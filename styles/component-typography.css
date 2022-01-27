@@ -1,0 +1,84 @@
+.uppercase {
+  text-transform: uppercase;
+}
+
+.underline {
+  border-bottom: 1px solid rgba(var(--font-color), 0.6);
+}
+
+.link {
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:focus {
+  text-decoration: underline;
+}
+
+.color-white {
+  color: white;
+}
+
+.color-blue {
+  color: rgb(111, 224, 235);
+}
+
+.color-yellow {
+  color: rgb(226, 216, 74);
+}
+
+.color-gray {
+  color: rgba(var(--font-color), 0.6);
+}
+
+.text-shadow-white {
+  text-shadow: 0px 0px 5px rgba(var(--font-color), 0.3);
+}
+
+.text-shadow-blue {
+  text-shadow: 0px 0px 4px rgba(111, 224, 235, 0.2);
+}
+
+.bottom-gutter {
+  padding-bottom: 8px;
+}
+
+.typography--variant-h1 {
+  font-size: 3rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+}
+
+.typography--variant-h2 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.typography--variant-h4 {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.typography--variant-h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.typography--variant-subheading1 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.typography--variant-subheading2 {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.typography--variant-body1 {
+  font-size: 1rem;
+}

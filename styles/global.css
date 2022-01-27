@@ -1,0 +1,29 @@
+:root {
+  --font-primary: "Barlow";
+  --font-secondary: sans-serif;
+  --text-base-size: 1rem;
+  --font-color: 245, 245, 245;
+  --bg-color: 31, 30, 29;
+  --navbar-height: 56px;
+  --border-color: #717172;
+}
+
+body {
+  font-size: var(--text-base-size);
+  font-family: var(--font-primary);
+  background-color: rgb(var(--bg-color));
+  color: rgb(var(--font-color));
+  overflow-y: scroll;
+}
+
+a {
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* * {
+  outline: 1px solid red;
+} */

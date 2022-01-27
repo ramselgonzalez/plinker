@@ -1,0 +1,7 @@
+.assists-container {
+  display: grid;
+  grid-template-rows: auto;
+  margin-bottom: 16px;
+  margin-top: 16px;
+  row-gap: 24px;
+}

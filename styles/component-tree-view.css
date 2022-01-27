@@ -1,0 +1,11 @@
+.nested-tree-list {
+  margin-left: 16px;
+  max-height: 0px;
+  overflow-y: hidden;
+  transition: all 0.5s ease;
+}
+
+.nested-tree-list-open {
+  max-height: 500px;
+  transition: all 0.5s ease;
+}

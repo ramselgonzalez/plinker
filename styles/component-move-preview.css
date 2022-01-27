@@ -1,0 +1,70 @@
+.move-preview-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: -8px;
+}
+
+.move-preview-attributes-item {
+  background-color: #717172;
+  border-radius: 16px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+  padding: 4px 12px;
+}
+
+.move-preview-content {
+  column-gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 8px;
+}
+
+.move-preview-data {
+  border-top: 1px solid rgba(var(--font-color), 0.1);
+  border-bottom: 1px solid rgba(var(--font-color), 0.1);
+}
+
+.move-preview-extra-info {
+  display: grid;
+  grid-auto-rows: min-content;
+  row-gap: 8px;
+}
+
+.move-preview-image-container {
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  position: relative;
+}
+
+.move-preview-image {
+  border-radius: 16px;
+}
+
+.move-preview-notes {
+  list-style: disc inside;
+}
+
+/* trick used to offset the anchor hash scrollTo */
+/* .move-preview-name:before {
+  display: block;
+  content: " ";
+  margin-top: -72px;
+  height: 72px;
+  visibility: hidden;
+} */
+
+@media only screen and (min-device-width: 0px) and (max-device-width: 480px) {
+  .move-preview-item {
+    margin-top: 0;
+    padding: 16px 8px;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .move-preview-details {
+    display: none;
+  }
+
+  .move-preview-image-container {
+    display: none;
+  }
+}

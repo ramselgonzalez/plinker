@@ -1,0 +1,19 @@
+.home-container {
+  margin-top: 16px;
+  margin-bottom: 32px;
+}
+
+.home-welcome-cta {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media screen and (max-width: 800px) {
+  .home-container {
+    grid-template-columns: 1fr;
+    margin-bottom: 16px;
+  }
+}

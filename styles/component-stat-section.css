@@ -1,0 +1,10 @@
+.stat-section-container {
+  border-top: 3px solid rgba(255, 255, 255, 0.8);
+  padding-top: 8px;
+}
+
+.stat-section-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 0;
+}
