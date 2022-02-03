@@ -1,6 +1,13 @@
 .stat-section-container {
   border-top: 3px solid rgba(255, 255, 255, 0.8);
-  padding-top: 8px;
+}
+
+.stat-section-header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 0px;
 }
 
 .stat-section-footer {

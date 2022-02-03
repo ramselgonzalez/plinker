@@ -9,10 +9,10 @@ function DataRow(props: DataRowProps) {
   const { label, value } = props;
   return (
     <div className="row">
-      <Typography className="uppercase" color="gray" variant="subheading1">
+      <Typography color="gray" component="h4" uppercase variant="subheading1">
         {label}
       </Typography>
-      <Typography className="uppercase text-shadow-white" variant="h3">
+      <Typography component="p" shadow uppercase variant="h3">
         {value}
       </Typography>
     </div>

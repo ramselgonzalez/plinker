@@ -13,8 +13,8 @@ const Overview: NextPage = () => {
     <Container className="stats-container">
       <div>
         <section className="overview-header">
-          <Typography variant="h1" className="uppercase bottom-gutter text-shadow-white">
-            Nova
+          <Typography className="bottom-gutter" shadow uppercase variant="h1">
+            Akuma
           </Typography>
           <Typography className="bottom-gutter" variant="body1">
             A strong point character with effective tools to deal with a variety of matchups.
@@ -47,7 +47,7 @@ const Overview: NextPage = () => {
       </div>
       <section className="model-display" />
       <div>
-        <StatSection className="ground-dash-section-override">
+        <StatSection>
           <StatSectionHeader>Ground Dashes</StatSectionHeader>
           <DataRow label="Forward" value="38 / 4" />
           <DataRow label="Back" value="25 / 13" />

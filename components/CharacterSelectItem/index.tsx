@@ -1,25 +1,31 @@
-import cx from "classnames";
+import cn from "classnames";
 import Image from "next/image";
 
-interface CharacterSelectItemProps extends React.ComponentPropsWithoutRef<"button"> {
+type SelectableCharacter = {
+  id: string;
+  name: string;
+};
+
+interface CharacterSelectItemProps {
   alt: string;
   imageUrl: string;
+  onSelectCharacter?: (c: SelectableCharacter) => void;
   selected?: boolean;
   variant: "marvel" | "capcom";
+  value: SelectableCharacter;
 }
 
 function CharacterSelectItem(props: CharacterSelectItemProps) {
-  const { alt, imageUrl, onClick, selected, variant, ...rest } = props;
+  const { alt, imageUrl, onSelectCharacter, selected, value, variant } = props;
   return (
     <button
-      className={cx("character-select-item", {
-        ["selected-character"]: selected,
+      className={cn("character-select-item", {
+        ["selected-item"]: selected,
         [`${variant}`]: variant,
       })}
-      onClick={onClick}
-      {...rest}
+      onClick={() => onSelectCharacter?.(value)}
     >
-      <Image alt={alt} className="character-select-image" layout="fill" priority src={imageUrl} />
+      <Image alt={alt} layout="fill" priority src={imageUrl} />
     </button>
   );
 }

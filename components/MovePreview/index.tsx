@@ -1,11 +1,16 @@
-interface MovePreviewProps extends React.ComponentPropsWithoutRef<"div"> {}
+import Link from "next/link";
+interface MovePreviewProps extends React.ComponentPropsWithoutRef<"a"> {
+  to: string;
+}
 
 function MovePreview(props: MovePreviewProps) {
-  const { children, ...rest } = props;
+  const { children, to, ...rest } = props;
   return (
-    <div className="move-preview-container" {...rest}>
-      {children}
-    </div>
+    <Link href={to}>
+      <a className="move-preview-container" draggable="false" {...rest}>
+        {children}
+      </a>
+    </Link>
   );
 }
 

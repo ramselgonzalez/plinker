@@ -6,11 +6,18 @@ import StatSectionFooter from "components/StatSectionFooter";
 import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
 
-function getFirebaseStorageImageURL(characterId: string) {
-  return `https://firebasestorage.googleapis.com/v0/b/wave-dash-tool.appspot.com/o/thumbnails%2F${characterId}.png?alt=media`;
+type SelectableCharacter = {
+  id: string;
+  name: string;
+};
+
+interface CharacterSelectPreviewProps {
+  selectedCharacter?: SelectableCharacter;
 }
 
-function CharacterSelectPreview({ selectedCharacter }: { selectedCharacter: { id: string; name: string } | null }) {
+function CharacterSelectPreview(props: CharacterSelectPreviewProps) {
+  const { selectedCharacter } = props;
+
   if (!selectedCharacter) {
     return (
       <div className="home-welcome-cta">
@@ -25,27 +32,29 @@ function CharacterSelectPreview({ selectedCharacter }: { selectedCharacter: { id
   }
 
   return (
-    <div className="character-select-preview">
+    <div key={selectedCharacter.id} className="character-select-preview">
       <div className="character-select-preview-model">
         <Image
           alt={selectedCharacter.name}
-          className="character-select-image"
+          className="character-select-preview-model-image"
+          objectFit="cover"
           layout="fill"
-          src={getFirebaseStorageImageURL(selectedCharacter.id)}
+          src={`/images/thumbnails_${selectedCharacter.id}.webp`}
         />
       </div>
       <StatSection>
-        <StatSectionHeader>{selectedCharacter.name}</StatSectionHeader>
+        <StatSectionHeader>
+          <Typography color="blue" shadow uppercase variant="h3">
+            {selectedCharacter.name}
+          </Typography>
+          <Link href="/overview">
+            <a className="typography-subheading1 uppercase">View Full Details</a>
+          </Link>
+        </StatSectionHeader>
         <DataRow label="Health" value="900,000" />
         <DataRow label="Recommended Position" value="Point" />
         <DataRow label="Archetype" value="Rushdown" />
         <DataRow label="Difficulty" value="Medium" />
-        <DataRow label="Tier" value="S" />
-        <StatSectionFooter>
-          <Link href="/overview">
-            <a className="color-white">View Character</a>
-          </Link>
-        </StatSectionFooter>
       </StatSection>
     </div>
   );

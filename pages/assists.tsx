@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { NextPage } from "next";
 import Container from "components/Container";
 import DataRow from "components/DataRow";
@@ -65,33 +66,43 @@ const assists = [
 
 const Assists: NextPage = () => {
   return (
-    <Container className="assists-container">
-      {assists.map((a) => (
-        <MovePreview key={a.type}>
-          <MovePreviewHeader>
-            <Typography className="uppercase" color="gray" variant="subheading1">
-              {a.type}
-            </Typography>
-            <Typography className="text-shadow-white" variant="h2">
-              {a.name}
-            </Typography>
-          </MovePreviewHeader>
-          <MovePreviewContent>
-            <MovePreviewImage />
-            <MovePreviewData>
-              <DataRow label="Start Up" value={a.startUp} />
-              <DataRow label="Active" value={a.active} />
-              <DataRow label="Recovery" value={a.recovery} />
-              <DataRow label="Alt. Assist Recovery" value={a.altRecovery} />
-              <DataRow label="Damage" value={a.damage} />
-              <DataRow label="Meter Gain" value={a.meterGain} />
-              <DataRow label="Team Hyper" value={a.thc} />
-            </MovePreviewData>
-            <MovePreviewExtraInfo attributes={a.attributes} notes={a.notes} />
-          </MovePreviewContent>
-        </MovePreview>
-      ))}
-    </Container>
+    <>
+      <Head>
+        <title>Assists / Akuma / Plinker</title>
+        <meta property="og:title" content="Akuma - Assists | Plinker: Frama Data for Ultimate Marvel vs. Capcom 3" />
+        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
+        <meta property="og:description" content="Frame data and details for Akuma's assists." />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
+      </Head>
+      <Container className="assists-container">
+        {assists.map((a) => (
+          <MovePreview key={a.type} to="/assist">
+            <MovePreviewHeader>
+              <Typography color="gray" uppercase variant="subheading1">
+                {a.type}
+              </Typography>
+              <Typography shadow uppercase variant="h2">
+                {a.name}
+              </Typography>
+            </MovePreviewHeader>
+            <MovePreviewContent>
+              <MovePreviewImage alt="Dr. Doom perform Hidden Missiles" src="/images/moves/akuma-fireball.png" />
+              <MovePreviewData>
+                <DataRow label="Start Up" value={a.startUp} />
+                <DataRow label="Active" value={a.active} />
+                <DataRow label="Recovery" value={a.recovery} />
+                <DataRow label="Alt. Assist Recovery" value={a.altRecovery} />
+                <DataRow label="Damage" value={a.damage} />
+                <DataRow label="Meter Gain" value={a.meterGain} />
+                <DataRow label="Team Hyper" value={a.thc} />
+              </MovePreviewData>
+              <MovePreviewExtraInfo attributes={a.attributes} notes={a.notes} />
+            </MovePreviewContent>
+          </MovePreview>
+        ))}
+      </Container>
+    </>
   );
 };
 

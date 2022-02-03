@@ -8,7 +8,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     <div className="app-container">
       <header className="header">
         <Link href="/">
-          <a className="typography--variant-subheading1 uppercase">Plinker</a>
+          <a className="typography-subheading1 uppercase">Plinker</a>
         </Link>
       </header>
       {route !== "/" ? <SecondaryHeader /> : <div className="secondary-header-offset" />}

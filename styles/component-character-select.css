@@ -1,3 +1,166 @@
+.character-select-desktop {
+  column-gap: 32px;
+  display: grid;
+  grid-template-columns: 1fr 380px 1fr;
+  grid-template-areas: "leftcol preview rightcol";
+}
+
+.character-select-mobile {
+  height: calc(100vh - var(--navbar-height) - 132px);
+  overflow-y: hidden;
+}
+
+.character-select-column {
+  column-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(7, 1fr);
+  row-gap: 12px;
+}
+
+.character-select-column-left {
+  grid-area: leftcol;
+}
+
+.character-select-column-right {
+  grid-area: rightcol;
+}
+
+.character-select-carousel {
+  background-color: rgb(var(--bg-color));
+  border-top: 1px solid var(--border-color);
+  bottom: 0;
+  column-gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(50, 1fr);
+  padding: 16px 16px;
+  position: fixed;
+  overflow-x: scroll;
+  width: 100%;
+}
+
+.character-select-item {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  height: 85px;
+  overflow: hidden;
+  position: relative;
+  transition: all 200ms ease-in-out;
+  width: 85px;
+}
+
+.character-select-item:hover {
+  transform: scale(1.1);
+}
+
+.character-select-item.capcom:focus {
+  border: 2px solid rgb(226, 216, 74);
+}
+
+.character-select-item.marvel:focus {
+  border: 2px solid rgb(189, 49, 49);
+}
+
+.selected-item {
+  animation-name: selected;
+  animation-delay: 0ms;
+  animation-duration: 500ms;
+}
+
+.character-select-item.selected-item {
+  transform: scale(1.1);
+}
+
+.character-select-item.selected-item.capcom {
+  border: 3px solid rgb(226, 216, 74);
+}
+
+.character-select-item.selected-item.marvel {
+  border: 3px solid rgb(189, 49, 49);
+}
+
+.character-select-preview {
+  animation-name: fadein;
+  animation-delay: 100ms;
+  animation-duration: 750ms;
+  animation-fill-mode: backwards;
+  grid-area: preview;
+  position: relative;
+}
+
+.character-select-preview-model {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  height: 380px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  position: relative;
+  width: 380px;
+}
+
+.character-select-preview-model-image {
+  background-color: white;
+}
+
+@media screen and (min-width: 1200px) {
+  .character-select-item.capcom:nth-of-type(2) {
+    grid-column: 1;
+  }
+
+  .character-select-item.marvel:first-of-type {
+    grid-column: 4;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .character-select-desktop {
+    display: none;
+  }
+
+  .character-select-preview {
+    padding: 0 16px;
+  }
+
+  .character-select-preview-model {
+    height: 250px;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .character-select-mobile {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .character-select-column {
+    grid-template-columns: repeat(5, 70px);
+    grid-template-rows: repeat(5, 70px);
+  }
+  .character-select-desktop {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: min-content;
+    grid-template-areas:
+      "leftcol preview"
+      "rightcol preview";
+    padding: 0 16px;
+    row-gap: 12px;
+  }
+
+  .character-select-preview {
+    align-content: center;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .character-select-preview-model {
+    display: none;
+  }
+}
+
 @keyframes fadein {
   from {
     opacity: 0;
@@ -21,117 +184,5 @@
 
   100% {
     transform: scale(1.1);
-  }
-}
-
-.selected-character {
-  animation-name: selected;
-  animation-delay: 0ms;
-  animation-duration: 500ms;
-}
-
-.character-select-desktop {
-  column-gap: 32px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.character-select-mobile {
-  display: none;
-  grid-template-rows: calc(100vh - var(--navbar-height) - 132px) 100px;
-}
-
-.character-select-section {
-  column-gap: 12px;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(7, 80px);
-  row-gap: 12px;
-}
-
-.character-select-item {
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  transition: all 200ms ease-in-out;
-}
-
-.character-select-item.selected-character {
-  transform: scale(1.1);
-}
-
-.character-select-item.selected-character.capcom {
-  border: 3px solid rgb(226, 216, 74);
-}
-
-.character-select-item.selected-character.marvel {
-  border: 3px solid rgb(189, 49, 49);
-}
-
-.character-select-image {
-  background-color: white;
-}
-
-.character-select-item:hover {
-  transform: scale(1.1);
-}
-
-.character-select-preview {
-  animation-name: fadein;
-  animation-delay: 100ms;
-  animation-duration: 750ms;
-  animation-fill-mode: backwards;
-  display: grid;
-  grid-template-rows: 360px 1fr;
-  position: relative;
-  row-gap: 16px;
-  overflow-y: auto;
-  max-height: 100%;
-}
-
-.character-select-preview-model {
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  align-content: center;
-}
-
-.character-select-carousel {
-  align-content: center;
-  column-gap: 16px;
-  display: grid;
-  height: 100%;
-  grid-template-columns: repeat(50, 85px);
-  grid-template-rows: 85px;
-  padding: 0px 16px;
-  overflow-x: scroll;
-  overflow-y: visible;
-  scrollbar-width: 0;
-}
-
-@media screen and (min-width: 800px) {
-  .character-select-item.capcom:nth-of-type(2) {
-    grid-column: 1;
-  }
-
-  .character-select-item.marvel:first-of-type {
-    grid-column: 4;
-  }
-}
-
-@media screen and (max-width: 800px) {
-  .character-select-preview {
-    padding: 0 16px;
-  }
-
-  .character-select-desktop {
-    display: none;
-  }
-
-  .character-select-mobile {
-    display: grid;
   }
 }

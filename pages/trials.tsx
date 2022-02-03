@@ -1,8 +1,8 @@
 import { NextPage } from "next";
 import Container from "components/Container";
 
-const Combos: NextPage = () => {
+const Trials: NextPage = () => {
   return <Container></Container>;
 };
 
-export default Combos;
+export default Trials;

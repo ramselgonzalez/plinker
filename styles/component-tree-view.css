@@ -1,11 +1,37 @@
-.nested-tree-list {
-  margin-left: 16px;
+.tree-section {
+  margin-left: 24px;
   max-height: 0px;
   overflow-y: hidden;
-  transition: all 0.5s ease;
+  transition: all 500ms ease;
 }
 
-.nested-tree-list-open {
-  max-height: 500px;
-  transition: all 0.5s ease;
+.tree-section-label {
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.tree-section-label-icon {
+  transition: all 500ms ease-in-out;
+}
+
+.tree-section-label-icon-open {
+  transform: rotate(90deg);
+}
+
+.tree-item {
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px 8px;
+  transition: all 200ms ease-out;
+}
+
+a.tree-item {
+  display: block;
+  width: 100%;
+}
+
+.tree-item:hover,
+.tree-item:focus {
+  background-color: rgba(255, 255, 255, 0.025);
 }

@@ -6,11 +6,18 @@ interface StatSectionHeaderProps {
 
 function StatSectionHeader(props: StatSectionHeaderProps) {
   const { children } = props;
-  return (
-    <Typography color="blue" variant="h3" className="uppercase underline bottom-gutter text-shadow-blue">
-      {children}
-    </Typography>
-  );
+
+  if (typeof children === "string") {
+    return (
+      <div className="stat-section-header">
+        <Typography color="blue" variant="h3" className="uppercase text-shadow-blue">
+          {children}
+        </Typography>
+      </div>
+    );
+  }
+
+  return <div className="stat-section-header">{children}</div>;
 }
 
 export default StatSectionHeader;

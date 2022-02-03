@@ -1,0 +1,35 @@
+.move-container {
+  display: grid;
+  margin-top: 16px;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 16px;
+}
+
+.move-col-1 {
+  gap: 8px 0;
+  display: grid;
+  grid-auto-rows: min-content;
+}
+
+.move-image-container {
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  display: flex;
+  height: 400px;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  .move-container {
+    grid-template-columns: 1fr;
+    row-gap: 16px;
+    padding: 0 16px;
+  }
+
+  .move-image-container {
+    height: 200px;
+  }
+}

@@ -31,7 +31,13 @@
   display: flex;
   height: inherit;
   justify-content: center;
+  transition: all 250ms ease-out;
   width: 150px;
+}
+
+.secondary-header-nav-list-item:hover,
+.secondary-header-nav-list-item:focus {
+  background-color: rgba(255, 255, 255, 0.025);
 }
 
 .secondary-header-nav-list-item > a {
@@ -39,12 +45,16 @@
   width: 100%;
 }
 
+.secondary-header-nav-list-item-selected {
+  color: rgb(var(--blue));
+}
+
 .secondary-header-nav-list-item > a:focus {
   text-decoration: underline;
 }
 
 .nav-list-indicator {
-  background-color: white;
+  background-color: rgb(var(--blue));
   bottom: 0;
   height: 3px;
   left: 0;
