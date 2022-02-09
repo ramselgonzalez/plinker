@@ -28,9 +28,9 @@ const Move: NextPage = () => {
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
         <meta
           property="og:description"
-          content="Explore frame data, usage, and details for Akuma's Godadoken L.
+          content="Explore frame data, usage, and details for Akuma's Air Tatsumaki Zankyaku L.
           
-          Start Up: 4 / Active: 10 / Recovery: 8 / Block Adv: -3 / Hit Adv. +3"
+          Start Up: 4 | Active: 10 | Recovery: 8 | Block Adv: -3 | Hit Adv. +3"
         />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
