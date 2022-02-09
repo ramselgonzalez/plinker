@@ -3,8 +3,8 @@ import { getCharacterOverview } from "lib/characters";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const url = req.query.url as string;
-  const hostname = process.env.NEXT_PUBLIC_HOST + "/";
-  const [cid] = url.replace(hostname, "").split("/");
+  const splitUrl = url.split("/");
+  const cid = splitUrl[splitUrl.length - 2];
   const { id, name } = getCharacterOverview(cid);
 
   const oembed = {
