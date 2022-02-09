@@ -26,14 +26,6 @@ const Move: NextPage = () => {
         <meta property="og:site_name" content="Plinker" />
         <meta property="og:title" content="Gohadoken L" />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
-        <meta
-          property="og:description"
-          content="Frame data and details for Akuma's Gohadoken L.
-
-        Start Up: 5
-        Active: 10
-        Recovery: 8"
-        />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
         <meta name="twitter:card" content="summary_large_image" />
