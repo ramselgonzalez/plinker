@@ -30,7 +30,10 @@ const Overview: NextPage<OverviewProps> = (props) => {
         />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content={`A portrait of ${character.name}`} />
-        <link type="application/json+oembed" href={`${process.env.NEXT_PUBLIC_HOST}/oembed.json`} />
+        <link
+          type="application/json+oembed"
+          href={`${process.env.NEXT_PUBLIC_HOST}/api/oembed/?format=json&url=${process.env.NEXT_PUBLIC_HOST}/${character.name}/move`}
+        />
       </Head>
       <Container className="stats-container">
         <div>

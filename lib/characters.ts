@@ -5,7 +5,7 @@ import { RawCharacter } from "types";
 
 const dataPath = path.join(process.cwd(), "data", "index.json");
 
-function getFullCharactersJSON(): Array<RawCharacter> {
+export function getFullCharactersJSON(): Array<RawCharacter> {
   return JSON.parse(fs.readFileSync(dataPath, "utf8"));
 }
 
