@@ -23,7 +23,8 @@ const Move: NextPage = () => {
     <>
       <Head>
         <title>Gohadoken L / Akuma / Plinker</title>
-        <meta property="og:title" content="Akuma - Gohadoken L | Plinker" />
+        <meta property="og:site_name" content="Plinker" />
+        <meta property="og:title" content="Gohadoken L" />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
         <meta
           property="og:description"

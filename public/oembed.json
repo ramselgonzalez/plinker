@@ -1,7 +1,8 @@
 {
-  "title": "Plinker",
   "author_name": "Akuma",
   "author_url": "https://plinker.vercel.app/akuma/overview",
   "provider_name": "Plinker",
-  "provider_url": "https://plinker.vercel.app"
+  "provider_url": "https://plinker.vercel.app",
+  "type": "rich",
+  "html": "<div>This is a test: <br> Start Up: 5<br>Active: 10<br>Recovery: 8</div>"
 }
