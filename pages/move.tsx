@@ -28,13 +28,17 @@ const Move: NextPage = () => {
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
         <meta
           property="og:description"
-          content="Start Up: 5 / Active: 10 / Recovery: 8 / Block Adv: -3 / Hit Adv. +3"
+          content="Explore frame data, usage, and details for Akuma's Godadoken L.
+          
+          Start Up: 4 / Active: 10 / Recovery: 8 / Block Adv: -3 / Hit Adv. +3"
         />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="theme-color" content="#6fe0eb" />
-        {/* <link type="application/json+oembed" href={`${process.env.NEXT_PUBLIC_HOST}/oembed.json`} /> */}
+        <link
+          type="application/json+oembed"
+          href={`${process.env.NEXT_PUBLIC_HOST}/api/oembed/?format=json&url=${process.env.NEXT_PUBLIC_HOST}/akuma/move`}
+        />
       </Head>
       <Container className="move-container">
         <div className="move-col-1">
