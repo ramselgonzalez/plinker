@@ -10,7 +10,7 @@ function StatSectionHeader(props: StatSectionHeaderProps) {
   if (typeof children === "string") {
     return (
       <div className="stat-section-header">
-        <Typography color="blue" variant="h3" className="uppercase text-shadow-blue">
+        <Typography color="blue" variant="h4" className="uppercase text-shadow-blue">
           {children}
         </Typography>
       </div>

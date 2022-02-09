@@ -1,3 +1,5 @@
+import List from "components/List";
+
 interface TreeProps extends React.ComponentPropsWithoutRef<"ul"> {}
 
 function Tree(props: TreeProps) {
@@ -5,7 +7,7 @@ function Tree(props: TreeProps) {
 
   return (
     <nav>
-      <ul {...rest}>{children}</ul>
+      <List {...rest}>{children}</List>
     </nav>
   );
 }

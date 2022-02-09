@@ -1,15 +1,11 @@
 import React from "react";
 import cn from "classnames";
-
-type SelectableCharacter = {
-  id: string;
-  name: string;
-};
+import { ICharacterPreview } from "types";
 
 interface CharacterSelectSectionProps {
   children: React.ReactNode;
   className?: string;
-  selectedCharacter?: SelectableCharacter | null;
+  selectedCharacter?: ICharacterPreview | null;
   variant: "column" | "carousel";
 }
 

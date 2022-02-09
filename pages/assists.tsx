@@ -1,13 +1,16 @@
 import Head from "next/head";
 import { NextPage } from "next";
+import Chip from "components/Chip";
 import Container from "components/Container";
 import DataRow from "components/DataRow";
+import List from "components/List";
+import ListItem from "components/ListItem";
 import MovePreview from "components/MovePreview";
 import MovePreviewContent from "components/MovePreviewContent";
-import MovePreviewData from "components/MovePreviewData";
-import MovePreviewExtraInfo from "components/MovePreviewExtraInfo";
 import MovePreviewHeader from "components/MovePreviewHeader";
 import MovePreviewImage from "components/MovePreviewImage";
+import StatSection from "components/StatSection";
+import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
 
 const assists = [
@@ -79,16 +82,17 @@ const Assists: NextPage = () => {
         {assists.map((a) => (
           <MovePreview key={a.type} to="/assist">
             <MovePreviewHeader>
-              <Typography color="gray" uppercase variant="subheading1">
+              <Typography color="gray" gutter uppercase variant="subheading1">
                 {a.type}
               </Typography>
-              <Typography shadow uppercase variant="h2">
+              <Typography className="move-preview-heading" shadow uppercase variant="h2">
                 {a.name}
               </Typography>
             </MovePreviewHeader>
             <MovePreviewContent>
               <MovePreviewImage alt="Dr. Doom perform Hidden Missiles" src="/images/moves/akuma-fireball.png" />
-              <MovePreviewData>
+              <StatSection className="move-preview-data">
+                <StatSectionHeader>Frame Data</StatSectionHeader>
                 <DataRow label="Start Up" value={a.startUp} />
                 <DataRow label="Active" value={a.active} />
                 <DataRow label="Recovery" value={a.recovery} />
@@ -96,8 +100,20 @@ const Assists: NextPage = () => {
                 <DataRow label="Damage" value={a.damage} />
                 <DataRow label="Meter Gain" value={a.meterGain} />
                 <DataRow label="Team Hyper" value={a.thc} />
-              </MovePreviewData>
-              <MovePreviewExtraInfo attributes={a.attributes} notes={a.notes} />
+              </StatSection>
+              <StatSection className="move-preview-extra-info">
+                <StatSectionHeader>Extra Info</StatSectionHeader>
+                <div className="chips">
+                  {a.attributes.map((att) => (
+                    <Chip key={att}>{att}</Chip>
+                  ))}
+                </div>
+                <List>
+                  {a.notes.map((n) => (
+                    <ListItem key={n}>{n}</ListItem>
+                  ))}
+                </List>
+              </StatSection>
             </MovePreviewContent>
           </MovePreview>
         ))}

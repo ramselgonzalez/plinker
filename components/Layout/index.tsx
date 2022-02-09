@@ -7,6 +7,11 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="app-container">
       <header className="header">
+        <button className="menu">
+          <span />
+          <span />
+          <span />
+        </button>
         <Link href="/">
           <a className="typography-subheading1 uppercase">Plinker</a>
         </Link>

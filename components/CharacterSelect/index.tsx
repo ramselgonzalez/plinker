@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import cn from "classnames";
-
-type SelectableCharacter = {
-  id: string;
-  name: string;
-};
+import { ICharacterPreview } from "types";
 
 interface CharacterSelectProps {
   children: React.ReactNode;
@@ -14,11 +9,11 @@ interface CharacterSelectProps {
 function CharacterSelect(props: CharacterSelectProps) {
   const { children: childrenProp, className } = props;
   const router = useRouter();
-  const [selectedCharacter, setSelectedCharacter] = useState<SelectableCharacter | null>(null);
+  const [selectedCharacter, setSelectedCharacter] = useState<ICharacterPreview | null>(null);
 
-  function handleSelectCharacter(character: SelectableCharacter) {
+  function handleSelectCharacter(character: ICharacterPreview) {
     if (character.id === selectedCharacter?.id) {
-      router.push("/overview");
+      router.push(`/${character.id}/overview`);
     } else {
       setSelectedCharacter(character);
     }

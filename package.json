@@ -8,6 +8,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@capsizecss/core": "^3.0.0",
+    "@capsizecss/metrics": "^0.1.0",
     "@react-three/drei": "^8.6.3",
     "@react-three/fiber": "^7.0.25",
     "classnames": "^2.3.1",

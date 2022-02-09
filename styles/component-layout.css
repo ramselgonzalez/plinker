@@ -8,8 +8,28 @@
   background-color: rgb(var(--bg-color));
   border-bottom: 1px solid var(--border-color);
   display: flex;
-  padding: 16px 16px;
   position: sticky;
   top: 0;
   z-index: 10;
+}
+
+.menu {
+  border-radius: 16px;
+  cursor: pointer;
+  display: grid;
+  row-gap: 3px;
+  padding: 18px 15px;
+  transition: all 250ms ease-out;
+}
+
+.menu:hover {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+.menu > span {
+  border-radius: 4px;
+  display: block;
+  height: 2px;
+  width: 18px;
+  background-color: white;
 }

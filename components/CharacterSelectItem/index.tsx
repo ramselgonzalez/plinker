@@ -1,18 +1,14 @@
 import cn from "classnames";
 import Image from "next/image";
-
-type SelectableCharacter = {
-  id: string;
-  name: string;
-};
+import { ICharacterPreview } from "types";
 
 interface CharacterSelectItemProps {
   alt: string;
   imageUrl: string;
-  onSelectCharacter?: (c: SelectableCharacter) => void;
+  onSelectCharacter?: (c: ICharacterPreview) => void;
   selected?: boolean;
   variant: "marvel" | "capcom";
-  value: SelectableCharacter;
+  value: ICharacterPreview;
 }
 
 function CharacterSelectItem(props: CharacterSelectItemProps) {

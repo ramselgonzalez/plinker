@@ -1,30 +1,37 @@
-import { NextPage } from "next";
+import { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
 import Container from "components/Container";
 import CharacterSelect from "components/CharacterSelect";
 import CharacterSelectItem from "components/CharacterSelectItem";
 import CharacterSelectPreview from "components/CharacterSelectPreview";
 import CharacterSelectSection from "components/CharacterSelectSection";
-import characters from "data/characters";
+import { getCharacterPreviews } from "lib/characters";
+import { ICharacterPreview } from "types";
 
-const orderSort = characters.slice().sort((a, b) => a.selectOrder - b.selectOrder);
-const nameSort = characters.slice().sort((a, b) => {
-  if (a.name > b.name) return 1;
-  if (a.name < b.name) return -1;
-  return 0;
-});
+interface HomeProps {
+  characters: Array<ICharacterPreview>;
+}
 
-const marvel = orderSort.filter((c) => c.franchise === "Marvel");
-const capcom = orderSort.filter((c) => c.franchise === "Capcom");
+const Home: NextPage<HomeProps> = (props) => {
+  const { characters } = props;
 
-const Home: NextPage = () => {
+  const orderSort = characters.slice().sort((a, b) => a.selectOrder - b.selectOrder);
+  const nameSort = characters.slice().sort((a, b) => {
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
+  });
+
+  const marvel = orderSort.filter((c) => c.franchise === "marvel");
+  const capcom = orderSort.filter((c) => c.franchise === "capcom");
+
   return (
     <>
       <Head>
         <title>Plinker</title>
         <meta property="og:title" content="Home | Plinker: Frama Data for Ultimate Marvel vs. Capcom 3" />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
-        <meta property="og:description" content="Frame data and details for Ultimate Marvel vs. Capcom." />
+        <meta property="og:description" content="Frame data and details for Ultimate Marvel vs. Capcom 3." />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
       </Head>
@@ -63,7 +70,7 @@ const Home: NextPage = () => {
                 imageUrl={`/images/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}
-                variant={c.franchise === "Marvel" ? "marvel" : "capcom"}
+                variant={c.franchise}
               />
             ))}
           </CharacterSelectSection>
@@ -71,6 +78,15 @@ const Home: NextPage = () => {
       </Container>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const characters = getCharacterPreviews();
+  return {
+    props: {
+      characters,
+    },
+  };
 };
 
 export default Home;

@@ -8,7 +8,7 @@ function getActiveState(currentRoute: string, routes: Array<string>) {
 }
 
 function SecondaryHeader() {
-  const { route } = useRouter();
+  const { route, query } = useRouter();
   const ref = useRef<HTMLLIElement | null>(null);
   const [mounted, setMounted] = useState(false);
   const [indicatorPosition, setIndicatorPosition] = useState(0);
@@ -19,7 +19,7 @@ function SecondaryHeader() {
 
   useEffect(() => {
     if (ref.current) {
-      if (getActiveState(route, ["/overview"])) {
+      if (getActiveState(route, ["/[cid]/overview"])) {
         setIndicatorPosition(0);
       }
 
@@ -42,10 +42,10 @@ function SecondaryHeader() {
       <nav className="secondary-header-nav">
         <ul className="secondary-header-nav-list">
           <li ref={ref} className="secondary-header-nav-list-item">
-            <Link href="/overview">
+            <Link href={`/${query.cid}/overview`}>
               <a
                 className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/overview"]),
+                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/overview"]),
                 })}
               >
                 Overview

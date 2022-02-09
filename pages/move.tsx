@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NextPage } from "next";
 import Head from "next/head";
+import Chip from "components/Chip";
 import Container from "components/Container";
 import DataRow from "components/DataRow";
 import Typography from "components/Typography";
@@ -9,6 +10,8 @@ import StatSectionHeader from "components/StatSectionHeader";
 import RadioButtonGroup from "components/RadioButtonGroup";
 import RadioButton from "components/RadioButton";
 import Image from "next/image";
+import ListItem from "components/ListItem";
+import List from "components/List";
 
 function formatNumber(value: number, multiplier: number): string {
   const total = value + value * multiplier;
@@ -20,22 +23,29 @@ const Move: NextPage = () => {
     <>
       <Head>
         <title>Gohadoken L / Akuma / Plinker</title>
-        <meta
-          property="og:title"
-          content="Akuma - Gohadoken L | Plinker: Frama Data for Ultimate Marvel vs. Capcom 3"
-        />
+        <meta property="og:title" content="Akuma - Gohadoken L | Plinker" />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
-        <meta property="og:description" content="Frame data and details for Akuma's Gohadoken L." />
+        <meta
+          property="og:description"
+          content="Frame data and details for Akuma's Gohadoken L.
+
+        Start Up: 5
+        Active: 10
+        Recovery: 8"
+        />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="theme-color" content="#6fe0eb" />
+        <link type="application/json+oembed" href={`${process.env.NEXT_PUBLIC_HOST}/oembed.json`} />
       </Head>
       <Container className="move-container">
         <div className="move-col-1">
           <header className="move-header">
-            <Typography shadow uppercase variant="h1">
+            <Typography className="move-header" gutter shadow uppercase variant="h1">
               Gohadoken L
             </Typography>
-            <Typography color="blue" shadow variant="h2">
+            <Typography className="move-subheader" color="blue" shadow variant="h2">
               236L
             </Typography>
           </header>
@@ -47,33 +57,31 @@ const Move: NextPage = () => {
               objectFit="cover"
             />
           </div>
-          <div className="move-preview-attributes">
-            {["OTG", "Soft Knockdown"].map((a, i) => (
-              <span className="move-preview-attributes-item" key={i}>
-                {a}
-              </span>
-            ))}
-          </div>
-          <div>
-            <Typography color="blue" className="bottom-gutter underline" shadow uppercase variant="h3">
-              Usage &amp; Details
-            </Typography>
-            <ul style={{ listStyle: "disc inside", marginTop: 8 }}>
-              <li className="typography-body1">Standard mashable standing jab with a smallish hitbox.</li>
-              <li className="typography-body1">Serviceable as an anti air in certain situations.</li>
-              <li className="typography-body1">Always combo into Level 1 Super.</li>
-              <li className="typography-body1">Fixed hitstun.</li>
-            </ul>
-          </div>
+          <StatSection className="move-usage-container">
+            <StatSectionHeader>Usage &amp; Details</StatSectionHeader>
+            <div className="chips">
+              {["OTG", "Soft Knockdown"].map((a) => (
+                <Chip key={a}>{a}</Chip>
+              ))}
+            </div>
+            <List>
+              {[
+                "Standard mashable standing jab with a smallish hitbox.",
+                "Serviceable as an anti air in certain situations.",
+              ].map((n) => (
+                <ListItem key={n}>{n}</ListItem>
+              ))}
+            </List>
+          </StatSection>
         </div>
         <div>
-          <StatSection>
+          <StatSection divider>
             <StatSectionHeader>Basic Info</StatSectionHeader>
             <DataRow label="Total Hits" value="2" />
             <DataRow label="Block" value="Low" />
             <DataRow label="Hit Type" value="Strike" />
           </StatSection>
-          <StatSection>
+          <StatSection divider>
             <StatSectionHeader>Frame Data</StatSectionHeader>
             <DataRow label="Start Up" value="5" />
             <DataRow label="Active" value="3" />
@@ -83,22 +91,19 @@ const Move: NextPage = () => {
           </StatSection>
           <StatefulStatSection>
             {(multiplier, onChange) => (
-              <StatSection>
+              <StatSection divider>
                 <StatSectionHeader>Damage & Meter Values</StatSectionHeader>
                 <DataRow label="Total Damage" value={formatNumber(5000, multiplier)} />
                 <DataRow label="Max Scaled Damage" value={formatNumber(1400, multiplier)} />
                 <DataRow label="Damage Per Hit" value={formatNumber(1000, multiplier)} />
                 <DataRow label="Meter Gain" value={formatNumber(1000, multiplier)} />
                 <DataRow label="Meter Per Hit" value={formatNumber(500, multiplier)} />
-                <form style={{ padding: "8px 0" }}>
-                  <legend
-                    className="bottom-gutter"
-                    style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
-                  >
+                <form className="stat-section-multiplier-container">
+                  <legend className="stat-section-multiplier-legend">
                     <Typography component="p" uppercase variant="subheading1">
                       Apply X-Factor Multiplier
                     </Typography>
-                    <Typography color="blue" component="p" shadow variant="h3">
+                    <Typography color="blue" component="p" shadow variant="h4">
                       (+{multiplier.toLocaleString("en", { style: "percent" })})
                     </Typography>
                   </legend>

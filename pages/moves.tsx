@@ -1,11 +1,11 @@
 import Head from "next/head";
 import { NextPage } from "next";
+import Chip from "components/Chip";
 import Container from "components/Container";
 import DataRow from "components/DataRow";
+import List from "components/List";
 import MovePreview from "components/MovePreview";
 import MovePreviewContent from "components/MovePreviewContent";
-import MovePreviewData from "components/MovePreviewData";
-import MovePreviewExtraInfo from "components/MovePreviewExtraInfo";
 import MovePreviewHeader from "components/MovePreviewHeader";
 import MovePreviewImage from "components/MovePreviewImage";
 import Tree from "components/Tree";
@@ -13,6 +13,9 @@ import Typography from "components/Typography";
 import moves from "data";
 import TreeSection from "components/TreeSection";
 import TreeItem from "components/TreeItem";
+import StatSection from "components/StatSection";
+import StatSectionHeader from "components/StatSectionHeader";
+import ListItem from "components/ListItem";
 
 const normals = moves.filter((m) => m.moveType === "Normal");
 const commandNormals = moves.filter((m) => m.moveType === "Command Normal");
@@ -59,46 +62,55 @@ const Moves: NextPage = () => {
             ))}
           </Tree>
         </aside>
-        <ul>
+        <List>
           {sections.map((s) => (
-            <li className="move-list-section" key={s.id}>
-              <Typography color="blue" variant="h3" className="underline uppercase bottom-gutter text-shadow-blue">
+            <ListItem className="move-list-section" key={s.id}>
+              <Typography className="underline" color="blue" gutter shadow uppercase variant="h4">
                 {s.label}
               </Typography>
-              <ul className="moves-sub-list">
+              <List className="moves-sub-list">
                 {s.nodes.map((n) => (
-                  <li key={n.id}>
+                  <ListItem key={n.id}>
                     <MovePreview id={n.id} to="/move">
                       <MovePreviewHeader>
-                        <Typography color="gray" variant="subheading1">
+                        <Typography color="gray" gutter variant="subheading1">
                           {n.input}
                         </Typography>
-                        <Typography shadow uppercase variant="h2">
+                        <Typography className="move-preview-heading" shadow uppercase variant="h2">
                           {n.name}
                         </Typography>
                       </MovePreviewHeader>
                       <MovePreviewContent>
                         <MovePreviewImage alt="Akuma performing Gohadoken L" src="/images/moves/akuma-fireball.png" />
-                        <MovePreviewData>
+                        <StatSection className="move-preview-data">
+                          <StatSectionHeader>Frame Data</StatSectionHeader>
                           <DataRow label="Start Up" value={n.startUp} />
                           <DataRow label="Active" value={n.active} />
                           <DataRow label="Recovery" value={n.recovery} />
                           <DataRow label="Block Adv." value={n.blockAdv} />
                           <DataRow label="Hit Adv." value={n.hitAdv} />
-                          <DataRow label="Damage" value={n.damage} />
-                        </MovePreviewData>
-                        <MovePreviewExtraInfo
-                          attributes={n.attributes ? n.attributes.split(", ") : []}
-                          notes={n.notes ? n.notes.split(". ") : []}
-                        />
+                        </StatSection>
+                        <StatSection className="move-preview-extra-info">
+                          <StatSectionHeader>Extra Info</StatSectionHeader>
+                          <div className="chips">
+                            {(n.attributes ? n.attributes.split(", ") : []).map((a) => (
+                              <Chip key={a}>{a}</Chip>
+                            ))}
+                          </div>
+                          <List>
+                            {(n.notes ? n.notes.split(". ") : []).map((n) => (
+                              <ListItem key={n}>{n}</ListItem>
+                            ))}
+                          </List>
+                        </StatSection>
                       </MovePreviewContent>
                     </MovePreview>
-                  </li>
+                  </ListItem>
                 ))}
-              </ul>
-            </li>
+              </List>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       </Container>
     </>
   );

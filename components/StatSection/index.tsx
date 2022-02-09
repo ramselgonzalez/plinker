@@ -1,13 +1,22 @@
-interface StatSectionProps extends React.ComponentPropsWithoutRef<"section"> {}
+import cn from "classnames";
+
+interface StatSectionProps extends React.ComponentPropsWithoutRef<"section"> {
+  divider?: boolean;
+}
 
 function StatSection(props: StatSectionProps) {
-  const { children, className } = props;
-  let classes = "stat-section-container";
-  if (className) {
-    classes = classes + " " + className;
-  }
+  const { children, divider, className } = props;
 
-  return <section className={classes}>{children}</section>;
+  return (
+    <section
+      className={cn("stat-section-container", {
+        [`${className}`]: className,
+        ["stat-section-divider"]: divider,
+      })}
+    >
+      {children}
+    </section>
+  );
 }
 
 export default StatSection;

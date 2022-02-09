@@ -1,8 +1,9 @@
 .move-container {
-  display: grid;
-  margin-top: 16px;
-  grid-template-columns: 2fr 1fr;
   column-gap: 16px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .move-col-1 {
@@ -22,6 +23,11 @@
   position: relative;
 }
 
+.move-usage-container {
+  display: grid;
+  row-gap: 8px;
+}
+
 @media screen and (max-width: 767px) {
   .move-container {
     grid-template-columns: 1fr;
@@ -31,5 +37,13 @@
 
   .move-image-container {
     height: 200px;
+  }
+
+  .move-header {
+    font-size: 32px;
+  }
+
+  .move-subheader {
+    font-size: 24px;
   }
 }

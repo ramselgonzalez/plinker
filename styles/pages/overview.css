@@ -1,14 +1,24 @@
 .damage-scaling-grid {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 8px;
   justify-content: center;
+  row-gap: 12px;
+  margin: 12px 0;
 }
 
-.damage-scaling-grid > .data-item-container {
-  margin-bottom: 8px;
-  text-align: center;
+.damage-scaling-grid > * {
   width: calc(100% / 3);
+}
+
+.jump-duration-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.jump-duration-grid > * {
+  flex-grow: 1;
 }
 
 .model-display {
@@ -42,7 +52,7 @@
   }
 }
 
-@media (min-width: 0px) and (max-width: 480px) {
+@media screen and (max-width: 480px) {
   .model-display {
     display: none;
   }

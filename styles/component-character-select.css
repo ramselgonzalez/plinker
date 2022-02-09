@@ -93,6 +93,7 @@
 .character-select-preview-model {
   border: 1px solid var(--border-color);
   border-radius: 8px;
+  display: block;
   height: 380px;
   margin-bottom: 16px;
   overflow: hidden;

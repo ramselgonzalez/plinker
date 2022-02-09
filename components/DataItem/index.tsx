@@ -9,10 +9,10 @@ function DataItem(props: DataItemProps) {
   const { label, value = "--" } = props;
   return (
     <div className="data-item-container">
-      <Typography className="uppercase" color="gray" variant="subheading1">
+      <Typography className="data-item-label" color="gray" uppercase variant="subheading1">
         {label}
       </Typography>
-      <Typography className="text-shadow-white" variant="h2">
+      <Typography shadow variant="h2">
         {value}
       </Typography>
     </div>

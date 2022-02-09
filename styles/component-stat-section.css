@@ -1,4 +1,9 @@
 .stat-section-container {
+  margin-top: -12px;
+}
+
+.stat-section-divider {
+  margin-top: 0;
   border-top: 3px solid rgba(255, 255, 255, 0.8);
 }
 
@@ -7,11 +12,22 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
-  padding: 8px 0px;
+  padding: 12px 0px;
+}
+
+.stat-section-multiplier-container {
+  margin-top: 12px;
+}
+
+.stat-section-multiplier-legend {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 .stat-section-footer {
   display: flex;
   justify-content: flex-end;
-  padding: 8px 0;
+  padding: 12px 0;
 }
