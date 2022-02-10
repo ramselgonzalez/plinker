@@ -1,11 +1,16 @@
+import { m } from "framer-motion";
 import {
   AirDashArchetype,
   ChainComboArchetype,
   Difficulty,
   Franchise,
+  IAssistPreview,
   ICharacterOverview,
   ICharacterPreview,
+  IMovePreview,
+  RawAssist,
   RawCharacter,
+  RawMove,
   RecommendedPosition,
 } from "types";
 
@@ -56,6 +61,8 @@ export class Character {
   xf1SpeedBoost: number;
   xf2SpeedBoost: number;
   xf3SpeedBoost: number;
+  moves: Array<RawMove>;
+  assists: Array<RawAssist>;
 
   constructor(character: RawCharacter) {
     this.airDashNormalJumpThreshold = character.airDashNormalJumpThreshold;
@@ -104,6 +111,8 @@ export class Character {
     this.groundDashForwardCancelThreshold = character.groundDashForwardCancelThreshold;
     this.groundDashBackDuration = character.groundDashBackDuration;
     this.groundDashBackCancelThreshold = character.groundDashBackCancelThreshold;
+    this.moves = character.moves;
+    this.assists = character.assists;
   }
 
   getCharacterPreview(): ICharacterPreview {
@@ -149,6 +158,39 @@ export class Character {
       xf2: this.assembleXfactorDescription(this.xf2SpeedBoost, this.xf2DamageBoost),
       xf3: this.assembleXfactorDescription(this.xf3SpeedBoost, this.xf3DamageBoost),
     };
+  }
+
+  getMovePreviews(): Array<IMovePreview> {
+    return this.moves.map((m) => ({
+      active: m.active || "--",
+      attributes: m.attributes ? m.attributes.split(",") : [],
+      blockAdv: m.blockAdv || "--",
+      damage: m.damage,
+      hitAdv: m.hitAdv || "--",
+      id: m.id,
+      input: m.input,
+      moveType: m.moveType,
+      name: m.name,
+      recovery: m.recovery || "--",
+      startUp: m.startUp || "--",
+    }));
+  }
+
+  getAssistPreviews(): Array<IAssistPreview> {
+    return this.assists.map((a) => ({
+      active: a.active || "--",
+      altRecovery: a.altRecovery,
+      attributes: a.attributes ? a.attributes.split(",") : [],
+      block: a.block,
+      damage: a.damage,
+      id: a.id,
+      meterGain: a.meterGain,
+      name: a.name,
+      recovery: a.recovery,
+      startUp: a.startUp,
+      thc: a.thc,
+      type: a.type,
+    }));
   }
 
   formatJumpDuration(value: number | null) {

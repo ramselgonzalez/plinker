@@ -12,6 +12,26 @@ import StatSectionFooter from "components/StatSectionFooter";
 import Typography from "components/Typography";
 import { ICharacterOverview } from "types";
 
+function getPageTitle(name: string) {
+  return `${name} / Overview / Plinker`;
+}
+
+function getOpenGraphTitle(name: string) {
+  return `${name} | Overview | Plinker`;
+}
+
+function getOpenGraphDescription(name: string) {
+  return `Explore ${name}'s stats, playstyles and best team compositions in Ultimate Marvel vs. Capcom 3.`;
+}
+
+function getOpenGraphImage(cid: string) {
+  return `${process.env.NEXT_PUBLIC_HOST}/images/akuma-fireball.png`;
+}
+
+function getOpenGraphyImageAlt(name: string) {
+  return `A portrait of ${name}`;
+}
+
 interface OverviewProps {
   character: ICharacterOverview;
 }
@@ -21,19 +41,13 @@ const Overview: NextPage<OverviewProps> = (props) => {
   return (
     <>
       <Head>
-        <title>{character.name} / Overview / Plinker</title>
-        <meta property="og:title" content={`${character.name} | Plinker`} />
-        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
-        <meta
-          property="og:description"
-          content={`Learn more about ${character.name}'s stats, playstyle, and team compositions in Ultimate Marvel vs. Capcom 3.`}
-        />
+        <title>{getPageTitle(character.name)}</title>
+        <meta property="og:title" content={getOpenGraphTitle(character.name)} />
+        <meta property="og:description" content={getOpenGraphDescription(character.name)} />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:alt" content={`A portrait of ${character.name}`} />
-        <link
-          type="application/json+oembed"
-          href={`${process.env.NEXT_PUBLIC_HOST}/api/oembed/?format=json&url=${process.env.NEXT_PUBLIC_HOST}/${character.name}/move`}
-        />
+        <meta property="og:image:alt" content={getOpenGraphyImageAlt(character.name)} />
+        <meta property="og:image" content={getOpenGraphImage(character.id)} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Container className="stats-container">
         <div>

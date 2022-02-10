@@ -1,11 +1,24 @@
+export const MoveTypeValues = [
+  "Normal",
+  "Command Normal",
+  "Air Exchange",
+  "Throw",
+  "Snap Back",
+  "Special",
+  "Super",
+] as const;
+export type Archetype = "Rushdown" | "Zoning" | "Hybrid";
+export type AssistType = "Alpha" | "Beta" | "Gamma";
 export type AirDashArchetype = "1-Way" | "2-Way" | "3-Way" | "8-Way" | null;
+export type Block = "Low" | "Mid" | "High" | "Unblockable" | "Throw" | "No Hit";
 export type ChainComboArchetype = "Hunter Series" | "Marvel Series" | "2-Hit Limited" | "3-Hit Alternating";
 export type Difficulty = "Easy" | "Medium" | "Hard";
 export type Franchise = "marvel" | "capcom";
+export type HitType = "Strike" | "Projectile" | "Throw" | "No Hit";
+export type MoveType = typeof MoveTypeValues[number];
 export type RecommendedPosition = "Point" | "Middle" | "Anchor";
 
 export interface RawCharacter {
-  [key: string]: string | number | boolean | null;
   name: string;
   id: string;
   quote: string;
@@ -64,6 +77,47 @@ export interface RawCharacter {
   xf1SpeedBoost: number;
   xf2SpeedBoost: number;
   xf3SpeedBoost: number;
+  moves: Array<RawMove>;
+  assists: Array<RawAssist>;
+}
+
+export interface RawMove {
+  name: string;
+  id: string;
+  characterId: string;
+  damage: string | number;
+  startUp: number | string | null;
+  active: number | string | null;
+  recovery: number | string | null;
+  hitAdv: number | null;
+  blockAdv: number | null;
+  meterGain: number | string;
+  totalHits: number | string;
+  input: string;
+  moveType: MoveType;
+  block: Block;
+  hitType: HitType;
+  attributes: string | null;
+  notes: string | null;
+}
+
+export interface RawAssist {
+  name: string;
+  id: string;
+  characterId: string;
+  damage: string | number;
+  startUp: number | string;
+  active: number | string | null;
+  recovery: number | string;
+  altRecovery: number | string;
+  meterGain: number | string;
+  totalHits: number | string;
+  block: Block;
+  attributes: string | null;
+  notes: string | null;
+  hitType: HitType;
+  thc: string;
+  type: AssistType;
 }
 
 type CharacterPreview = Pick<
@@ -104,4 +158,33 @@ export interface ICharacterOverview {
   xf1: string;
   xf2: string;
   xf3: string;
+}
+
+export interface IMovePreview {
+  damage: string | number;
+  id: string;
+  input: string;
+  name: string;
+  startUp: number | string;
+  active: number | string;
+  recovery: number | string;
+  hitAdv: number | string;
+  blockAdv: number | string;
+  attributes: Array<string>;
+  moveType: MoveType;
+}
+
+export interface IAssistPreview {
+  altRecovery: number | string;
+  attributes: Array<string>;
+  active: number | string;
+  block: Block;
+  damage: number | string;
+  id: string;
+  meterGain: number | string;
+  name: string;
+  recovery: number | string;
+  startUp: number | string;
+  thc: string;
+  type: AssistType;
 }

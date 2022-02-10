@@ -23,11 +23,11 @@ function SecondaryHeader() {
         setIndicatorPosition(0);
       }
 
-      if (getActiveState(route, ["/moves", "/move"])) {
+      if (getActiveState(route, ["/[cid]/moves", "/move"])) {
         setIndicatorPosition(ref.current.clientWidth);
       }
 
-      if (getActiveState(route, ["/assists", "/assist"])) {
+      if (getActiveState(route, ["/[cid]/assists", "/assist"])) {
         setIndicatorPosition(ref.current.clientWidth * 2);
       }
 
@@ -53,10 +53,10 @@ function SecondaryHeader() {
             </Link>
           </li>
           <li className="secondary-header-nav-list-item">
-            <Link href="/moves">
+            <Link href={`/${query.cid}/moves`}>
               <a
                 className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/moves", "/move"]),
+                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/moves", "/move"]),
                 })}
               >
                 Moves
@@ -64,24 +64,13 @@ function SecondaryHeader() {
             </Link>
           </li>
           <li className="secondary-header-nav-list-item">
-            <Link href="/assists">
+            <Link href={`/${query.cid}/assists`}>
               <a
                 className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/assists", "/assist"]),
+                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/assists", "/assist"]),
                 })}
               >
                 Assists
-              </a>
-            </Link>
-          </li>
-          <li className="secondary-header-nav-list-item">
-            <Link href="/trials">
-              <a
-                className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/trials", "/trial"]),
-                })}
-              >
-                Trials
               </a>
             </Link>
           </li>

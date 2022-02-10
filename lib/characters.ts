@@ -31,3 +31,23 @@ export function getCharacterOverview(cid: string) {
   const overview = new Character(character).getCharacterOverview();
   return overview;
 }
+
+export function getCharacterName(cid: string) {
+  const file = getFullCharactersJSON();
+  const [character] = file.filter((c) => c.id === cid);
+  return character.name;
+}
+
+export function getMovePreviews(cid: string) {
+  const file = getFullCharactersJSON();
+  const [character] = file.filter((c) => c.id === cid);
+  const previews = new Character(character).getMovePreviews();
+  return previews;
+}
+
+export function getAssistPreviews(cid: string) {
+  const file = getFullCharactersJSON();
+  const [character] = file.filter((c) => c.id === cid);
+  const previews = new Character(character).getAssistPreviews();
+  return previews;
+}

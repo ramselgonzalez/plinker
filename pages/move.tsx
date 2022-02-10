@@ -24,13 +24,11 @@ const Move: NextPage = () => {
       <Head>
         <title>Gohadoken L / Akuma / Plinker</title>
         <meta property="og:site_name" content="Plinker" />
-        <meta property="og:title" content="Gohadoken L" />
+        <meta property="og:title" content={`Akuma | Gohadoken L`} />
         <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
         <meta
           property="og:description"
-          content="Explore frame data, usage, and details for Akuma's Air Tatsumaki Zankyaku L.
-          
-          Start Up: 4 | Active: 10 | Recovery: 8 | Block Adv: -3 | Hit Adv. +3"
+          content="Explore frame data, usage, and details for Akuma's Air Tatsumaki Zankyaku L in Ultimate Marvel vs. Capcom 3"
         />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />

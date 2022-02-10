@@ -5,6 +5,10 @@
   margin-top: 16px;
 }
 
+.assist-preview-content {
+  grid-template-columns: 3fr 2fr;
+}
+
 @media screen and (max-width: 767px) {
   .assists-container {
     margin: 0;

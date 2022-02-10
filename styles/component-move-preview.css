@@ -1,24 +1,18 @@
-.move-preview-attributes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 8px;
-}
-
 .move-preview-content {
   column-gap: 16px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  margin-top: 8px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .move-preview-data {
   border-bottom: 1px solid rgba(var(--font-color), 0.1);
 }
 
-.move-preview-extra-info {
-  display: grid;
-  grid-auto-rows: min-content;
-  row-gap: 8px;
+.move-preview-header {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  margin-bottom: 12px;
 }
 
 .move-preview-image-container {

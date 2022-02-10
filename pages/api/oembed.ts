@@ -10,7 +10,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const oembed = {
     author_name: name,
     author_url: `https://plinker.vercel.app/${id}/overview`,
-    provider_name: "Plinker",
+    provider_name: "Plinker, an Ultimate Marvel vs. Capcom 3 repository.",
     provider_url: "https://plinker.vercel.app",
   };
 
