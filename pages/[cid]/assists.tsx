@@ -19,7 +19,7 @@ function getPageTitle(name: string) {
 }
 
 function getOpenGraphTitle(name: string) {
-  return `${name} | Assists | Plinker`;
+  return `${name} | Assists`;
 }
 
 function getOpenGraphDescription(name: string) {

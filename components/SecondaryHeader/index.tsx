@@ -23,7 +23,7 @@ function SecondaryHeader() {
         setIndicatorPosition(0);
       }
 
-      if (getActiveState(route, ["/[cid]/moves", "/move"])) {
+      if (getActiveState(route, ["/[cid]/moves", "/[cid]/[mid]"])) {
         setIndicatorPosition(ref.current.clientWidth);
       }
 
@@ -56,7 +56,7 @@ function SecondaryHeader() {
             <Link href={`/${query.cid}/moves`}>
               <a
                 className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/moves", "/move"]),
+                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/moves", "/[cid]/[mid]"]),
                 })}
               >
                 Moves

@@ -94,9 +94,7 @@ const Move: NextPage = () => {
                 <StatSectionHeader>Damage & Meter Values</StatSectionHeader>
                 <DataRow label="Total Damage" value={formatNumber(5000, multiplier)} />
                 <DataRow label="Max Scaled Damage" value={formatNumber(1400, multiplier)} />
-                <DataRow label="Damage Per Hit" value={formatNumber(1000, multiplier)} />
                 <DataRow label="Meter Gain" value={formatNumber(1000, multiplier)} />
-                <DataRow label="Meter Per Hit" value={formatNumber(500, multiplier)} />
                 <form className="stat-section-multiplier-container">
                   <legend className="stat-section-multiplier-legend">
                     <Typography component="p" uppercase variant="subheading1">

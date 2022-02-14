@@ -68,11 +68,11 @@
     width: 100%;
   }
   .secondary-header-nav-list-item {
-    width: 25%;
+    width: calc(100% / 3);
   }
 
   .nav-list-indicator {
-    width: 25%;
+    width: calc(100% / 3);
   }
 
   .secondary-header-offset {

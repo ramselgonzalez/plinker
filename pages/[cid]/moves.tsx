@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Chip from "components/Chip";
@@ -24,7 +25,7 @@ function getPageTitle(name: string) {
 }
 
 function getOpenGraphTitle(name: string) {
-  return `${name} | Moves | Plinker`;
+  return `${name} | Moves`;
 }
 
 function getOpenGraphDescription(name: string) {
@@ -42,6 +43,7 @@ interface MovesProps {
 
 const Moves: NextPage<MovesProps> = (props) => {
   const { name, moves } = props;
+  const { query } = useRouter();
 
   const sections = [];
   for (const type of MoveTypeValues) {
@@ -82,19 +84,19 @@ const Moves: NextPage<MovesProps> = (props) => {
                 {s.label}
               </Typography>
               <List className="moves-sub-list">
-                {s.items.map((n) => (
-                  <ListItem key={n.id}>
-                    <MovePreview id={n.id} to="/move">
+                {s.items.map((m) => (
+                  <ListItem key={m.id}>
+                    <MovePreview id={m.id} to={`/${query.cid}/${m.id}`}>
                       <MovePreviewHeader>
                         <Typography color="gray" variant="h4">
-                          {n.input}
+                          {m.input}
                         </Typography>
                         <Typography className="move-preview-heading" shadow uppercase variant="h2">
-                          {n.name}
+                          {m.name}
                         </Typography>
-                        {n.attributes.length > 0 && (
+                        {m.attributes.length > 0 && (
                           <div className="chips">
-                            {n.attributes.map((a) => (
+                            {m.attributes.map((a) => (
                               <Chip key={a}>{a}</Chip>
                             ))}
                           </div>
@@ -104,12 +106,12 @@ const Moves: NextPage<MovesProps> = (props) => {
                         <MovePreviewImage alt="Akuma performing Gohadoken L" src="/images/moves/akuma-fireball.png" />
                         <StatSection className="move-preview-data">
                           <StatSectionHeader>Frame Data</StatSectionHeader>
-                          <DataRow label="Damage" value={n.damage} />
-                          <DataRow label="Start Up" value={n.startUp} />
-                          <DataRow label="Active" value={n.active} />
-                          <DataRow label="Recovery" value={n.recovery} />
-                          <DataRow label="Block Adv." value={n.blockAdv} />
-                          <DataRow label="Hit Adv." value={n.hitAdv} />
+                          <DataRow label="Damage" value={m.damage} />
+                          <DataRow label="Start Up" value={m.startUp} />
+                          <DataRow label="Active" value={m.active} />
+                          <DataRow label="Recovery" value={m.recovery} />
+                          <DataRow label="Block Adv." value={m.blockAdv} />
+                          <DataRow label="Hit Adv." value={m.hitAdv} />
                         </StatSection>
                       </MovePreviewContent>
                     </MovePreview>

@@ -2,8 +2,45 @@
   column-gap: 16px;
   display: grid;
   grid-template-columns: 2fr 1fr;
+  grid-auto-rows: min-content;
   margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.move-nav-container {
+  grid-column: span 2;
+  height: 50px;
+  margin-bottom: 12px;
+}
+
+.move-nav {
+  position: relative;
+}
+
+.move-link-container {
+  border-radius: 8px;
+  padding: 12px;
+  transition: all 250ms ease-out;
+}
+
+.move-link-container:hover {
+  background-color: rgba(255, 255, 255, 0.025);
+}
+
+.previous-move {
+  left: -12px;
+  position: absolute;
+  text-align: start;
+}
+
+.next-move {
+  right: -12px;
+  position: absolute;
+  text-align: end;
+}
+
+.next-move-heading {
+  margin-bottom: 4px;
 }
 
 .move-col-1 {
@@ -45,5 +82,9 @@
 
   .move-subheader {
     font-size: 24px;
+  }
+
+  .move-nav-container {
+    display: none;
   }
 }

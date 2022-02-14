@@ -82,23 +82,24 @@ export interface RawCharacter {
 }
 
 export interface RawMove {
-  name: string;
-  id: string;
-  characterId: string;
-  damage: string | number;
-  startUp: number | string | null;
-  active: number | string | null;
-  recovery: number | string | null;
-  hitAdv: number | null;
-  blockAdv: number | null;
-  meterGain: number | string;
-  totalHits: number | string;
-  input: string;
-  moveType: MoveType;
-  block: Block;
-  hitType: HitType;
   attributes: string | null;
+  active: number | string | null;
+  block: Block;
+  characterId: string;
+  blockAdv: number | null;
+  damage: number | string;
+  damagePerHit: number | string | null;
+  hitAdv: number | null;
+  hits: number | string;
+  hitType: HitType;
+  id: string;
+  input: string;
+  meterGain: number;
+  moveType: MoveType;
+  name: string;
   notes: string | null;
+  recovery: number | string | null;
+  startUp: number | string | null;
 }
 
 export interface RawAssist {
@@ -187,4 +188,27 @@ export interface IAssistPreview {
   startUp: number | string;
   thc: string;
   type: AssistType;
+}
+
+export interface IMoveDetail {
+  active: number | string;
+  attributes: Array<string>;
+  block: Block;
+  blockAdv: number | string;
+  damage: number;
+  damagePerHit: string | number | null;
+  hitAdv: number | string;
+  hits: number;
+  hitType: HitType;
+  id: string;
+  input: string;
+  isLevelThree: boolean;
+  maxHits: number | null;
+  maxDamage: number | null;
+  meterGain: number;
+  moveType: MoveType;
+  name: string;
+  notes: Array<string>;
+  recovery: number | string;
+  startUp: number | string;
 }
