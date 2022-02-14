@@ -33,12 +33,16 @@ function getOpenGraphTitle(name: string, move: string) {
   return `${name} | ${move}`;
 }
 
+function getOpenGraphImageAlt(name: string, move: string) {
+  return `${name} performing ${move}`;
+}
+
 function getOpenGraphDescription(name: string, move: string) {
   return `Frame data and details for ${name}'s ${move}.`;
 }
 
-function getOpenGraphImage(cid: string) {
-  return `${process.env.NEXT_PUBLIC_HOST}/images/akuma-fireball.png`;
+function getOpenGraphImage(cid: string, mid: string) {
+  return `${process.env.NEXT_PUBLIC_HOST}/images/${cid}/moves/${mid}.jpg`;
 }
 
 interface IMoveLink {
@@ -59,6 +63,7 @@ const Move: NextPage<MoveProps> = (props) => {
   const { characterId, characterName, scaling, move, nextMove, previousMove } = props;
   const {
     name,
+    id,
     input,
     attributes,
     notes,
@@ -83,10 +88,11 @@ const Move: NextPage<MoveProps> = (props) => {
       <Head>
         <title>{getPageTitle(characterName, "Gohadoken L")}</title>
         <meta property="og:title" content={getOpenGraphTitle(characterName, "Gohadoken L")} />
-        <meta property="og:description" content={getOpenGraphDescription(characterName, "Gohadoken L")} />
+        <meta property="og:description" content={getOpenGraphDescription(characterName, name)} />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
-        <meta property="og:image" content={getOpenGraphImage(characterId)} />
+        <meta property="og:image:alt" content={getOpenGraphImageAlt(characterName, name)} />
+        <meta property="og:image" content={getOpenGraphImage(characterId, id)} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Container className="move-container">
         <aside className="move-nav-container">
@@ -130,7 +136,7 @@ const Move: NextPage<MoveProps> = (props) => {
             <Image
               alt="Akuma performing Gohadoken L"
               layout="fill"
-              src="/images/moves/akuma-fireball.png"
+              src={`/images/${characterId}/moves/${move.id}.jpg`}
               objectFit="cover"
             />
           </div>

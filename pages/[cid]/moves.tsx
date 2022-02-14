@@ -62,6 +62,7 @@ const Moves: NextPage<MovesProps> = (props) => {
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performing Gohadoken L" />
         <meta property="og:image" content={getOpenGraphImage(name)} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Container className="moves-container">
         <aside className="movelist-tree">
@@ -103,7 +104,10 @@ const Moves: NextPage<MovesProps> = (props) => {
                         )}
                       </MovePreviewHeader>
                       <MovePreviewContent>
-                        <MovePreviewImage alt="Akuma performing Gohadoken L" src="/images/moves/akuma-fireball.png" />
+                        <MovePreviewImage
+                          alt="Akuma performing Gohadoken L"
+                          src={`/images/${query.cid}/moves/${m.id}.jpg`}
+                        />
                         <StatSection className="move-preview-data">
                           <StatSectionHeader>Frame Data</StatSectionHeader>
                           <DataRow label="Damage" value={m.damage} />
