@@ -8,3 +8,4 @@ export function getArrayFromString(value: string | null) {
 export * from "./character";
 export * from "./move";
 export * from "./assist";
+export * from "./damage";

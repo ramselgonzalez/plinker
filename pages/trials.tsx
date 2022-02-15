@@ -6,8 +6,8 @@ import MovePreviewHeader from "components/MovePreviewHeader";
 import MovePreviewContent from "components/MovePreviewContent";
 import MovePreviewImage from "components/MovePreviewImage";
 import StatSection from "components/StatSection";
-import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
+
 const Trials: NextPage = () => {
   return (
     <Container className="trials-container">

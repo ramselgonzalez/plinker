@@ -2,16 +2,36 @@ import { useState, useEffect, useRef } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import routes from "routes";
+import Typography from "components/Typography";
 
-function getActiveState(currentRoute: string, routes: Array<string>) {
-  return routes.includes(currentRoute);
+function getNavItems(currentRoute: string) {
+  return [
+    {
+      path: routes.overview,
+      label: "Overview",
+      active: [routes.overview()].includes(currentRoute),
+    },
+    {
+      path: routes.moves,
+      label: "Moves",
+      active: [routes.moves(), routes.move()].includes(currentRoute),
+    },
+    {
+      path: routes.assists,
+      label: "Assists",
+      active: [routes.assists(), routes.assist()].includes(currentRoute),
+    },
+  ];
 }
 
 function SecondaryHeader() {
   const { route, query } = useRouter();
+  const cid = query.cid as string;
   const ref = useRef<HTMLLIElement | null>(null);
   const [mounted, setMounted] = useState(false);
   const [indicatorPosition, setIndicatorPosition] = useState(0);
+  const navItems = getNavItems(route);
 
   useEffect(() => {
     setMounted(true);
@@ -19,20 +39,16 @@ function SecondaryHeader() {
 
   useEffect(() => {
     if (ref.current) {
-      if (getActiveState(route, ["/[cid]/overview"])) {
+      if (navItems.find((i) => i.label === "Overview")?.active) {
         setIndicatorPosition(0);
       }
 
-      if (getActiveState(route, ["/[cid]/moves", "/[cid]/[mid]"])) {
+      if (navItems.find((i) => i.label === "Moves")?.active) {
         setIndicatorPosition(ref.current.clientWidth);
       }
 
-      if (getActiveState(route, ["/[cid]/assists", "/assist"])) {
+      if (navItems.find((i) => i.label === "Assists")?.active) {
         setIndicatorPosition(ref.current.clientWidth * 2);
-      }
-
-      if (getActiveState(route, ["/trials", "/trial"])) {
-        setIndicatorPosition(ref.current.clientWidth * 3);
       }
     }
   }, [ref, route]);
@@ -41,39 +57,21 @@ function SecondaryHeader() {
     <div className="secondary-header">
       <nav className="secondary-header-nav">
         <ul className="secondary-header-nav-list">
-          <li ref={ref} className="secondary-header-nav-list-item">
-            <Link href={`/${query.cid}/overview`}>
-              <a
-                className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/overview"]),
-                })}
-              >
-                Overview
-              </a>
-            </Link>
-          </li>
-          <li className="secondary-header-nav-list-item">
-            <Link href={`/${query.cid}/moves`}>
-              <a
-                className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/moves", "/[cid]/[mid]"]),
-                })}
-              >
-                Moves
-              </a>
-            </Link>
-          </li>
-          <li className="secondary-header-nav-list-item">
-            <Link href={`/${query.cid}/assists`}>
-              <a
-                className={cn("typography-subheading1 uppercase", {
-                  ["secondary-header-nav-list-item-selected"]: getActiveState(route, ["/[cid]/assists", "/assist"]),
-                })}
-              >
-                Assists
-              </a>
-            </Link>
-          </li>
+          {navItems.map((item, i) => (
+            <li key={item.label} ref={i === 0 ? ref : undefined} className="secondary-header-nav-list-item">
+              <Link href={item.path(cid)}>
+                <a
+                  className={cn({
+                    ["secondary-header-nav-list-item-selected"]: item.active,
+                  })}
+                >
+                  <Typography color={item.active ? "blue" : "white"} uppercase variant="subheading1">
+                    {item.label}
+                  </Typography>
+                </a>
+              </Link>
+            </li>
+          ))}
         </ul>
         {mounted && <span style={{ left: indicatorPosition }} className="nav-list-indicator" />}
       </nav>

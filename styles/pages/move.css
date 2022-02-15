@@ -11,9 +11,6 @@
   grid-column: span 2;
   height: 50px;
   margin-bottom: 12px;
-}
-
-.move-nav {
   position: relative;
 }
 
@@ -44,9 +41,9 @@
 }
 
 .move-col-1 {
-  gap: 8px 0;
-  display: grid;
+  gap: 12px 0;
   grid-auto-rows: min-content;
+  display: grid;
 }
 
 .move-image-container {
@@ -68,8 +65,9 @@
 @media screen and (max-width: 767px) {
   .move-container {
     grid-template-columns: 1fr;
-    row-gap: 16px;
+    row-gap: 12px;
     padding: 0 16px;
+    margin-bottom: 64px;
   }
 
   .move-image-container {

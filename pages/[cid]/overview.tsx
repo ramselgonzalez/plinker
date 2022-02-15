@@ -86,21 +86,41 @@ const Overview: NextPage<OverviewProps> = (props) => {
         <div>
           <StatSection divider>
             <StatSectionHeader>Ground Dashes</StatSectionHeader>
-            {character.gdf && <DataRow label="Forward" value={character.gdf} />}
-            {character.gdb && <DataRow label="Back" value={character.gdb} />}
-            <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>
+            {character.id === "arthur" ? (
+              <div className="no-air-dash-container">
+                <Typography uppercase variant="subheading1">
+                  {character.name} does not have a ground dash.
+                </Typography>
+              </div>
+            ) : (
+              <>
+                {character.gdf && <DataRow label="Forward" value={character.gdf} />}
+                {character.gdb && <DataRow label="Back" value={character.gdb} />}
+                <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>
+              </>
+            )}
           </StatSection>
           <StatSection divider>
             <StatSectionHeader>Air Dashes</StatSectionHeader>
-            {character.adf && <DataRow label="Forward" value={character.adf} />}
-            {character.addf && <DataRow label="Down Forward" value={character.addf} />}
-            {character.add && <DataRow label="Down" value={character.add} />}
-            {character.addb && <DataRow label="Down Back" value={character.addb} />}
-            {character.adb && <DataRow label="Back" value={character.adb} />}
-            {character.adub && <DataRow label="Up Back" value={character.adub} />}
-            {character.adu && <DataRow label="Up" value={character.adu} />}
-            {character.aduf && <DataRow label="Up Forward" value={character.aduf} />}
-            <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>
+            {character.airDashArchetype === "None" ? (
+              <div className="no-air-dash-container">
+                <Typography uppercase variant="subheading1">
+                  {character.name} does not have an air dash.
+                </Typography>
+              </div>
+            ) : (
+              <>
+                {character.adf && <DataRow label="Forward" value={character.adf} />}
+                {character.addf && <DataRow label="Down Forward" value={character.addf} />}
+                {character.add && <DataRow label="Down" value={character.add} />}
+                {character.addb && <DataRow label="Down Back" value={character.addb} />}
+                {character.adb && <DataRow label="Back" value={character.adb} />}
+                {character.adub && <DataRow label="Up Back" value={character.adub} />}
+                {character.adu && <DataRow label="Up" value={character.adu} />}
+                {character.aduf && <DataRow label="Up Forward" value={character.aduf} />}
+                <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>{" "}
+              </>
+            )}
           </StatSection>
           <StatSection divider>
             <StatSectionHeader>Jump Durations</StatSectionHeader>

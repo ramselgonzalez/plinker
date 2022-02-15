@@ -43,6 +43,11 @@
   background-color: rgba(255, 255, 255, 0.025);
 }
 
+.move-preview-scroll-offset {
+  margin-top: -112px;
+  padding-top: 112px;
+}
+
 @media screen and (max-width: 767px) {
   .move-preview-container {
     border-bottom: 1px solid var(--border-color);

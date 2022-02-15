@@ -6,6 +6,7 @@ import { capsizeStyles } from "components/Typography";
 import "styles/reset.css";
 import "styles/global.css";
 // component styles
+import "styles/components/bottom-navigation.css";
 import "styles/components/character-select.css";
 import "styles/components/chip.css";
 import "styles/components/container.css";

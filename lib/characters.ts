@@ -74,10 +74,23 @@ export function getMove(cid: string, mid: string) {
   const file = getFullCharactersJSON();
   const [character] = file.filter((c) => c.id === cid);
   const moveIndex = character.moves.findIndex((m) => m.id === mid);
-  const move = helpers.getMoveDetail(character.moves[moveIndex]);
+  const formattedMove = helpers.getMoveDetail(character.moves[moveIndex]);
+
+  const previousMoveIndex = moveIndex - 1 < 0 ? character.moves.length - 1 : moveIndex - 1;
+  const nextMoveIndex = moveIndex + 1 === character.moves.length ? 0 : moveIndex + 1;
+
   return {
-    move,
-    previousMove: character.moves[moveIndex - 1] || null,
-    nextMove: character.moves[moveIndex + 1] || null,
+    cname: character.name,
+    minDmgScalingNormal: character.minDmgScalingLight,
+    minDmgScalingSpecial: character.minDmgScalingSpecial,
+    minDmgScalingSuper: character.minDmgScalingSuper,
+    move: formattedMove,
+    moveIndex: moveIndex,
+    nextMove: character.moves[nextMoveIndex],
+    previousMove: character.moves[previousMoveIndex],
+    totalMoves: character.moves.length,
+    xf1: character.xf1DamageBoost,
+    xf2: character.xf2DamageBoost,
+    xf3: character.xf3DamageBoost,
   };
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getScaling } from "helpers/move";
+import { getScaling } from "helpers";
 
 type MultiplerState = {
   scaling: number;

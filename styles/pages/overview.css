@@ -37,6 +37,14 @@
   margin-bottom: 32px;
 }
 
+.no-air-dash-container {
+  align-items: center;
+  display: flex;
+  height: 80px;
+  justify-content: center;
+  text-align: center;
+}
+
 @media (min-width: 480px) and (max-width: 1200px) {
   .model-display {
     max-height: calc(100vh - var(--navbar-height) - 48px - 32px);

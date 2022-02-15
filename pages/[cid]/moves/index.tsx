@@ -19,6 +19,7 @@ import StatSectionHeader from "components/StatSectionHeader";
 import ListItem from "components/ListItem";
 import { getCharacterIds, getCharacterName, getMovePreviews } from "lib/characters";
 import { MoveTypeValues, IMovePreview } from "types";
+import routes from "routes";
 
 function getPageTitle(name: string) {
   return `${name} / Moves / Plinker`;
@@ -44,7 +45,7 @@ interface MovesProps {
 const Moves: NextPage<MovesProps> = (props) => {
   const { name, moves } = props;
   const { query } = useRouter();
-
+  const cid = query.cid as string;
   const sections = [];
   for (const type of MoveTypeValues) {
     const items = moves.filter((m) => m.moveType === type);
@@ -86,8 +87,8 @@ const Moves: NextPage<MovesProps> = (props) => {
               </Typography>
               <List className="moves-sub-list">
                 {s.items.map((m) => (
-                  <ListItem key={m.id}>
-                    <MovePreview id={m.id} to={`/${query.cid}/${m.id}`}>
+                  <ListItem id={m.id} className="move-preview-scroll-offset" key={m.id}>
+                    <MovePreview to={routes.move(cid, m.id)}>
                       <MovePreviewHeader>
                         <Typography color="gray" variant="h4">
                           {m.input}
@@ -104,10 +105,7 @@ const Moves: NextPage<MovesProps> = (props) => {
                         )}
                       </MovePreviewHeader>
                       <MovePreviewContent>
-                        <MovePreviewImage
-                          alt="Akuma performing Gohadoken L"
-                          src={`/images/${query.cid}/moves/${m.id}.jpg`}
-                        />
+                        <MovePreviewImage alt="Akuma performing Gohadoken L" src={`/images/${cid}/moves/${m.id}.jpg`} />
                         <StatSection className="move-preview-data">
                           <StatSectionHeader>Frame Data</StatSectionHeader>
                           <DataRow label="Damage" value={m.damage} />

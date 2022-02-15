@@ -4,7 +4,7 @@ interface ListProps extends React.ComponentPropsWithRef<"ul"> {}
 function List(props: ListProps) {
   const { children, className, ...rest } = props;
   return (
-    <ul className={cn(className)} {...rest}>
+    <ul className={className} {...rest}>
       {children}
     </ul>
   );
