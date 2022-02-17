@@ -1,67 +1,75 @@
-import { IMovePreview, IMoveDetail, RawMove } from "types";
-import { getArrayFromString, getDamagePreview } from "helpers";
+import { IMovePreview, IMoveDetail, RawMove, MoveType } from "types";
+import { getDmgRange, getDamagePreview, getHits } from "helpers";
 
 export function getMovePreview(move: RawMove): IMovePreview {
   return {
     active: move.active || "--",
-    attributes: getArrayFromString(move.attributes),
-    blockAdv: move.blockAdv || "--",
-    damage: getDamagePreview(move.damage),
-    hitAdv: move.hitAdv || "--",
+    advBlock: move.advBlock || "--",
+    advHit: move.advHit || "--",
+    attributes: move.attributes,
+    dmg: getDamagePreview(move.dmg),
     id: move.id,
     input: move.input,
-    moveType: move.moveType,
     name: move.name,
     recovery: move.recovery || "--",
     startUp: move.startUp || "--",
+    type: move.type,
   };
 }
 
 export function getMoveDetail(move: RawMove): IMoveDetail {
-  let dmg;
-  let maxDmg;
-  if (typeof move.damage === "string") {
-    const [minStr, maxStr] = move.damage.split(" - ");
-    dmg = parseInt(minStr);
-    maxDmg = parseInt(maxStr);
-  } else {
-    dmg = move.damage;
-    maxDmg = null;
-  }
-
-  let hits;
-  let maxHits;
-  if (typeof move.hits === "string") {
-    const [minStr, maxStr] = move.hits.split(" - ");
-    hits = parseInt(minStr);
-    maxHits = parseInt(maxStr);
-  } else {
-    hits = move.hits;
-    maxHits = null;
-  }
-
-  const attributes = getArrayFromString(move.attributes);
-
   return {
-    active: move.active || "--",
-    attributes,
-    block: move.block,
-    blockAdv: move.blockAdv || "--",
-    damagePerHit: move.damagePerHit,
-    damage: dmg,
-    hits,
-    hitAdv: move.hitAdv || "--",
-    hitType: move.hitType,
     id: move.id,
+    active: move.active || "--",
+    attributes: move.attributes,
+    block: move.block,
+    advBlock: move.advHit || "--",
+    advHit: move.advHit || "--",
+    dmg: getDmgRange(move.dmg)[0],
+    dmgMax: getDmgRange(move.dmg)[1],
+    dmgPerHit: move.dmgPerHit,
+    hit: move.hit,
+    hits: getHits(move.hits)[0],
+    hitsMax: getHits(move.hits)[1],
+    imageUrl: "",
+    imageAlt: "",
     input: move.input,
-    isLevelThree: attributes.includes("Level 3 Super"),
-    maxHits,
-    maxDamage: maxDmg,
+    isLevelThree: move.attributes.includes("Level 3 Super"),
     meterGain: move.meterGain,
-    moveType: move.moveType,
     name: move.name,
-    notes: getArrayFromString(move.notes),
+    notes: move.notes,
     recovery: move.recovery || "--",
     startUp: move.startUp || "--",
+    type: move.type,
   };
+}
+
+export function getPreviousMoveIndex(moveIndex: number, totalMoves: number) {
+  return moveIndex - 1 < 0 ? totalMoves - 1 : moveIndex - 1;
+}
+
+export function getNextMoveIndex(moveIndex: number, totalMoves: number) {
+  return moveIndex + 1 === totalMoves ? 0 : moveIndex + 1;
+}
+
+export function getMinDmgScaling(moveType: MoveType, normalFactor: number, specialFactor: number, superFactor: number) {
+  const UNSCALED_FACTOR = 1;
+  switch (moveType) {
+    case "Normal":
+      return normalFactor;
+    case "Command Normal":
+      return normalFactor;
+    case "Throw":
+      return UNSCALED_FACTOR;
+    case "Air Exchange":
+      return specialFactor;
+    case "Snap Back":
+      return normalFactor;
+    case "Special":
+      return specialFactor;
+    case "Super":
+      return superFactor;
+    default:
+      return UNSCALED_FACTOR;
+  }
 }

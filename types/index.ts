@@ -25,12 +25,11 @@ export interface RawCharacter {
   health: number;
   selectOrder: number;
   franchise: Franchise;
+  archetype: string;
   difficulty: Difficulty;
   recommendedPosition: RecommendedPosition;
   chainComboArchetype: ChainComboArchetype;
-  minDmgScalingLight: number;
-  minDmgScalingMedium: number;
-  minDmgScalingHeavy: number;
+  minDmgScalingNormal: number;
   minDmgScalingSpecial: number;
   minDmgScalingSuper: number;
   groundDashForwardDuration: number | null;
@@ -41,13 +40,11 @@ export interface RawCharacter {
   normalJumpDuration: number;
   superJumpDuration: number;
   hasDoubleJump: boolean;
-  doubleJumpCount: number;
   doubleJumpDuration: number | null;
   tripleJumpDuration: number | null;
   jumpNotes: string | null;
   flightDuration: number | null;
   hasAirDash: boolean;
-  airDashCount: number;
   airDashArchetype: AirDashArchetype;
   airDashNormalJumpThreshold: number | null;
   airDashSuperJumpThreshold: number | null;
@@ -82,48 +79,30 @@ export interface RawCharacter {
 }
 
 export interface RawMove {
-  attributes: string | null;
-  active: number | string | null;
-  block: Block;
-  characterId: string;
-  blockAdv: number | null;
-  damage: number | string;
-  damagePerHit: number | string | null;
-  hitAdv: number | null;
-  hits: number | string;
-  hitType: HitType;
   id: string;
+  characterId: string;
+  active: number | string | null;
+  advBlock: number | null;
+  advHit: number | null;
+  attributes: Array<string>;
+  block: Block;
+  dmg: number | string;
+  dmgPerHit: number | string | null;
+  hit: HitType;
+  hits: number | string;
   input: string;
   meterGain: number;
-  moveType: MoveType;
+  order: number;
+  type: MoveType;
   name: string;
-  notes: string | null;
+  notes: Array<string>;
   recovery: number | string | null;
   startUp: number | string | null;
 }
 
-export interface RawAssist {
-  name: string;
-  id: string;
-  characterId: string;
-  damage: string | number;
-  startUp: number | string;
-  active: number | string | null;
-  recovery: number | string;
-  altRecovery: number | string;
-  meterGain: number | string;
-  totalHits: number | string;
-  block: Block;
-  attributes: string | null;
-  notes: string | null;
-  hitType: HitType;
-  thc: string;
-  type: AssistType;
-}
-
 type CharacterPreview = Pick<
   RawCharacter,
-  "difficulty" | "franchise" | "id" | "name" | "recommendedPosition" | "selectOrder"
+  "difficulty" | "franchise" | "id" | "name" | "recommendedPosition" | "selectOrder" | "archetype"
 >;
 
 export interface ICharacterPreview extends CharacterPreview {
@@ -139,15 +118,14 @@ export interface ICharacterOverview {
   adub: string | null;
   adu: string | null;
   aduf: string | null;
+  archetype: string;
   airDashArchetype: NonNullable<AirDashArchetype> | "None";
   chainComboArchetype: ChainComboArchetype;
   health: string;
   gdf: string | null;
   gdb: string | null;
   id: string;
-  minDmgScalingLight: string;
-  minDmgScalingMedium: string;
-  minDmgScalingHeavy: string;
+  minDmgScalingNormal: string;
   minDmgScalingSpecial: string;
   minDmgScalingSuper: string;
   name: string;
@@ -159,56 +137,105 @@ export interface ICharacterOverview {
   xf1: string;
   xf2: string;
   xf3: string;
+  crossoverActive: number;
+  crossoverRecovery: number;
+  crossoverBlockAdv: number;
 }
 
 export interface IMovePreview {
-  damage: string | number;
   id: string;
+  attributes: Array<string>;
+  advBlock: number | string;
+  advHit: number | string;
+  dmg: string | number;
   input: string;
   name: string;
   startUp: number | string;
   active: number | string;
   recovery: number | string;
-  hitAdv: number | string;
-  blockAdv: number | string;
-  attributes: Array<string>;
-  moveType: MoveType;
-}
-
-export interface IAssistPreview {
-  altRecovery: number | string;
-  attributes: Array<string>;
-  active: number | string;
-  block: Block;
-  damage: number | string;
-  id: string;
-  meterGain: number | string;
-  name: string;
-  recovery: number | string;
-  startUp: number | string;
-  thc: string;
-  type: AssistType;
+  type: MoveType;
 }
 
 export interface IMoveDetail {
-  active: number | string;
-  attributes: Array<string>;
-  block: Block;
-  blockAdv: number | string;
-  damage: number;
-  damagePerHit: string | number | null;
-  hitAdv: number | string;
-  hits: number;
-  hitType: HitType;
   id: string;
+  active: number | string;
+  advBlock: number | string;
+  advHit: number | string;
+  block: Block;
+  dmg: number;
+  dmgMax: number | null;
+  dmgPerHit: string | number | null;
+  hit: HitType;
+  hits: number;
+  hitsMax: number | null;
+  imageUrl: string;
+  imageAlt: string;
   input: string;
   isLevelThree: boolean;
-  maxHits: number | null;
-  maxDamage: number | null;
   meterGain: number;
-  moveType: MoveType;
   name: string;
-  notes: Array<string>;
   recovery: number | string;
   startUp: number | string;
+  type: MoveType;
+  attributes: Array<string>;
+  notes: Array<string>;
+}
+
+export interface RawAssist {
+  name: string;
+  id: string;
+  characterId: string;
+  hit: HitType;
+  type: AssistType;
+  thc: string;
+  dmg: number;
+  dmgPerHit: string | number | null;
+  active: string | number | null;
+  recovery: number;
+  recoveryAlt: number;
+  meterGain: number;
+  hits: string | number;
+  block: Block;
+  startUp: number;
+  attributes: Array<string>;
+  notes: Array<string>;
+}
+
+export interface IAssistPreview {
+  id: string;
+  active: string | number | null;
+  block: Block;
+  dmg: string;
+  meterGain: string;
+  name: string;
+  recovery: number;
+  recoveryAlt: number;
+  startUp: number;
+  thc: string;
+  type: AssistType;
+  attributes: Array<string>;
+}
+
+export interface IAssistDetail {
+  id: string;
+  active: number | string;
+  block: Block;
+  dmg: number;
+  dmgPerHit: string | number | null;
+  hit: HitType;
+  hits: number;
+  meterGain: number;
+  name: string;
+  recovery: number | string;
+  recoveryAlt: number;
+  startUp: number | string;
+  thc: string;
+  type: AssistType;
+  attributes: Array<string>;
+  notes: Array<string>;
+}
+
+export interface IMoveLink {
+  name: string;
+  id: string;
 }

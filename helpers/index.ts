@@ -1,8 +1,12 @@
-export function getArrayFromString(value: string | null) {
-  if (!value) {
-    return [];
+export function getHits(hits: number | string) {
+  if (typeof hits === "number") {
+    return [hits, null] as const;
   }
-  return value.split(", ");
+
+  const [hitsMinStr, hitsMaxStr] = hits.split(" - ");
+  const hitsMinNum = parseInt(hitsMinStr);
+  const hitsMaxNum = parseInt(hitsMaxStr);
+  return [hitsMinNum, hitsMaxNum];
 }
 
 export * from "./character";

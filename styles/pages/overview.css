@@ -26,9 +26,10 @@
   border-radius: 16px;
   height: 100%;
   position: relative;
+  height: 700px;
 }
 
-.stats-container {
+.overview-container {
   column-gap: 64px;
   display: grid;
   grid-auto-rows: min-content;
@@ -45,14 +46,14 @@
   text-align: center;
 }
 
-@media (min-width: 480px) and (max-width: 1200px) {
+@media screen and (min-width: 480px) and (max-width: 1200px) {
   .model-display {
     max-height: calc(100vh - var(--navbar-height) - 48px - 32px);
     position: sticky;
     top: calc(56px + 48px + 16px);
   }
 
-  .stats-container {
+  .overview-container {
     column-gap: 32px;
     grid-template-columns: 1fr 1fr;
     margin: 0;
@@ -65,7 +66,7 @@
     display: none;
   }
 
-  .stats-container {
+  .overview-container {
     grid-template-columns: 1fr;
     margin: 0;
     padding: 16px;

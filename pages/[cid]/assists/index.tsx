@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Chip from "components/Chip";
@@ -11,8 +12,9 @@ import MovePreviewImage from "components/MovePreviewImage";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
-import { getCharacterIds, getCharacterName, getAssistPreviews } from "lib/characters";
+import { getCharacterIds, getAssistPreviews } from "lib/characters";
 import { IAssistPreview } from "types";
+import routes from "routes";
 
 function getPageTitle(name: string) {
   return `${name} / Assists / Plinker`;
@@ -31,25 +33,28 @@ function getOpenGraphImage(cid: string) {
 }
 
 interface AssistsProps {
-  name: string;
+  cname: string;
   assists: Array<IAssistPreview>;
 }
 
 const Assists: NextPage<AssistsProps> = (props) => {
-  const { name, assists } = props;
+  const { cname, assists } = props;
+  const router = useRouter();
+  const cid = router.query.cid as string;
   return (
     <>
       <Head>
-        <title>{getPageTitle(name)}</title>
-        <meta property="og:title" content={getOpenGraphTitle(name)} />
-        <meta property="og:description" content={getOpenGraphDescription(name)} />
+        <title>{getPageTitle(cname)}</title>
+        <meta property="og:title" content={getOpenGraphTitle(cname)} />
+        <meta property="og:description" content={getOpenGraphDescription(cname)} />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
-        <meta property="og:image" content={getOpenGraphImage(name)} />
+        <meta property="og:image" content={getOpenGraphImage(cname)} />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Container className="assists-container">
         {assists.map((a) => (
-          <MovePreview key={a.type} to="/assist">
+          <MovePreview key={a.type} to={routes.assist(cid, a.id)}>
             <MovePreviewHeader>
               <Typography color="gray" uppercase variant="subheading1">
                 {a.type}
@@ -65,18 +70,21 @@ const Assists: NextPage<AssistsProps> = (props) => {
                 </div>
               )}
             </MovePreviewHeader>
-            <MovePreviewContent className="assist-preview-content">
-              <MovePreviewImage alt="Dr. Doom perform Hidden Missiles" src="/images/moves/akuma-fireball.png" />
+            <MovePreviewContent>
+              <MovePreviewImage
+                alt={`${cname} being called in as an assist performing ${a.name}`}
+                src={`/images/${cid}/assists/${a.id}.jpg`}
+              />
               <StatSection className="move-preview-data">
                 <StatSectionHeader>Frame Data</StatSectionHeader>
-                <DataRow label="Block" value={a.block} />
                 <DataRow label="Start Up" value={a.startUp} />
-                <DataRow label="Active" value={a.active} />
+                <DataRow label="Active" value={a.active || "--"} />
                 <DataRow label="Recovery" value={a.recovery} />
-                <DataRow label="Alt. Assist Recovery" value={a.altRecovery} />
-                <DataRow label="Damage" value={a.damage} />
+                <DataRow label="Alt. Assist Recovery" value={a.recoveryAlt} />
+                <DataRow label="Damage" value={a.dmg} />
                 <DataRow label="Meter Gain" value={a.meterGain} />
                 <DataRow label="Team Hyper" value={a.thc} />
+                <DataRow label="Block" value={a.block} />
               </StatSection>
             </MovePreviewContent>
           </MovePreview>
@@ -98,14 +106,13 @@ interface IParams extends ParsedUrlQuery {
   cid: string;
 }
 
-export const getStaticProps: GetStaticProps = (context) => {
+export const getStaticProps: GetStaticProps<AssistsProps> = (context) => {
   const { cid } = context.params as IParams;
-  const assists = getAssistPreviews(cid);
-  const name = getCharacterName(cid);
+  const data = getAssistPreviews(cid);
   return {
     props: {
-      name,
-      assists,
+      cname: data.cname,
+      assists: data.assists,
     },
   };
 };

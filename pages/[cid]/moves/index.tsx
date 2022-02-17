@@ -17,7 +17,7 @@ import TreeItem from "components/TreeItem";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
 import ListItem from "components/ListItem";
-import { getCharacterIds, getCharacterName, getMovePreviews } from "lib/characters";
+import { getCharacterIds, getMovePreviews } from "lib/characters";
 import { MoveTypeValues, IMovePreview } from "types";
 import routes from "routes";
 
@@ -38,17 +38,17 @@ function getOpenGraphImage(cid: string) {
 }
 
 interface MovesProps {
-  name: string;
+  cname: string;
   moves: Array<IMovePreview>;
 }
 
 const Moves: NextPage<MovesProps> = (props) => {
-  const { name, moves } = props;
+  const { cname, moves } = props;
   const { query } = useRouter();
   const cid = query.cid as string;
   const sections = [];
   for (const type of MoveTypeValues) {
-    const items = moves.filter((m) => m.moveType === type);
+    const items = moves.filter((m) => m.type === type);
     if (items.length > 0) {
       sections.push({ items, label: type + "s" });
     }
@@ -57,12 +57,12 @@ const Moves: NextPage<MovesProps> = (props) => {
   return (
     <>
       <Head>
-        <title>{getPageTitle(name)}</title>
-        <meta property="og:title" content={getOpenGraphTitle(name)} />
-        <meta property="og:description" content={getOpenGraphDescription(name)} />
+        <title>{getPageTitle(cname)}</title>
+        <meta property="og:title" content={getOpenGraphTitle(cname)} />
+        <meta property="og:description" content={getOpenGraphDescription(cname)} />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performing Gohadoken L" />
-        <meta property="og:image" content={getOpenGraphImage(name)} />
+        <meta property="og:image" content={getOpenGraphImage(cname)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <Container className="moves-container">
@@ -108,12 +108,12 @@ const Moves: NextPage<MovesProps> = (props) => {
                         <MovePreviewImage alt="Akuma performing Gohadoken L" src={`/images/${cid}/moves/${m.id}.jpg`} />
                         <StatSection className="move-preview-data">
                           <StatSectionHeader>Frame Data</StatSectionHeader>
-                          <DataRow label="Damage" value={m.damage} />
+                          <DataRow label="Damage" value={m.dmg} />
                           <DataRow label="Start Up" value={m.startUp} />
                           <DataRow label="Active" value={m.active} />
                           <DataRow label="Recovery" value={m.recovery} />
-                          <DataRow label="Block Adv." value={m.blockAdv} />
-                          <DataRow label="Hit Adv." value={m.hitAdv} />
+                          <DataRow label="Block Adv." value={m.advBlock} />
+                          <DataRow label="Hit Adv." value={m.advHit} />
                         </StatSection>
                       </MovePreviewContent>
                     </MovePreview>
@@ -143,10 +143,9 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps = (context) => {
   const { cid } = context.params as IParams;
   const moves = getMovePreviews(cid);
-  const name = getCharacterName(cid);
   return {
     props: {
-      name,
+      cname: "Akuma",
       moves,
     },
   };

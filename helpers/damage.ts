@@ -6,6 +6,17 @@ function getRoundedDamageValue(damage: number) {
   return Math.floor(damage / 100) * 100;
 }
 
+export function getDmgRange(dmg: string | number) {
+  if (typeof dmg === "number") {
+    return [dmg, null] as const;
+  }
+
+  const [dmgMinStr, dmgMaxStr] = dmg.split(" - ");
+  const dmgMinNum = parseInt(dmgMinStr);
+  const dmgMaxNum = parseInt(dmgMaxStr);
+  return [dmgMinNum, dmgMaxNum];
+}
+
 export function getScaling(scaling: number, isXfactorActive: boolean, isLevelThree?: boolean) {
   if (isLevelThree) return 1;
   if (isXfactorActive) return 0.35;
@@ -29,14 +40,14 @@ export function getMeterGain(meterGain: number, mulitplier: number) {
   return rounded.toLocaleString();
 }
 
-export function getDamage(damage: number, multiplier: number) {
+export function getDmg(damage: number, multiplier: number) {
   const modifiedDmg = applyDamageModifiers(damage, 1, multiplier);
   return getRoundedDamageValue(modifiedDmg).toLocaleString();
 }
 
-export function getDamagePerHit(damage: string | number, mulitplier: number) {
+export function getDmgPerHit(damage: string | number, mulitplier: number) {
   if (typeof damage === "number") {
-    return getDamage(damage, mulitplier);
+    return getDmg(damage, mulitplier);
   }
 
   const hits = damage.split(", ");
@@ -44,10 +55,10 @@ export function getDamagePerHit(damage: string | number, mulitplier: number) {
   for (const hit of hits) {
     if (hit.includes("*")) {
       const [dmgStr, repeatStr] = hit.split(" * ");
-      const dmg = getDamage(parseInt(dmgStr), mulitplier);
+      const dmg = getDmg(parseInt(dmgStr), mulitplier);
       final.push(dmg + " * " + repeatStr);
     } else {
-      final.push(getDamage(parseInt(hit), mulitplier));
+      final.push(getDmg(parseInt(hit), mulitplier));
     }
   }
   return final.join(", ");

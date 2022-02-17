@@ -1,16 +1,38 @@
-import { IAssistPreview, RawAssist } from "types";
+import { getDmg, getHits, getDamagePreview, getMeterGain } from "helpers";
+import { IAssistDetail, IAssistPreview, RawAssist } from "types";
 
 export function getAssistPreview(a: RawAssist): IAssistPreview {
   return {
+    id: a.id,
     active: a.active || "--",
-    altRecovery: a.altRecovery,
-    attributes: a.attributes ? a.attributes.split(",") : [],
+    attributes: a.attributes,
     block: a.block,
-    damage: a.damage,
+    dmg: getDamagePreview(a.dmg),
+    meterGain: getMeterGain(a.meterGain, 0),
+    name: a.name,
+    recovery: a.recovery,
+    recoveryAlt: a.recoveryAlt,
+    startUp: a.startUp,
+    thc: a.thc,
+    type: a.type,
+  };
+}
+
+export function getAssistDetail(a: RawAssist): IAssistDetail {
+  return {
+    active: a.active || "--",
+    attributes: a.attributes,
+    block: a.block,
+    dmg: a.dmg,
+    dmgPerHit: a.dmgPerHit || null,
+    hit: a.hit,
+    hits: getHits(a.hits)[0],
     id: a.id,
     meterGain: a.meterGain,
     name: a.name,
+    notes: a.notes,
     recovery: a.recovery,
+    recoveryAlt: a.recoveryAlt,
     startUp: a.startUp,
     thc: a.thc,
     type: a.type,

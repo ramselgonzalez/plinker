@@ -49,7 +49,7 @@ const Overview: NextPage<OverviewProps> = (props) => {
         <meta property="og:image" content={getOpenGraphImage(character.id)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="stats-container">
+      <Container className="overview-container">
         <div>
           <section className="overview-header">
             <Typography gutter shadow uppercase variant="h1">
@@ -61,15 +61,13 @@ const Overview: NextPage<OverviewProps> = (props) => {
             <DataRow label="Health" value={character.health} />
             <DataRow label="Magic Series" value={character.chainComboArchetype} />
             <DataRow label="Air Dash" value={character.airDashArchetype} />
-            <DataRow label="Archetype" value="Rushdown" />
+            <DataRow label="Archetype" value={character.archetype} />
             <DataRow label="Recommended Position" value={character.recommendedPosition} />
           </StatSection>
           <StatSection divider>
             <StatSectionHeader>Min. Damage Scaling</StatSectionHeader>
             <div className="damage-scaling-grid">
-              <DataItem label="Light" value={character.minDmgScalingLight} />
-              <DataItem label="Medium" value={character.minDmgScalingMedium} />
-              <DataItem label="Heavy" value={character.minDmgScalingHeavy} />
+              <DataItem label="Normal" value={character.minDmgScalingNormal} />
               <DataItem label="Special" value={character.minDmgScalingSpecial} />
               <DataItem label="Super" value={character.minDmgScalingSuper} />
             </div>
@@ -84,6 +82,12 @@ const Overview: NextPage<OverviewProps> = (props) => {
         </div>
         <section className="model-display" />
         <div>
+          <StatSection divider>
+            <StatSectionHeader>Crossover Attack</StatSectionHeader>
+            <DataRow label="Active" value={character.crossoverActive} />
+            <DataRow label="Recovery" value={character.crossoverRecovery} />
+            <DataRow label="Block Adv." value={character.crossoverBlockAdv} />
+          </StatSection>
           <StatSection divider>
             <StatSectionHeader>Ground Dashes</StatSectionHeader>
             {character.id === "arthur" ? (

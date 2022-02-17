@@ -2,10 +2,11 @@ import { AirDashArchetype, ICharacterOverview, ICharacterPreview, RawCharacter }
 
 export function getCharacterPreview(c: RawCharacter): ICharacterPreview {
   return {
+    id: c.id,
+    archetype: c.archetype,
     difficulty: c.difficulty,
     franchise: c.franchise,
     health: getHealth(c.health),
-    id: c.id,
     name: c.name,
     recommendedPosition: c.recommendedPosition,
     selectOrder: c.selectOrder,
@@ -22,15 +23,14 @@ export function getCharacterOverview(c: RawCharacter): ICharacterOverview {
     adub: getDashLabel(c.airDashUpBackDuration, c.airDashUpBackCancelThreshold),
     adu: getDashLabel(c.airDashUpDuration, c.airDashUpCancelThreshold),
     aduf: getDashLabel(c.airDashUpForwardDuration, c.airDashUpForwardCancelThreshold),
+    archetype: c.archetype,
     airDashArchetype: getAirDashLabel(c.airDashArchetype),
     chainComboArchetype: c.chainComboArchetype,
     health: getHealth(c.health),
     gdf: getDashLabel(c.groundDashForwardDuration, c.groundDashForwardCancelThreshold),
     gdb: getDashLabel(c.groundDashBackDuration, c.groundDashBackCancelThreshold),
     id: c.id,
-    minDmgScalingLight: getPercentage(c.minDmgScalingLight),
-    minDmgScalingMedium: getPercentage(c.minDmgScalingMedium),
-    minDmgScalingHeavy: getPercentage(c.minDmgScalingHeavy),
+    minDmgScalingNormal: getPercentage(c.minDmgScalingNormal),
     minDmgScalingSpecial: getPercentage(c.minDmgScalingSpecial),
     minDmgScalingSuper: getPercentage(c.minDmgScalingSuper),
     name: c.name,
@@ -42,6 +42,9 @@ export function getCharacterOverview(c: RawCharacter): ICharacterOverview {
     xf1: getXfactorLabel(c.xf1SpeedBoost, c.xf1DamageBoost),
     xf2: getXfactorLabel(c.xf2SpeedBoost, c.xf2DamageBoost),
     xf3: getXfactorLabel(c.xf3SpeedBoost, c.xf3DamageBoost),
+    crossoverActive: c.crossoverActive,
+    crossoverRecovery: c.crossoverRecovery,
+    crossoverBlockAdv: c.crossoverBlockAdv,
   };
 }
 
