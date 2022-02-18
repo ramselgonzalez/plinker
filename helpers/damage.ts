@@ -1,8 +1,8 @@
-function applyDamageModifiers(damage: number, scaling: number = 1, xf: number = 0) {
+function applyDmgMod(damage: number, scaling: number = 1, xf: number = 0) {
   return damage * scaling * (1 + xf);
 }
 
-function getRoundedDamageValue(damage: number) {
+function getRoundedDmg(damage: number) {
   return Math.floor(damage / 100) * 100;
 }
 
@@ -23,7 +23,7 @@ export function getScaling(scaling: number, isXfactorActive: boolean, isLevelThr
   return scaling;
 }
 
-export function getDamagePreview(damage: string | number) {
+export function getDmgPreview(damage: string | number) {
   if (typeof damage === "number") {
     return damage.toLocaleString();
   }
@@ -41,8 +41,8 @@ export function getMeterGain(meterGain: number, mulitplier: number) {
 }
 
 export function getDmg(damage: number, multiplier: number) {
-  const modifiedDmg = applyDamageModifiers(damage, 1, multiplier);
-  return getRoundedDamageValue(modifiedDmg).toLocaleString();
+  const modifiedDmg = applyDmgMod(damage, 1, multiplier);
+  return getRoundedDmg(modifiedDmg).toLocaleString();
 }
 
 export function getDmgPerHit(damage: string | number, mulitplier: number) {
@@ -65,20 +65,20 @@ export function getDmgPerHit(damage: string | number, mulitplier: number) {
 }
 
 export function getScaledSingleHit(damage: number, scaling: number, multiplier: number) {
-  const modifiedDamage = applyDamageModifiers(damage, scaling, multiplier);
-  return getRoundedDamageValue(modifiedDamage).toLocaleString();
+  const modifiedDamage = applyDmgMod(damage, scaling, multiplier);
+  return getRoundedDmg(modifiedDamage).toLocaleString();
 }
 
 export function getScaledMultiHit(damage: string | number, hits: number, scaling: number, multiplier: number) {
   if (typeof damage === "number") {
-    const modifiedDamage = applyDamageModifiers(damage, scaling, multiplier);
-    return getRoundedDamageValue(modifiedDamage * hits).toLocaleString();
+    const modifiedDamage = applyDmgMod(damage, scaling, multiplier);
+    return getRoundedDmg(modifiedDamage * hits).toLocaleString();
   }
 
   const multiHitDamageArray = getMultiHitDamageArray(damage);
   const scaledHits = multiHitDamageArray.map((hit) => {
-    const modifiedDamage = applyDamageModifiers(hit, scaling, multiplier);
-    return getRoundedDamageValue(modifiedDamage);
+    const modifiedDamage = applyDmgMod(hit, scaling, multiplier);
+    return getRoundedDmg(modifiedDamage);
   });
 
   return scaledHits.reduce((totalDmg, currentHit) => totalDmg + currentHit, 0).toLocaleString();
@@ -105,8 +105,8 @@ export function getMultiHitDamageArray(hits: string) {
 
 export function getScaledPerHit(damage: string | number, scaling: number, multiplier: number) {
   if (typeof damage === "number") {
-    const modifiedDamage = applyDamageModifiers(damage, scaling, multiplier);
-    return getRoundedDamageValue(modifiedDamage).toLocaleString();
+    const modifiedDamage = applyDmgMod(damage, scaling, multiplier);
+    return getRoundedDmg(modifiedDamage).toLocaleString();
   }
 
   const hits = damage.split(", ");
@@ -115,13 +115,13 @@ export function getScaledPerHit(damage: string | number, scaling: number, multip
     if (hit.includes("*")) {
       const [dmgStr, repeatStr] = hit.split(" * ");
       const dmg = parseInt(dmgStr);
-      const scaledDmg = applyDamageModifiers(dmg, scaling, multiplier);
-      const rounded = getRoundedDamageValue(scaledDmg);
+      const scaledDmg = applyDmgMod(dmg, scaling, multiplier);
+      const rounded = getRoundedDmg(scaledDmg);
       final.push(rounded.toLocaleString() + " * " + repeatStr);
     } else {
       const dmg = parseInt(hit);
-      const scaledDmg = applyDamageModifiers(dmg, scaling, multiplier);
-      const rounded = getRoundedDamageValue(scaledDmg);
+      const scaledDmg = applyDmgMod(dmg, scaling, multiplier);
+      const rounded = getRoundedDmg(scaledDmg);
       final.push(rounded.toLocaleString());
     }
   }

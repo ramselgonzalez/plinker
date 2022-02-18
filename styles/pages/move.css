@@ -4,7 +4,7 @@
   grid-template-columns: 2fr 1fr;
   grid-auto-rows: min-content;
   margin-top: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 64px;
 }
 
 .move-nav-container {
@@ -51,7 +51,7 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   display: flex;
-  height: 500px;
+  height: 450px;
   justify-content: center;
   overflow: hidden;
   position: relative;
@@ -75,11 +75,11 @@
   }
 
   .move-header {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .move-subheader {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .move-nav-container {

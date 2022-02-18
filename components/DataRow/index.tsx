@@ -12,7 +12,7 @@ function DataRow(props: DataRowProps) {
       <Typography color="gray" component="h4" uppercase variant="subheading1">
         {label}
       </Typography>
-      <Typography component="p" shadow uppercase variant="h4">
+      <Typography className="row-value" component="p" shadow uppercase variant="h4">
         {value}
       </Typography>
     </div>

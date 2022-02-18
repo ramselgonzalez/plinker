@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import { AppProps } from "next/app";
 import Layout from "components/Layout";
@@ -11,6 +12,7 @@ import "styles/components/character-select.css";
 import "styles/components/chip.css";
 import "styles/components/container.css";
 import "styles/components/data-item.css";
+import "styles/components/drawer.css";
 import "styles/components/layout.css";
 import "styles/components/list-item.css";
 import "styles/components/move-preview.css";

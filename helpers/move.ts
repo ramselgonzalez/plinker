@@ -1,5 +1,5 @@
 import { IMovePreview, IMoveDetail, RawMove, MoveType } from "types";
-import { getDmgRange, getDamagePreview, getHits } from "helpers";
+import { getDmgRange, getDmgPreview, getHits } from "helpers";
 
 export function getMovePreview(move: RawMove): IMovePreview {
   return {
@@ -7,7 +7,7 @@ export function getMovePreview(move: RawMove): IMovePreview {
     advBlock: move.advBlock || "--",
     advHit: move.advHit || "--",
     attributes: move.attributes,
-    dmg: getDamagePreview(move.dmg),
+    dmg: getDmgPreview(move.dmg),
     id: move.id,
     input: move.input,
     name: move.name,

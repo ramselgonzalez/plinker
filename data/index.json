@@ -1108,7 +1108,7 @@
         "block": "Throw",
         "dmg": "465000 - 510000",
         "dmgPerHit": 31000,
-        "startUp": 50,
+        "startUp": "5+0",
         "active": 40,
         "recovery": 4,
         "advBlock": null,

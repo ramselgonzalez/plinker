@@ -59,13 +59,14 @@ function Typography(props: TypographyProps) {
 
   return (
     <Component
-      className={cn(className, {
+      className={cn({
         ["bottom-gutter"]: gutter,
         [`capsize-${variant}`]: variant,
         [`color-${color}`]: color,
         [`text-shadow-${color}`]: shadow,
         [`typography-${variant}`]: variant,
         ["uppercase"]: uppercase,
+        [`${className}`]: className,
       })}
       {...rest}
     >

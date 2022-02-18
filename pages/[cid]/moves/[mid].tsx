@@ -16,7 +16,7 @@ import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
 import { getMoveIds, getMove } from "lib/characters";
-import { IMoveDetail, IMoveLink } from "types";
+import { IMoveDetail, IMoveLink, RawMove } from "types";
 import { getDmg, getScaledSingleHit, getScaledMultiHit, getDmgPerHit, getMeterGain, getScaledPerHit } from "helpers";
 import routes from "routes";
 import BottomNavigation from "components/BottomNavigation";
@@ -44,8 +44,8 @@ function getOpenGraphImage(cid: string, mid: string) {
 interface MoveProps {
   cname: string;
   move: IMoveDetail;
-  previousMove: IMoveLink;
-  nextMove: IMoveLink;
+  previousMove: RawMove;
+  nextMove: RawMove;
   moveIndex: number;
   minDmgScaling: number;
   totalMoves: number;
@@ -147,6 +147,7 @@ const Move: NextPage<MoveProps> = (props) => {
             <DataRow label="Hit Adv." value={move.advHit} />
           </StatSection>
           <DamageProvider
+            key={move.id}
             dmg={move.dmg}
             dmgMax={move.dmgMax}
             dmgPerHit={move.dmgPerHit}
@@ -159,9 +160,9 @@ const Move: NextPage<MoveProps> = (props) => {
                 <StatSectionHeader>Damage &amp; Meter Values</StatSectionHeader>
                 <DataRow label="Damage" value={dmg} />
                 {dmgMax && <DataRow label="Max Damage" value={dmgMax} />}
-                {dmgPerHit && <DataRow label="Damage Per Hit" value={dmgPerHit} />}
+                {dmgPerHit && <DataRow label="Damage / Hit" value={dmgPerHit} />}
                 {dmgScaled && <DataRow label="Scaled Damage" value={dmgScaled} />}
-                {dmgPerHitScaled && <DataRow label="Scaled Damage Per Hit" value={dmgPerHitScaled} />}
+                {dmgPerHitScaled && <DataRow label="Scaled Damage / Hit" value={dmgPerHitScaled} />}
                 <DataRow label="Meter Gain" value={getMeterGain(move.meterGain, multiplier)} />
                 <form className="stat-section-multiplier-container">
                   <legend className="stat-section-multiplier-legend">
