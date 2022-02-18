@@ -51,7 +51,7 @@ function SecondaryHeader() {
         setIndicatorPosition(ref.current.clientWidth * 2);
       }
     }
-  }, [ref, route]);
+  }, [ref, route, navItems]);
 
   return (
     <div className="secondary-header">

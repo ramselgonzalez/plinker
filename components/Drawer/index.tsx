@@ -42,7 +42,7 @@ function Drawer(props: DrawerProps) {
             </div>
             <List>
               {data.map((c) => (
-                <ListItem>
+                <ListItem key={c.id}>
                   <Link href={`/${c.id}/overview`}>
                     <a className="drawer-link" onClick={closeDrawer}>
                       <Typography>{c.name}</Typography>
