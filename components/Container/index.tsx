@@ -1,13 +1,14 @@
 import { motion } from "framer-motion";
-import { useRouter } from "next/router";
-import routes from "routes";
 
-interface ContainerProps extends React.ComponentPropsWithoutRef<"main"> {}
+interface ContainerProps extends React.ComponentPropsWithoutRef<"main"> {
+  custom?: number;
+  handleSwipe?: (swipe: number) => void;
+}
 
 const variants = {
   enter: (direction: number) => {
     return {
-      x: "100%",
+      x: direction > 0 ? "100%" : "-100%",
     };
   },
   center: {
@@ -17,7 +18,7 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: "-100%",
+      x: direction < 0 ? "100%" : "-100%",
     };
   },
 };
@@ -36,9 +37,7 @@ const swipePower = (offset: number, velocity: number) => {
 };
 
 function Container(props: ContainerProps) {
-  const { children, className } = props;
-  const router = useRouter();
-  const cid = router.query.cid as string;
+  const { children, className, custom, handleSwipe } = props;
 
   let classes = "page-container";
   if (className) {
@@ -46,25 +45,31 @@ function Container(props: ContainerProps) {
   }
 
   return (
-    <motion.main
-      initial="enter"
-      animate="center"
-      exit="exit"
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0}
-      transition={spring}
-      onDragEnd={(e, { offset, velocity }) => {
-        const swipe = swipePower(offset.x, velocity.x);
-        if (swipe < -swipeConfidenceThreshold) {
-          router.push(routes.moves(cid));
-        }
-      }}
-      variants={variants}
-      className={classes}
-    >
-      {children}
-    </motion.main>
+    <div style={{ position: "relative" }}>
+      <motion.main
+        custom={custom}
+        initial="enter"
+        animate="center"
+        exit="exit"
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.1}
+        transition={spring}
+        onDragEnd={(e, { offset, velocity }) => {
+          const swipe = swipePower(offset.x, velocity.x);
+          if (swipe < -swipeConfidenceThreshold) {
+            handleSwipe?.(1);
+          } else if (swipe > swipeConfidenceThreshold) {
+            handleSwipe?.(-1);
+          }
+        }}
+        variants={variants}
+        className={classes}
+        style={{ position: "absolute" }}
+      >
+        {children}
+      </motion.main>
+    </div>
   );
 }
 

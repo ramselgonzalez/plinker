@@ -38,7 +38,7 @@ interface AssistsProps {
 }
 
 const Assists: NextPage<AssistsProps> = (props) => {
-  const { cname, assists } = props;
+  const { cname, assists, ...rest } = props;
   const router = useRouter();
   const cid = router.query.cid as string;
   return (
@@ -52,7 +52,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
         <meta property="og:image" content={getOpenGraphImage(cname)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="assists-container">
+      <Container className="assists-container" {...rest}>
         {assists.map((a) => (
           <MovePreview key={a.type} to={routes.assist(cid, a.id)}>
             <MovePreviewHeader>

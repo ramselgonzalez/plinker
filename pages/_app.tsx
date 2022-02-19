@@ -35,7 +35,31 @@ import "styles/pages/overview.css";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
+  const [direction, setPage] = useState(0);
   const router = useRouter();
+  const cid = router.query.cid as string;
+
+  function handleSwipe(newDirection: number) {
+    if (newDirection > 0) {
+      if (router.route === routes.overview()) {
+        router.push(routes.moves(cid));
+      }
+      if (router.route === routes.moves()) {
+        router.push(routes.assists(cid));
+      }
+    }
+
+    if (newDirection < 0) {
+      if (router.route === routes.moves()) {
+        router.push(routes.overview(cid));
+      }
+      if (router.route === routes.assists()) {
+        router.push(routes.moves(cid));
+      }
+    }
+    setPage(newDirection);
+  }
+
   return (
     <>
       <Head>
@@ -51,8 +75,8 @@ export default function MyApp(props: AppProps) {
         </style>
       </Head>
       <Layout>
-        <AnimatePresence>
-          <Component key={router.pathname} {...pageProps} />
+        <AnimatePresence custom={direction}>
+          <Component key={router.pathname} {...pageProps} handleSwipe={handleSwipe} custom={direction} />
         </AnimatePresence>
       </Layout>
     </>

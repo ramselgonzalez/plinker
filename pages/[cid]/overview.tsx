@@ -39,39 +39,8 @@ interface OverviewProps {
   character: ICharacterOverview;
 }
 
-const variants = {
-  enter: (direction: number) => {
-    return {
-      x: "100%",
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-  },
-  exit: (direction: number) => {
-    return {
-      zIndex: 0,
-      x: "-100%",
-    };
-  },
-};
-
-const spring = {
-  type: "spring",
-  delay: 0,
-  stiffness: 500,
-  damping: 60,
-  mass: 1,
-};
-
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
-};
-
 const Overview: NextPage<OverviewProps> = (props) => {
-  const { character } = props;
+  const { character, ...rest } = props;
   const router = useRouter();
   const cid = router.query.cid as string;
   return (
@@ -85,7 +54,7 @@ const Overview: NextPage<OverviewProps> = (props) => {
         <meta property="og:image" content={getOpenGraphImage(character.id)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="overview-container">
+      <Container className="overview-container" {...rest}>
         <div>
           <section className="overview-header">
             <Typography gutter shadow uppercase variant="h1">

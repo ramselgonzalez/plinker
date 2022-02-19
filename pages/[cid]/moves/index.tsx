@@ -44,7 +44,7 @@ interface MovesProps {
 }
 
 const Moves: NextPage<MovesProps> = (props) => {
-  const { cname, moves } = props;
+  const { cname, moves, ...rest } = props;
   const router = useRouter();
   const cid = router.query.cid as string;
   const sections = [];
@@ -66,7 +66,7 @@ const Moves: NextPage<MovesProps> = (props) => {
         <meta property="og:image" content={getOpenGraphImage(cname)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="moves-container">
+      <Container className="moves-container" {...rest}>
         <aside className="movelist-tree">
           <Tree>
             {sections.map((s) => (
