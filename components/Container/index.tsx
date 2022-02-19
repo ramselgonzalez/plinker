@@ -46,14 +46,13 @@ function Container(props: ContainerProps) {
   }
 
   return (
-    <motion.div
-      style={{ overflowX: "hidden" }}
+    <motion.main
       initial="enter"
       animate="center"
       exit="exit"
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={1}
+      dragElastic={0}
       transition={spring}
       onDragEnd={(e, { offset, velocity }) => {
         const swipe = swipePower(offset.x, velocity.x);
@@ -65,7 +64,7 @@ function Container(props: ContainerProps) {
       className={classes}
     >
       {children}
-    </motion.div>
+    </motion.main>
   );
 }
 
