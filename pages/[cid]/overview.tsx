@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
+import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/router";
 import Head from "next/head";
 import { getCharacterIds, getCharacterOverview } from "lib/characters";
 import { ParsedUrlQuery } from "querystring";
-import React from "react";
 import Container from "components/Container";
 import DataItem from "components/DataItem";
 import DataRow from "components/DataRow";
@@ -11,6 +13,7 @@ import StatSection from "components/StatSection";
 import StatSectionFooter from "components/StatSectionFooter";
 import Typography from "components/Typography";
 import { ICharacterOverview } from "types";
+import routes from "routes";
 
 function getPageTitle(name: string) {
   return `${name} / Overview / Plinker`;
@@ -36,8 +39,41 @@ interface OverviewProps {
   character: ICharacterOverview;
 }
 
+const variants = {
+  enter: (direction: number) => {
+    return {
+      x: "100%",
+    };
+  },
+  center: {
+    zIndex: 1,
+    x: 0,
+  },
+  exit: (direction: number) => {
+    return {
+      zIndex: 0,
+      x: "-100%",
+    };
+  },
+};
+
+const spring = {
+  type: "spring",
+  delay: 0,
+  stiffness: 500,
+  damping: 60,
+  mass: 1,
+};
+
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
+
 const Overview: NextPage<OverviewProps> = (props) => {
   const { character } = props;
+  const router = useRouter();
+  const cid = router.query.cid as string;
   return (
     <>
       <Head>

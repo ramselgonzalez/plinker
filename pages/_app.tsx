@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Head from "next/head";
 import { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import Layout from "components/Layout";
 import { capsizeStyles } from "components/Typography";
+import routes from "routes";
 // global styles
 import "styles/reset.css";
 import "styles/global.css";
@@ -32,6 +35,7 @@ import "styles/pages/overview.css";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -47,7 +51,9 @@ export default function MyApp(props: AppProps) {
         </style>
       </Head>
       <Layout>
-        <Component {...pageProps} />
+        <AnimatePresence>
+          <Component key={router.pathname} {...pageProps} />
+        </AnimatePresence>
       </Layout>
     </>
   );

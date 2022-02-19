@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
@@ -44,8 +45,8 @@ interface MovesProps {
 
 const Moves: NextPage<MovesProps> = (props) => {
   const { cname, moves } = props;
-  const { query } = useRouter();
-  const cid = query.cid as string;
+  const router = useRouter();
+  const cid = router.query.cid as string;
   const sections = [];
   for (const type of MoveTypeValues) {
     const items = moves.filter((m) => m.type === type);
