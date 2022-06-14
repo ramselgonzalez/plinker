@@ -1,4 +1,4 @@
-import { getDmg, getHits, getDmgPreview, getMeterGain } from "helpers";
+import { getHits, getDmgPreview, getMeterGain } from "helpers";
 import { IAssistDetail, IAssistPreview, RawAssist } from "types";
 
 export function getAssistPreview(a: RawAssist): IAssistPreview {

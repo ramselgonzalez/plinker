@@ -7,8 +7,8 @@ interface StatSectionFooterProps {
 function StatSectionFooter(props: StatSectionFooterProps) {
   const { children } = props;
   return (
-    <div className="stat-section-footer">
-      <Typography className="uppercase" color="gray" variant="subheading1">
+    <div className="flex justify-end py-3">
+      <Typography className="uppercase" color="gray" component="p" variant="h4">
         {children}
       </Typography>
     </div>

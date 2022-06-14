@@ -239,3 +239,5 @@ export interface IMoveLink {
   name: string;
   id: string;
 }
+
+export type InputColor = "blue" | "yellow" | "red" | "green" | "purple" | undefined;

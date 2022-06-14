@@ -1,10 +1,8 @@
 import { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
-import Container from "components/Container";
-import CharacterSelect from "components/CharacterSelect";
+import Page from "components/Page";
+import Typography from "components/Typography";
 import CharacterSelectItem from "components/CharacterSelectItem";
-import CharacterSelectPreview from "components/CharacterSelectPreview";
-import CharacterSelectSection from "components/CharacterSelectSection";
 import { getCharacterPreviews } from "lib/characters";
 import { ICharacterPreview } from "types";
 
@@ -16,7 +14,7 @@ const Home: NextPage<HomeProps> = (props) => {
   const { characters } = props;
 
   const orderSort = characters.slice().sort((a, b) => a.selectOrder - b.selectOrder);
-  const nameSort = characters.slice().sort((a, b) => {
+  const mobileSort = characters.slice().sort((a, b) => {
     if (a.name > b.name) return 1;
     if (a.name < b.name) return -1;
     return 0;
@@ -35,47 +33,57 @@ const Home: NextPage<HomeProps> = (props) => {
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
       </Head>
-      <Container className="home-container">
-        <CharacterSelect className="character-select-desktop">
-          <CharacterSelectSection className="character-select-column-left" variant="column">
-            {capcom.map((c) => (
+      <Page className="mt-4 px-4 pt-34 md:mt-0">
+        {/* desktop view */}
+        <div className="hidden w-full md:flex">
+          <div className="grid-rows-7 grid grid-cols-4 gap-x-3 gap-y-3">
+            {capcom.map((c, i) => (
               <CharacterSelectItem
+                className={i === 1 ? "col-start-1" : ""}
                 alt={c.name}
                 imageUrl={`/images/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}
-                variant="capcom"
               />
             ))}
-          </CharacterSelectSection>
-          <CharacterSelectPreview />
-          <CharacterSelectSection className="character-select-column-right" variant="column">
-            {marvel.map((c) => (
+          </div>
+          <div className="flex h-full flex-1 flex-col items-center justify-center">
+            <Typography className="uppercase" variant="h1">
+              Plinker
+            </Typography>
+            <Typography className="uppercase" color="gray" component="p" variant="h4">
+              Select a character
+            </Typography>
+          </div>
+          <div className="grid-rows-7 grid grid-cols-4 gap-x-3 gap-y-3">
+            {marvel.map((c, i) => (
               <CharacterSelectItem
+                className={i === 0 ? "col-start-4" : ""}
                 alt={c.name}
                 imageUrl={`/images/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}
-                variant="marvel"
               />
             ))}
-          </CharacterSelectSection>
-        </CharacterSelect>
-        <CharacterSelect className="character-select-mobile">
-          <CharacterSelectPreview />
-          <CharacterSelectSection variant="carousel">
-            {nameSort.map((c) => (
-              <CharacterSelectItem
-                alt={c.name}
-                imageUrl={`/images/thumbnails_${c.id}.webp`}
-                key={c.id}
-                value={c}
-                variant={c.franchise}
-              />
+          </div>
+        </div>
+        {/* mobile view */}
+        <div className="w-full overflow-y-hidden lg:hidden">
+          <div className="flex h-full flex-col items-center justify-center">
+            <Typography className="uppercase" variant="h1">
+              Plinker
+            </Typography>
+            <Typography className="uppercase" color="gray" variant="subheading1">
+              Select a character
+            </Typography>
+          </div>
+          <div className="fixed bottom-0 left-0 grid w-full grid-cols-50 gap-x-3 overflow-x-scroll border-t border-t-neutral-500 bg-neutral-900 p-4">
+            {mobileSort.map((c) => (
+              <CharacterSelectItem alt={c.name} imageUrl={`/images/thumbnails_${c.id}.webp`} key={c.id} value={c} />
             ))}
-          </CharacterSelectSection>
-        </CharacterSelect>
-      </Container>
+          </div>
+        </div>
+      </Page>
     </>
   );
 };

@@ -1,24 +1,18 @@
-import Link from "next/link";
 import cn from "classnames";
 
-interface MovePreviewProps extends React.ComponentPropsWithoutRef<"a"> {
-  to: string;
-}
+interface MovePreviewProps extends React.ComponentPropsWithoutRef<"div"> {}
 
 function MovePreview(props: MovePreviewProps) {
-  const { children, className, to, ...rest } = props;
+  const { children, className, ...rest } = props;
   return (
-    <Link href={to}>
-      <a
-        className={cn("move-preview-container", {
-          [`${className}`]: className,
-        })}
-        draggable="false"
-        {...rest}
-      >
-        {children}
-      </a>
-    </Link>
+    <div
+      className={cn("flex bg-neutral-800 md:rounded-2xl", {
+        [`${className}`]: className,
+      })}
+      {...rest}
+    >
+      {children}
+    </div>
   );
 }
 

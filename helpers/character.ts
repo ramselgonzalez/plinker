@@ -79,5 +79,5 @@ function getJumpDuration(value: number | null) {
 }
 
 function getPercentage(value: number) {
-  return value.toLocaleString("en", { style: "percent" });
+  return value.toLocaleString("en", { style: "percent", maximumFractionDigits: 1 });
 }

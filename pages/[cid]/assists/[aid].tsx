@@ -3,22 +3,19 @@ import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import Chip from "components/Chip";
-import Container from "components/Container";
-import DataRow from "components/DataRow";
-import ListItem from "components/ListItem";
-import DamageProvider from "components/MultiplierProvider";
-import RadioButton from "components/RadioButton";
-import RadioButtonGroup from "components/RadioButtonGroup";
+import Page from "components/Page";
+import Row from "components/Row";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
-import List from "components/List";
+import Tree from "components/Tree";
+import TreeSection from "components/TreeSection";
 import { getAssistIds, getAssist } from "lib/characters";
-import { IAssistDetail, IMoveLink } from "types";
-import { getDmg, getDmgPerHit, getScaledMultiHit, getScaledSingleHit, getScaledPerHit, getMeterGain } from "helpers";
+import { IAssistDetail, IAssistPreview, IMoveLink } from "types";
+import { getMeterGain } from "helpers";
 import routes from "routes";
+import TreeItem from "components/TreeItem";
 
 function getPageTitle(name: string, assist: string) {
   return `${name} / ${assist} / Plinker`;
@@ -43,6 +40,7 @@ function getOpenGraphImage(cid: string, mid: string) {
 interface AssistProps {
   cname: string;
   assist: IAssistDetail;
+  assists: Array<IAssistPreview>;
   previousAssist: IMoveLink;
   nextAssist: IMoveLink;
   assistIndex: number;
@@ -53,7 +51,7 @@ interface AssistProps {
 }
 
 const Assist: NextPage<AssistProps> = (props) => {
-  const { assist, cname, minDmgScaling, nextAssist, previousAssist, xf1, xf2, xf3 } = props;
+  const { assist, assists, cname, minDmgScaling, xf1, xf2, xf3 } = props;
   const router = useRouter();
   const cid = router.query.cid as string;
   return (
@@ -62,121 +60,179 @@ const Assist: NextPage<AssistProps> = (props) => {
         <title>{getPageTitle(cname, assist.name)}</title>
         <meta property="og:title" content={getOpenGraphTitle(cname, assist.name)} />
         <meta property="og:description" content={getOpenGraphDescription(cname, assist.name)} />
-        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
+        <meta property="og:image" content={getOpenGraphImage(cid, assist.id)} />
         <meta property="og:image:type" content="image/png" />
         <meta property="og:image:alt" content={getOpenGraphImageAlt(cname, assist.name)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="move-container">
-        <nav className="move-nav-container">
-          <Link href={routes.assist(cid, previousAssist.id)}>
-            <a className="move-link-container previous-move">
-              <Typography className="next-move-heading" color="gray" uppercase variant="subheading1">
-                Previous Assist
-              </Typography>
-              <Typography uppercase variant="h4">
-                {previousAssist.name}
-              </Typography>
-            </a>
-          </Link>
-          <Link href={routes.assist(cid, nextAssist.id)}>
-            <a className="move-link-container next-move">
-              <Typography className="next-move-heading" color="gray" uppercase variant="subheading1">
-                Next Assist
-              </Typography>
-              <Typography uppercase variant="h4">
-                {nextAssist.name}
-              </Typography>
-            </a>
-          </Link>
-        </nav>
-        <div className="move-col-1">
-          <header className="move-header">
-            <Typography color="blue" gutter shadow uppercase variant="h3">
-              {assist.type}
+      <Page>
+        <Tree>
+          <TreeSection label="Assists">
+            {assists.map((a) => (
+              <TreeItem key={a.id} to={routes.assist(cid, a.id)}>
+                {a.name}
+              </TreeItem>
+            ))}
+          </TreeSection>
+        </Tree>
+        <div className="mt-34 mb-8 w-page-content pl-8">
+          <header className="mb-2">
+            <Typography color="aqua" className="uppercase" component="p" variant="h3">
+              {cname}
             </Typography>
-            <Typography shadow uppercase variant="h1">
+            <Typography className="uppercase" variant="h1">
               {assist.name}
             </Typography>
           </header>
-          <div className="move-image-container">
-            <Image
-              alt={`${cname} being called in as an assist performing ${assist.name}`}
-              src={`/images/${cid}/assists/${assist.id}.jpg`}
-              layout="fill"
-              objectFit="cover"
-            />
-          </div>
-          {assist.attributes.length > 0 && (
-            <div className="chips">
-              {assist.attributes.map((a) => (
-                <Chip key={a}>{a}</Chip>
-              ))}
+          <div className="flex flex-col gap-y-4">
+            <div className="flex gap-x-4">
+              <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500">
+                <Image
+                  alt={`${cname} being called in as an assist performing ${assist.name}`}
+                  width={1920}
+                  height={1080}
+                  src={`/images/${cid}/assists/${assist.id}.jpg`}
+                  placeholder="empty"
+                  loading="eager"
+                />
+              </div>
+              <div className="w-1/2">
+                <div>
+                  <Typography className="mb-2 uppercase" color="gray" variant="h4">
+                    Assist Type
+                  </Typography>
+                  <Chip className="inline-block">
+                    <Typography component="p" className="mx-2 uppercase" variant="h3">
+                      {assist.type}
+                    </Typography>
+                  </Chip>
+                </div>
+                <div className="mt-3 flex border-t border-neutral-700 pt-3">
+                  <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                    <Typography color="gray" className="uppercase" variant="h4">
+                      Team Hyper Combo
+                    </Typography>
+                    <Typography component="p" className="uppercase" variant="h3">
+                      {assist.thc}
+                    </Typography>
+                  </div>
+                  <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                    <Typography color="gray" className="uppercase" variant="h4">
+                      Block
+                    </Typography>
+                    <Typography component="p" className="uppercase" variant="h3">
+                      {assist.block}
+                    </Typography>
+                  </div>
+                  <div className="flex-auto px-2 text-center">
+                    <Typography color="gray" className="uppercase" variant="h4">
+                      Hit Type
+                    </Typography>
+                    <Typography component="p" className="uppercase" variant="h3">
+                      {assist.hit}
+                    </Typography>
+                  </div>
+                </div>
+                <div className="mt-3 flex border-t border-neutral-700 pt-2">
+                  <Typography>
+                    Ea sint consequat eu adipisicing voluptate proident mollit labore laboris reprehenderit. Enim
+                    occaecat est adipisicing qui duis proident sunt aute. Proident eiusmod ullamco non esse duis enim
+                    nisi esse. Nulla duis exercitation nulla commodo ex dolore aliqua adipisicing irure.
+                  </Typography>
+                </div>
+              </div>
             </div>
-          )}
-          {assist.notes.length > 0 && (
-            <StatSection className="move-usage-container" divider>
-              <StatSectionHeader>Usage &amp; Details</StatSectionHeader>
-              <List>
-                {assist.notes.map((n) => (
-                  <ListItem className="typography-body1" key={n}>
-                    {n}
-                  </ListItem>
-                ))}
-              </List>
-            </StatSection>
-          )}
+            <div className="flex rounded-2xl bg-neutral-800 p-3">
+              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Start Up
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.startUp}
+                </Typography>
+              </div>
+              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Active
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.active}
+                </Typography>
+              </div>
+              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Recovery
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.recovery}
+                </Typography>
+              </div>
+              <div className="flex-auto px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Alt. Recovery
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.recoveryAlt}
+                </Typography>
+              </div>
+            </div>
+            <div className="flex rounded-2xl bg-neutral-800 p-3">
+              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Damage
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.dmg}
+                </Typography>
+              </div>
+              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Max Scaled Damage
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.dmg * minDmgScaling}
+                </Typography>
+              </div>
+              <div className="flex-auto px-2 text-center">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Meter Gain
+                </Typography>
+                <Typography component="p" className="uppercase" variant="h3">
+                  {assist.meterGain}
+                </Typography>
+              </div>
+            </div>
+            <div className="flex gap-x-8">
+              <div className="w-3/5">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Usage and Extra Info
+                </Typography>
+                <ul className="list-inside list-disc">
+                  {assist.notes.map((n, i) => (
+                    <li key={i}>{n}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="w-2/5">
+                <Typography color="gray" className="uppercase" variant="h4">
+                  Attributes
+                </Typography>
+                {assist.attributes.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {assist.attributes.map((a) => (
+                      <Chip key={a}>
+                        <Typography className="uppercase" variant="h4" component="span">
+                          {a}
+                        </Typography>
+                      </Chip>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <StatSection divider>
-            <StatSectionHeader>Basic Info</StatSectionHeader>
-            <DataRow label="Total Hits" value={assist.hits} />
-            <DataRow label="Block" value={assist.block} />
-            <DataRow label="Hit Type" value="Projectile" />
-            <DataRow label="Team Hyper" value={assist.thc} />
-          </StatSection>
-          <StatSection divider>
-            <StatSectionHeader>Frame Data</StatSectionHeader>
-            <DataRow label="Start Up" value={assist.startUp} />
-            <DataRow label="Active" value={assist.active} />
-            <DataRow label="Recovery" value={assist.recovery} />
-            <DataRow label="Alt. Assist Recovery" value={assist.recoveryAlt} />
-          </StatSection>
-          <DamageProvider
-            dmg={assist.dmg}
-            dmgPerHit={assist.dmgPerHit}
-            hits={assist.hits}
-            minDmgScaling={minDmgScaling}
-          >
-            {({ dmg, dmgPerHit, dmgPerHitScaled, dmgScaled, multiplier, setMultiplier }) => (
-              <StatSection divider>
-                <StatSectionHeader>Damage &amp; Meter Values</StatSectionHeader>
-                <DataRow label="Damage" value={dmg} />
-                {dmgPerHit && <DataRow label="Damage Per Hit" value={dmgPerHit} />}
-                {dmgScaled && <DataRow label="Scaled Damage" value={dmgScaled} />}
-                {dmgPerHitScaled && <DataRow label="Scaled Damage Per Hit" value={dmgPerHitScaled} />}
-                <DataRow label="Meter Gain" value={getMeterGain(assist.meterGain, multiplier)} />
-                <form className="stat-section-multiplier-container">
-                  <legend className="stat-section-multiplier-legend">
-                    <Typography component="p" uppercase variant="subheading1">
-                      Apply X-Factor Multiplier
-                    </Typography>
-                    <Typography color="blue" component="p" shadow variant="h4">
-                      (+{multiplier.toLocaleString("en", { style: "percent", maximumFractionDigits: 1 })})
-                    </Typography>
-                  </legend>
-                  <RadioButtonGroup>
-                    <RadioButton label="None" checked={multiplier === 0} onChange={setMultiplier} value={0} />
-                    <RadioButton label="Level 1" checked={multiplier === xf1} onChange={setMultiplier} value={xf1} />
-                    <RadioButton label="Level 2" checked={multiplier === xf2} onChange={setMultiplier} value={xf2} />
-                    <RadioButton label="Level 3" checked={multiplier === xf3} onChange={setMultiplier} value={xf3} />
-                  </RadioButtonGroup>
-                </form>
-              </StatSection>
-            )}
-          </DamageProvider>
-        </div>
-      </Container>
+      </Page>
     </>
   );
 };

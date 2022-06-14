@@ -9,9 +9,9 @@ function StatSection(props: StatSectionProps) {
 
   return (
     <section
-      className={cn("stat-section-container", {
+      className={cn("-mt-3", {
         [`${className}`]: className,
-        ["stat-section-divider"]: divider,
+        ["mt-0 border-t-3 border-neutral-300"]: divider,
       })}
     >
       {children}

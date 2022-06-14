@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
-import cn from "classnames";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import routes from "routes";
 import Typography from "components/Typography";
+import classNames from "classnames";
 
-function getNavItems(currentRoute: string) {
+function getNavTabs(currentRoute: string) {
   return [
     {
       path: routes.overview,
@@ -28,52 +27,29 @@ function getNavItems(currentRoute: string) {
 function SecondaryHeader() {
   const { route, query } = useRouter();
   const cid = query.cid as string;
-  const ref = useRef<HTMLLIElement | null>(null);
-  const [mounted, setMounted] = useState(false);
-  const [indicatorPosition, setIndicatorPosition] = useState(0);
-  const navItems = getNavItems(route);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (ref.current) {
-      if (navItems.find((i) => i.label === "Overview")?.active) {
-        setIndicatorPosition(0);
-      }
-
-      if (navItems.find((i) => i.label === "Moves")?.active) {
-        setIndicatorPosition(ref.current.clientWidth);
-      }
-
-      if (navItems.find((i) => i.label === "Assists")?.active) {
-        setIndicatorPosition(ref.current.clientWidth * 2);
-      }
-    }
-  }, [ref, route, navItems]);
+  const tabs = getNavTabs(route);
 
   return (
-    <div className="secondary-header">
-      <nav className="secondary-header-nav">
-        <ul className="secondary-header-nav-list">
-          {navItems.map((item, i) => (
-            <li key={item.label} ref={i === 0 ? ref : undefined} className="secondary-header-nav-list-item">
-              <Link href={item.path(cid)}>
-                <a
-                  className={cn({
-                    ["secondary-header-nav-list-item-selected"]: item.active,
-                  })}
-                >
-                  <Typography color={item.active ? "blue" : "white"} uppercase variant="subheading1">
-                    {item.label}
+    <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
+      <nav className="relative my-0 mx-auto h-full w-full xl:w-xl">
+        <ul className="flex h-full items-center">
+          {tabs.map((tab) => (
+            <li
+              key={tab.label}
+              className={classNames("box-content h-full", {
+                ["-mb-px border-b border-cyan-300"]: tab.active,
+              })}
+            >
+              <Link href={tab.path(cid)}>
+                <a className="flex h-full w-1/3 items-center justify-center duration-300 ease-out hover:bg-neutral-800 focus:bg-neutral-800 xl:w-40">
+                  <Typography color={tab.active ? "aqua" : "white"} className="uppercase" component="p" variant="h4">
+                    {tab.label}
                   </Typography>
                 </a>
               </Link>
             </li>
           ))}
         </ul>
-        {mounted && <span style={{ left: indicatorPosition }} className="nav-list-indicator" />}
       </nav>
     </div>
   );

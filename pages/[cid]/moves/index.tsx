@@ -1,25 +1,21 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Chip from "components/Chip";
-import Container from "components/Container";
-import DataRow from "components/DataRow";
-import List from "components/List";
+import Row from "components/Row";
 import MovePreview from "components/MovePreview";
-import MovePreviewContent from "components/MovePreviewContent";
-import MovePreviewHeader from "components/MovePreviewHeader";
-import MovePreviewImage from "components/MovePreviewImage";
-import Tree from "components/Tree";
-import Typography from "components/Typography";
-import TreeSection from "components/TreeSection";
-import TreeItem from "components/TreeItem";
+import Page from "components/Page";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
-import ListItem from "components/ListItem";
+import Tree from "components/Tree";
+import TreeItem from "components/TreeItem";
+import TreeSection from "components/TreeSection";
+import Typography from "components/Typography";
 import { getCharacterIds, getMovePreviews } from "lib/characters";
-import { MoveTypeValues, IMovePreview } from "types";
 import routes from "routes";
+import { MoveTypeValues, IMovePreview } from "types";
 
 function getPageTitle(name: string) {
   return `${name} / Moves / Plinker`;
@@ -50,7 +46,7 @@ const Moves: NextPage<MovesProps> = (props) => {
   for (const type of MoveTypeValues) {
     const items = moves.filter((m) => m.type === type);
     if (items.length > 0) {
-      sections.push({ items, label: type + "s" });
+      sections.push({ items, label: type + "s", id: type.replace(" ", "-").toLowerCase() + "s" });
     }
   }
 
@@ -61,69 +57,60 @@ const Moves: NextPage<MovesProps> = (props) => {
         <meta property="og:title" content={getOpenGraphTitle(cname)} />
         <meta property="og:description" content={getOpenGraphDescription(cname)} />
         <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:alt" content="Akuma performing Gohadoken L" />
+        <meta property="og:image:alt" content="" />
         <meta property="og:image" content={getOpenGraphImage(cname)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="moves-container">
-        <aside className="movelist-tree">
-          <Tree>
-            {sections.map((s) => (
-              <TreeSection key={s.label} label={s.label}>
-                {s.items.map((n) => (
-                  <TreeItem key={n.id} id={n.id}>
-                    {n.name}
-                  </TreeItem>
-                ))}
-              </TreeSection>
-            ))}
-          </Tree>
-        </aside>
-        <List>
+      <Page>
+        <Tree>
           {sections.map((s) => (
-            <ListItem className="move-list-section" key={s.label}>
-              <Typography className="underline" color="blue" gutter shadow uppercase variant="h4">
-                {s.label}
-              </Typography>
-              <List className="moves-sub-list">
-                {s.items.map((m) => (
-                  <ListItem id={m.id} className="move-preview-scroll-offset" key={m.id}>
-                    <MovePreview to={routes.move(cid, m.id)}>
-                      <MovePreviewHeader>
-                        <Typography color="gray" variant="h4">
-                          {m.input}
-                        </Typography>
-                        <Typography className="move-preview-heading" shadow uppercase variant="h2">
-                          {m.name}
-                        </Typography>
-                        {m.attributes.length > 0 && (
-                          <div className="chips">
-                            {m.attributes.map((a) => (
-                              <Chip key={a}>{a}</Chip>
-                            ))}
-                          </div>
-                        )}
-                      </MovePreviewHeader>
-                      <MovePreviewContent>
-                        <MovePreviewImage alt="Akuma performing Gohadoken L" src={`/images/${cid}/moves/${m.id}.jpg`} />
-                        <StatSection className="move-preview-data">
-                          <StatSectionHeader>Frame Data</StatSectionHeader>
-                          <DataRow label="Damage" value={m.dmg} />
-                          <DataRow label="Start Up" value={m.startUp} />
-                          <DataRow label="Active" value={m.active} />
-                          <DataRow label="Recovery" value={m.recovery} />
-                          <DataRow label="Block Adv." value={m.advBlock} />
-                          <DataRow label="Hit Adv." value={m.advHit} />
-                        </StatSection>
-                      </MovePreviewContent>
-                    </MovePreview>
-                  </ListItem>
-                ))}
-              </List>
-            </ListItem>
+            <TreeSection key={s.label} label={s.label}>
+              {s.items.map((n) => (
+                <TreeItem key={n.id} to={routes.move(cid, n.id)}>
+                  {n.name}
+                </TreeItem>
+              ))}
+            </TreeSection>
           ))}
-        </List>
-      </Container>
+        </Tree>
+        <div className="mt-34 mb-8 w-page-content pl-8">
+          <header className="mb-2">
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
+              {cname}
+            </Typography>
+            <Typography className="uppercase" variant="h1">
+              Move List
+            </Typography>
+          </header>
+          <ul className="my-4 mt-4 grid auto-rows-min gap-y-6 first:mt-0">
+            {moves.map((m) => (
+              <li key={m.id}>
+                <MovePreview>
+                  <StatSection className="w-1/2 py-6 px-6">
+                    <StatSectionHeader>
+                      <Link href={routes.move(cid, m.id)}>
+                        <a id={m.id} className="text-cyan-300 hover:underline">
+                          <Typography color="aqua" className="uppercase" variant="h3">
+                            {m.name}
+                          </Typography>
+                        </a>
+                      </Link>
+                    </StatSectionHeader>
+                    <Row label="Start Up" value={m.startUp} />
+                    <Row label="Active" value={m.active} />
+                    <Row label="Recovery" value={m.recovery} />
+                    <Row label="Block Adv." value={m.advBlock} />
+                    <Row label="Hit Adv." value={m.advHit} />
+                  </StatSection>
+                  <div className="relative w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700">
+                    <Image alt="Test" layout="fill" src={`/images/${cid}/moves/${m.id}.jpg`} objectFit="cover" />
+                  </div>
+                </MovePreview>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Page>
     </>
   );
 };
@@ -142,10 +129,10 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = (context) => {
   const { cid } = context.params as IParams;
-  const moves = getMovePreviews(cid);
+  const { moves, cname } = getMovePreviews(cid);
   return {
     props: {
-      cname: "Akuma",
+      cname,
       moves,
     },
   };

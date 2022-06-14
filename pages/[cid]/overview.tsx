@@ -1,16 +1,19 @@
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { getCharacterIds, getCharacterOverview } from "lib/characters";
 import { ParsedUrlQuery } from "querystring";
 import React from "react";
-import Container from "components/Container";
-import DataItem from "components/DataItem";
-import DataRow from "components/DataRow";
+import Page from "components/Page";
+import Row from "components/Row";
 import StatSectionHeader from "components/StatSectionHeader";
 import StatSection from "components/StatSection";
 import StatSectionFooter from "components/StatSectionFooter";
 import Typography from "components/Typography";
+import Tree from "components/Tree";
+import TreeSection from "components/TreeSection";
 import { ICharacterOverview } from "types";
+import TreeItem from "components/TreeItem";
 
 function getPageTitle(name: string) {
   return `${name} / Overview / Plinker`;
@@ -49,94 +52,101 @@ const Overview: NextPage<OverviewProps> = (props) => {
         <meta property="og:image" content={getOpenGraphImage(character.id)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="overview-container">
-        <div>
-          <section className="overview-header">
-            <Typography gutter shadow uppercase variant="h1">
+      <Page>
+        <Tree>
+          <TreeSection label="Content">
+            <TreeItem to="#overview">Overview</TreeItem>
+            <TreeItem to="#pros-and-cons">Pros and Cons</TreeItem>
+            <TreeItem to="#strategy">Strategy</TreeItem>
+          </TreeSection>
+        </Tree>
+        <div className="mt-34 mb-16 grid w-page-content grid-cols-[1fr_400px] gap-x-8 pl-8">
+          <div>
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
               {character.name}
             </Typography>
-          </section>
-          <StatSection divider>
-            <StatSectionHeader>Basic Stats</StatSectionHeader>
-            <DataRow label="Health" value={character.health} />
-            <DataRow label="Magic Series" value={character.chainComboArchetype} />
-            <DataRow label="Air Dash" value={character.airDashArchetype} />
-            <DataRow label="Archetype" value={character.archetype} />
-            <DataRow label="Recommended Position" value={character.recommendedPosition} />
-          </StatSection>
-          <StatSection divider>
-            <StatSectionHeader>Min. Damage Scaling</StatSectionHeader>
-            <div className="damage-scaling-grid">
-              <DataItem label="Normal" value={character.minDmgScalingNormal} />
-              <DataItem label="Special" value={character.minDmgScalingSpecial} />
-              <DataItem label="Super" value={character.minDmgScalingSuper} />
+          </div>
+          <div className="rounded-2xl bg-neutral-800 p-4">
+            <div className="relative mb-4 h-96 rounded-2xl border border-neutral-500">
+              <Image
+                className="rounded-2xl"
+                alt={character.name}
+                objectFit="cover"
+                layout="fill"
+                src={`/images/thumbnails_${character.id}.webp`}
+              />
             </div>
-          </StatSection>
-          <StatSection divider>
-            <StatSectionHeader>X-Factor Multipliers</StatSectionHeader>
-            <DataRow label="Level 1" value={character.xf1} />
-            <DataRow label="Level 2" value={character.xf2} />
-            <DataRow label="Level 3" value={character.xf3} />
-            <StatSectionFooter>Speed / Damage</StatSectionFooter>
-          </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>Basic Stats</StatSectionHeader>
+              <Row label="Health" value={character.health} />
+              <Row label="Magic Series" value={character.chainComboArchetype} />
+              <Row label="Air Dash" value={character.airDashArchetype} />
+              <Row label="Archetype" value={character.archetype} />
+              <Row label="Recommended Position" value={character.recommendedPosition} />
+            </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>Min. Damage Scaling</StatSectionHeader>
+              <Row label="Normal" value={character.minDmgScalingNormal} />
+              <Row label="Special" value={character.minDmgScalingSpecial} />
+              <Row label="Super" value={character.minDmgScalingSuper} />
+            </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>X-Factor Multipliers</StatSectionHeader>
+              <Row label="Level 1" value={character.xf1} />
+              <Row label="Level 2" value={character.xf2} />
+              <Row label="Level 3" value={character.xf3} />
+              <StatSectionFooter>Speed / Damage</StatSectionFooter>
+            </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>Crossover Attack</StatSectionHeader>
+              <Row label="Active" value={character.crossoverActive} />
+              <Row label="Recovery" value={character.crossoverRecovery} />
+              <Row label="Block Adv." value={character.crossoverBlockAdv} />
+            </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>Ground Dashes</StatSectionHeader>
+              {character.id === "arthur" ? (
+                <div className="flex h-20 items-center justify-center text-center">
+                  <Typography>{character.name} does not have a ground dash.</Typography>
+                </div>
+              ) : (
+                <>
+                  {character.gdf && <Row label="Forward" value={character.gdf} />}
+                  {character.gdb && <Row label="Back" value={character.gdb} />}
+                  <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>
+                </>
+              )}
+            </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>Air Dashes</StatSectionHeader>
+              {character.airDashArchetype === "None" ? (
+                <div className="flex h-20 items-center justify-center text-center">
+                  <Typography>{character.name} does not have an air dash.</Typography>
+                </div>
+              ) : (
+                <>
+                  {character.adf && <Row label="Forward" value={character.adf} />}
+                  {character.addf && <Row label="Down Forward" value={character.addf} />}
+                  {character.add && <Row label="Down" value={character.add} />}
+                  {character.addb && <Row label="Down Back" value={character.addb} />}
+                  {character.adb && <Row label="Back" value={character.adb} />}
+                  {character.adub && <Row label="Up Back" value={character.adub} />}
+                  {character.adu && <Row label="Up" value={character.adu} />}
+                  {character.aduf && <Row label="Up Forward" value={character.aduf} />}
+                  <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>
+                </>
+              )}
+            </StatSection>
+            <StatSection divider>
+              <StatSectionHeader>Jump Durations</StatSectionHeader>
+              {character.normalJumpDuration && <Row label="Normal" value={character.normalJumpDuration} />}
+              {character.superJumpDuration && <Row label="Super" value={character.superJumpDuration} />}
+              {character.doubleJumpDuration && <Row label="Double" value={character.doubleJumpDuration} />}
+              {character.tripleJumpDuration && <Row label="Triple" value={character.tripleJumpDuration} />}
+            </StatSection>
+          </div>
         </div>
-        <section className="model-display" />
-        <div>
-          <StatSection divider>
-            <StatSectionHeader>Crossover Attack</StatSectionHeader>
-            <DataRow label="Active" value={character.crossoverActive} />
-            <DataRow label="Recovery" value={character.crossoverRecovery} />
-            <DataRow label="Block Adv." value={character.crossoverBlockAdv} />
-          </StatSection>
-          <StatSection divider>
-            <StatSectionHeader>Ground Dashes</StatSectionHeader>
-            {character.id === "arthur" ? (
-              <div className="no-air-dash-container">
-                <Typography uppercase variant="subheading1">
-                  {character.name} does not have a ground dash.
-                </Typography>
-              </div>
-            ) : (
-              <>
-                {character.gdf && <DataRow label="Forward" value={character.gdf} />}
-                {character.gdb && <DataRow label="Back" value={character.gdb} />}
-                <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>
-              </>
-            )}
-          </StatSection>
-          <StatSection divider>
-            <StatSectionHeader>Air Dashes</StatSectionHeader>
-            {character.airDashArchetype === "None" ? (
-              <div className="no-air-dash-container">
-                <Typography uppercase variant="subheading1">
-                  {character.name} does not have an air dash.
-                </Typography>
-              </div>
-            ) : (
-              <>
-                {character.adf && <DataRow label="Forward" value={character.adf} />}
-                {character.addf && <DataRow label="Down Forward" value={character.addf} />}
-                {character.add && <DataRow label="Down" value={character.add} />}
-                {character.addb && <DataRow label="Down Back" value={character.addb} />}
-                {character.adb && <DataRow label="Back" value={character.adb} />}
-                {character.adub && <DataRow label="Up Back" value={character.adub} />}
-                {character.adu && <DataRow label="Up" value={character.adu} />}
-                {character.aduf && <DataRow label="Up Forward" value={character.aduf} />}
-                <StatSectionFooter>Duration / Cancel Threshold</StatSectionFooter>{" "}
-              </>
-            )}
-          </StatSection>
-          <StatSection divider>
-            <StatSectionHeader>Jump Durations</StatSectionHeader>
-            <div className="jump-duration-grid">
-              {character.normalJumpDuration && <DataItem label="Normal" value={character.normalJumpDuration} />}
-              {character.superJumpDuration && <DataItem label="Super" value={character.superJumpDuration} />}
-              {character.doubleJumpDuration && <DataItem label="Double" value={character.doubleJumpDuration} />}
-              {character.tripleJumpDuration && <DataItem label="Triple" value={character.tripleJumpDuration} />}
-            </div>
-          </StatSection>
-        </div>
-      </Container>
+      </Page>
     </>
   );
 };

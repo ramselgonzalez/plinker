@@ -1,16 +1,17 @@
 import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Chip from "components/Chip";
-import Container from "components/Container";
-import DataRow from "components/DataRow";
+import Page from "components/Page";
+import Row from "components/Row";
 import MovePreview from "components/MovePreview";
-import MovePreviewContent from "components/MovePreviewContent";
-import MovePreviewHeader from "components/MovePreviewHeader";
-import MovePreviewImage from "components/MovePreviewImage";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
+import Tree from "components/Tree";
+import TreeItem from "components/TreeItem";
+import TreeSection from "components/TreeSection";
 import Typography from "components/Typography";
 import { getCharacterIds, getAssistPreviews } from "lib/characters";
 import { IAssistPreview } from "types";
@@ -52,44 +53,57 @@ const Assists: NextPage<AssistsProps> = (props) => {
         <meta property="og:image" content={getOpenGraphImage(cname)} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
-      <Container className="assists-container">
-        {assists.map((a) => (
-          <MovePreview key={a.type} to={routes.assist(cid, a.id)}>
-            <MovePreviewHeader>
-              <Typography color="gray" uppercase variant="subheading1">
-                {a.type}
-              </Typography>
-              <Typography className="move-preview-heading" shadow uppercase variant="h2">
-                {a.name}
-              </Typography>
-              {a.attributes.length > 0 && (
-                <div className="chips">
-                  {a.attributes.map((att) => (
-                    <Chip key={att}>{att}</Chip>
-                  ))}
-                </div>
-              )}
-            </MovePreviewHeader>
-            <MovePreviewContent>
-              <MovePreviewImage
-                alt={`${cname} being called in as an assist performing ${a.name}`}
-                src={`/images/${cid}/assists/${a.id}.jpg`}
-              />
-              <StatSection className="move-preview-data">
-                <StatSectionHeader>Frame Data</StatSectionHeader>
-                <DataRow label="Start Up" value={a.startUp} />
-                <DataRow label="Active" value={a.active || "--"} />
-                <DataRow label="Recovery" value={a.recovery} />
-                <DataRow label="Alt. Assist Recovery" value={a.recoveryAlt} />
-                <DataRow label="Damage" value={a.dmg} />
-                <DataRow label="Meter Gain" value={a.meterGain} />
-                <DataRow label="Team Hyper" value={a.thc} />
-                <DataRow label="Block" value={a.block} />
-              </StatSection>
-            </MovePreviewContent>
-          </MovePreview>
-        ))}
-      </Container>
+      <Page>
+        <Tree>
+          <TreeSection label="Assists">
+            {assists.map((s) => (
+              <TreeItem key={s.id} to={routes.assist(cid, s.id)}>
+                {s.name}
+              </TreeItem>
+            ))}
+          </TreeSection>
+        </Tree>
+        <div className="mt-34 mb-8 w-page-content pl-8">
+          <Typography color="aqua" component="p" className="uppercase" variant="h3">
+            {cname}
+          </Typography>
+          <Typography className="uppercase" variant="h1">
+            Assists
+          </Typography>
+          <ul className="mt-4 grid auto-rows-min gap-y-6">
+            {assists.map((a) => (
+              <li key={a.id} id={a.id}>
+                <MovePreview>
+                  <StatSection className="w-1/2 py-6 px-6">
+                    <StatSectionHeader>
+                      <Link href={routes.assist(cid, a.id)}>
+                        <a id={a.id} className="text-cyan-300 hover:underline">
+                          <Typography className="uppercase" color="aqua" variant="h3">
+                            {a.name}
+                          </Typography>
+                        </a>
+                      </Link>
+                    </StatSectionHeader>
+                    <Row label="Start Up" value={a.startUp} />
+                    <Row label="Active" value={a.active || "--"} />
+                    <Row label="Recovery" value={a.recovery} />
+                    <Row label="Alt. Assist Recovery" value={a.recoveryAlt} />
+                    <Row label="Team Hyper" value={a.thc} />
+                  </StatSection>
+                  <div className="relative w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700">
+                    <Image
+                      alt={`${cname} being called in as an assist performing ${a.name}`}
+                      layout="fill"
+                      src={`/images/${cid}/assists/${a.id}.jpg`}
+                      objectFit="cover"
+                    />
+                  </div>
+                </MovePreview>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Page>
     </>
   );
 };

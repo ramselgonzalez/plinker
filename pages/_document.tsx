@@ -13,7 +13,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body>
+        <body className="overflow-y-scroll bg-neutral-900 text-neutral-50">
           <Main />
           <NextScript />
         </body>

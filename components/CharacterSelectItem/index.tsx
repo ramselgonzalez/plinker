@@ -1,28 +1,31 @@
 import cn from "classnames";
 import Image from "next/image";
+import Link from "next/link";
+import { ComponentPropsWithoutRef } from "react";
+import routes from "routes";
 import { ICharacterPreview } from "types";
 
-interface CharacterSelectItemProps {
+interface CharacterSelectItemProps extends ComponentPropsWithoutRef<"a"> {
   alt: string;
   imageUrl: string;
-  onSelectCharacter?: (c: ICharacterPreview) => void;
-  selected?: boolean;
-  variant: "marvel" | "capcom";
   value: ICharacterPreview;
 }
 
 function CharacterSelectItem(props: CharacterSelectItemProps) {
-  const { alt, imageUrl, onSelectCharacter, selected, value, variant } = props;
+  const { alt, imageUrl, value, className } = props;
   return (
-    <button
-      className={cn("character-select-item", {
-        ["selected-item"]: selected,
-        [`${variant}`]: variant,
-      })}
-      onClick={() => onSelectCharacter?.(value)}
-    >
-      <Image alt={alt} layout="fill" priority src={imageUrl} />
-    </button>
+    <Link href={routes.overview(value.id)}>
+      <a
+        className={cn(
+          "relative h-22 w-22 overflow-hidden rounded-lg border border-neutral-500 bg-white duration-200 hover:scale-110",
+          {
+            [`${className}`]: className,
+          }
+        )}
+      >
+        <Image alt={alt} layout="fill" priority src={imageUrl} />
+      </a>
+    </Link>
   );
 }
 

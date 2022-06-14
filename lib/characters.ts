@@ -42,13 +42,17 @@ export function getMoveIds() {
 export function getMovePreviews(cid: string) {
   const file = getFullCharactersJSON();
   const [character] = file.filter((c) => c.id === cid);
-  const previews = character.moves.map((m) => helpers.getMovePreview(m));
-  return previews;
+  const moves = character.moves.map((m) => helpers.getMovePreview(m));
+  return {
+    cname: character.name,
+    moves,
+  };
 }
 
 export function getMove(cid: string, mid: string) {
   const file = getFullCharactersJSON();
   const [character] = file.filter((c) => c.id === cid);
+  const previews = character.moves.map((m) => helpers.getMovePreview(m));
   const moveIndex = character.moves.findIndex((m) => m.id === mid);
   const move = helpers.getMoveDetail(character.moves[moveIndex]);
   const totalMoves = character.moves.length;
@@ -65,6 +69,7 @@ export function getMove(cid: string, mid: string) {
     cname: character.name,
     minDmgScaling: minDmgScaling,
     move: move,
+    moves: previews,
     moveIndex: moveIndex,
     nextMove: character.moves[nextMoveIndex],
     previousMove: character.moves[previousMoveIndex],
@@ -101,6 +106,7 @@ export function getAssist(cid: string, aid: string) {
   const [character] = file.filter((c) => c.id === cid);
   const assistIndex = character.assists.findIndex((a) => a.id === aid);
   const assist = helpers.getAssistDetail(character.assists[assistIndex]);
+  const assists = character.assists.map((a) => helpers.getAssistPreview(a));
   const totalAssists = 3;
   const previousMoveIndex = helpers.getPreviousMoveIndex(assistIndex, totalAssists);
   const nextMoveIndex = helpers.getNextMoveIndex(assistIndex, totalAssists);
@@ -108,6 +114,7 @@ export function getAssist(cid: string, aid: string) {
   return {
     cname: character.name,
     assist: assist,
+    assists: assists,
     assistIndex: assistIndex,
     minDmgScaling: character.minDmgScalingSpecial,
     nextAssist: character.assists[nextMoveIndex],

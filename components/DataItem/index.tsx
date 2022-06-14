@@ -8,11 +8,11 @@ interface DataItemProps {
 function DataItem(props: DataItemProps) {
   const { label, value = "--" } = props;
   return (
-    <div className="data-item-container">
-      <Typography className="data-item-label" color="gray" uppercase variant="subheading1">
+    <div className="flex flex-col items-center justify-center rounded-lg py-3 px-6 text-center">
+      <Typography component="p" className="mb-2 uppercase" color="gray" variant="subheading1">
         {label}
       </Typography>
-      <Typography shadow variant="h2">
+      <Typography component="p" className="uppercase" variant="h4">
         {value}
       </Typography>
     </div>

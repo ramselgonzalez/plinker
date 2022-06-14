@@ -1,15 +1,34 @@
 import cn from "classnames";
-import Typography from "components/Typography";
+import { ComponentPropsWithoutRef } from "react";
+import { InputColor } from "types";
 
-interface ChipProps {
+interface ChipProps extends ComponentPropsWithoutRef<"div"> {
+  color?: InputColor;
   children: React.ReactNode;
 }
 
+const colors = {
+  white: "bg-neutral-50",
+  gray: "bg-neutral-700",
+  blue: "bg-blue-600",
+  yellow: "bg-yellow-300",
+  red: "bg-red-800",
+  green: "bg-green-600",
+  purple: "",
+  aqua: "bg-cyan-300",
+  black: "bg-neutral-900",
+};
+
 function Chip(props: ChipProps) {
-  const { children } = props;
+  const { children, color = "gray", className } = props;
   return (
-    <div className={cn("chip-container")}>
-      <Typography variant="body2">{children}</Typography>
+    <div
+      className={cn("inline-flex items-center justify-center rounded-full py-2 px-4", {
+        [`${className}`]: className,
+        [colors[color]]: color,
+      })}
+    >
+      {children}
     </div>
   );
 }
