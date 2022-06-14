@@ -155,8 +155,10 @@ const Move: NextPage<MoveProps> = (props) => {
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-2">
                   <Typography>
-                    Akuma's Standing Light is a short range rapid fire jab. It does an okay job at being an anti-air
-                    similar to Magneto and Nova but the hitbox and Akuma's height prevent it from being anything good.
+                    Nostrud aliqua adipisicing est Lorem sunt laboris laboris anim id ut aute excepteur et. Culpa
+                    consectetur non eu et mollit et aliqua ut Lorem. Nostrud anim non tempor fugiat occaecat eiusmod
+                    cupidatat aliquip cillum excepteur. In labore ullamco ad culpa qui. Fugiat non consectetur excepteur
+                    minim do voluptate cillum esse est.
                   </Typography>
                 </div>
               </div>
