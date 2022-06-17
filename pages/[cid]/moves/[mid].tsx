@@ -47,7 +47,7 @@ interface MoveProps {
   xf1: number;
   xf2: number;
   xf3: number;
-  imgProps: ImageProps;
+  blurDataURL: string;
 }
 
 function getFrameDataColor(adv: number | string) {
@@ -57,7 +57,7 @@ function getFrameDataColor(adv: number | string) {
 }
 
 const Move: NextPage<MoveProps> = (props) => {
-  const { cname, minDmgScaling, move, moves, imgProps } = props;
+  const { cname, minDmgScaling, move, moves, blurDataURL } = props;
   const { query } = useRouter();
   const cid = query.cid as string;
   const sections = [];
@@ -103,8 +103,8 @@ const Move: NextPage<MoveProps> = (props) => {
             <div className="flex gap-x-4">
               <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500 ">
                 <Image
-                  {...imgProps}
-                  placeholder="blur"
+                  blurDataURL={blurDataURL}
+                  placeholder={blurDataURL ? "blur" : undefined}
                   alt={`${cname} performing ${move.name}`}
                   width={1920}
                   height={1080}
@@ -288,14 +288,16 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps<MoveProps> = async (context) => {
   const { cid, mid } = context.params as IParams;
   const data = getMove(cid, mid);
-  const { img, base64 } = await getPlaiceholder(`/images/${cid}/moves/${mid}.jpg`, { size: 32 });
+  let base64 = "";
+  try {
+    const res = await getPlaiceholder(`/images/${cid}/moves/${mid}.jpg`, { size: 32 });
+    base64 = res.base64;
+  } catch (err) {}
+
   return {
     props: {
       ...data,
-      imgProps: {
-        ...img,
-        blurDataURL: base64,
-      },
+      blurDataURL: base64,
     },
   };
 };

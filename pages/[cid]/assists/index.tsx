@@ -90,6 +90,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
                     <Row label="Active" value={a.active || "--"} />
                     <Row label="Recovery" value={a.recovery} />
                     <Row label="Alt. Assist Recovery" value={a.recoveryAlt} />
+                    <Row label="Damage" value={a.dmg} />
                     <Row label="Team Hyper" value={a.thc} />
                   </StatSection>
                   <div className="relative w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700">
