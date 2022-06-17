@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import Chip from "components/Chip";
 import Row from "components/Row";
 import MovePreview from "components/MovePreview";
 import Page from "components/Page";
@@ -13,6 +14,7 @@ import Tree from "components/Tree";
 import TreeItem from "components/TreeItem";
 import TreeSection from "components/TreeSection";
 import Typography from "components/Typography";
+import { getInputColor } from "helpers";
 import { getCharacterIds, getMovePreviews } from "lib/characters";
 import routes from "routes";
 import { MoveTypeValues, IMovePreview } from "types";
@@ -96,7 +98,21 @@ const Moves: NextPage<MovesProps> = (props) => {
                         </a>
                       </Link>
                     </StatSectionHeader>
-                    <Row label="Input" value={m.input} />
+                    <Row
+                      label="Input"
+                      value={
+                        <Chip className="inline-block" color={getInputColor(m.input)}>
+                          <Typography
+                            color={getInputColor(m.input) === "yellow" ? "black" : "white"}
+                            component="p"
+                            className="mx-2"
+                            variant="h4"
+                          >
+                            {m.input}
+                          </Typography>
+                        </Chip>
+                      }
+                    />
                     <Row label="Start Up" value={m.startUp} />
                     <Row label="Active" value={m.active} />
                     <Row label="Recovery" value={m.recovery} />
@@ -104,7 +120,14 @@ const Moves: NextPage<MovesProps> = (props) => {
                     <Row label="Hit Adv." value={m.advHit} />
                   </StatSection>
                   <div className="relative w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700">
-                    <Image alt="Test" layout="fill" src={`/images/${cid}/moves/${m.id}.jpg`} objectFit="cover" />
+                    <Image
+                      alt={`${cname} performing ${m.name}`}
+                      layout="fill"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO02w4AATkA93S4H0IAAAAASUVORK5CYII="
+                      src={`/images/${cid}/moves/${m.id}.jpg`}
+                      objectFit="cover"
+                    />
                   </div>
                 </MovePreview>
               </li>
@@ -128,7 +151,7 @@ interface IParams extends ParsedUrlQuery {
   cid: string;
 }
 
-export const getStaticProps: GetStaticProps = (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const { cid } = context.params as IParams;
   const { moves, cname } = getMovePreviews(cid);
   return {

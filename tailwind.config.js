@@ -29,6 +29,9 @@ module.exports = {
       height: {
         "c-offset": "calc(100vh - 6.5rem)",
       },
+      screens: {
+        xl: "1440px",
+      },
       width: {
         "page-content": "100%",
       },

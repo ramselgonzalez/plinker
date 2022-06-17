@@ -14,7 +14,7 @@ const colors = {
   yellow: "bg-yellow-300",
   red: "bg-red-800",
   green: "bg-green-600",
-  purple: "",
+  purple: "bg-purple-700",
   aqua: "bg-cyan-300",
   black: "bg-neutral-900",
 };

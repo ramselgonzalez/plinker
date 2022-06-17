@@ -1,3 +1,5 @@
+const { withPlaiceholder } = require("@plaiceholder/next");
+
 const withMDX = require("@next/mdx")({
   extension: /\.mdx?$/,
   options: {
@@ -9,7 +11,9 @@ const withMDX = require("@next/mdx")({
 });
 
 /** @type {import('next').NextConfig} */
-module.exports = withMDX({
-  reactStrictMode: true,
-  pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
-});
+module.exports = withPlaiceholder(
+  withMDX({
+    reactStrictMode: true,
+    pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  })
+);

@@ -1,8 +1,9 @@
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Head from "next/head";
-import Image from "next/image";
+import Image, { ImageProps } from "next/image";
 import { useRouter } from "next/router";
+import { getPlaiceholder } from "plaiceholder";
 import Chip from "components/Chip";
 import Page from "components/Page";
 import Tree from "components/Tree";
@@ -46,6 +47,7 @@ interface MoveProps {
   xf1: number;
   xf2: number;
   xf3: number;
+  imgProps: ImageProps;
 }
 
 function getFrameDataColor(adv: number | string) {
@@ -55,11 +57,10 @@ function getFrameDataColor(adv: number | string) {
 }
 
 const Move: NextPage<MoveProps> = (props) => {
-  const { cname, minDmgScaling, move, moves, nextMove, previousMove, moveIndex, totalMoves, xf1, xf2, xf3 } = props;
+  const { cname, minDmgScaling, move, moves, imgProps } = props;
   const { query } = useRouter();
   const cid = query.cid as string;
   const sections = [];
-
   for (const type of MoveTypeValues) {
     const items = moves.filter((m) => m.type === type);
     if (items.length > 0) {
@@ -100,14 +101,15 @@ const Move: NextPage<MoveProps> = (props) => {
           </header>
           <div className="flex flex-col gap-y-4">
             <div className="flex gap-x-4">
-              <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500">
+              <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500 ">
                 <Image
+                  {...imgProps}
+                  placeholder="blur"
                   alt={`${cname} performing ${move.name}`}
                   width={1920}
                   height={1080}
+                  key={move.id}
                   priority
-                  placeholder="empty"
-                  loading="eager"
                   src={`/images/${cid}/moves/${move.id}.jpg`}
                 />
               </div>
@@ -283,11 +285,18 @@ interface IParams extends ParsedUrlQuery {
   mid: string;
 }
 
-export const getStaticProps: GetStaticProps<MoveProps> = (context) => {
+export const getStaticProps: GetStaticProps<MoveProps> = async (context) => {
   const { cid, mid } = context.params as IParams;
   const data = getMove(cid, mid);
+  const { img, base64 } = await getPlaiceholder(`/images/${cid}/moves/${mid}.jpg`, { size: 32 });
   return {
-    props: { ...data },
+    props: {
+      ...data,
+      imgProps: {
+        ...img,
+        blurDataURL: base64,
+      },
+    },
   };
 };
 
