@@ -89,7 +89,7 @@ const Overview: NextPage<OverviewProps> = (props) => {
               components={{
                 Typography,
                 a: ({ children, href = "#" }) => (
-                  <a href={href} target="_blank" className="text-cyan-300 hover:underline">
+                  <a href={href} target="_blank" rel="noreferrer" className="text-cyan-300 hover:underline">
                     {children}
                   </a>
                 ),
