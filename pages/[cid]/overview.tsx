@@ -37,13 +37,22 @@ function getOpenGraphyImageAlt(name: string) {
   return `A portrait of ${name}`;
 }
 
+function getIdFromChildren(children: React.ReactNode) {
+  if (typeof children === "string") {
+    return children.toLowerCase().replace(/ /g, "-");
+  }
+
+  return undefined;
+}
+
 interface OverviewProps {
   character: ICharacterOverview;
   content: MDXRemoteSerializeResult;
+  headings: { label: string; id: string }[];
 }
 
 const Overview: NextPage<OverviewProps> = (props) => {
-  const { character, content } = props;
+  const { character, content, headings } = props;
   return (
     <>
       <Head>
@@ -58,9 +67,11 @@ const Overview: NextPage<OverviewProps> = (props) => {
       <Page>
         <Tree>
           <TreeSection label="Content">
-            <TreeItem to="#overview">Overview</TreeItem>
-            <TreeItem to="#pros-and-cons">Pros and Cons</TreeItem>
-            <TreeItem to="#strategy">Strategy</TreeItem>
+            {headings.map((h) => (
+              <TreeItem key={h.id} to={h.id}>
+                {h.label}
+              </TreeItem>
+            ))}
           </TreeSection>
         </Tree>
         <div className="mt-34 mb-16 grid w-full grid-cols-[1fr_375px] gap-x-8 pl-8">
@@ -77,10 +88,16 @@ const Overview: NextPage<OverviewProps> = (props) => {
               {...content}
               components={{
                 Typography,
+                a: ({ children, href = "#" }) => (
+                  <a href={href} target="_blank" className="text-cyan-300 hover:underline">
+                    {children}
+                  </a>
+                ),
                 p: ({ children }) => <Typography className="mb-4">{children}</Typography>,
                 h2: ({ children }) => (
                   <Typography
-                    className="mt-8 mb-2 border-b border-neutral-500 pb-2 uppercase first-of-type:mt-4"
+                    id={getIdFromChildren(children)}
+                    className="mt-8 mb-2 scroll-mt-28 border-b border-neutral-500 pb-2 uppercase first-of-type:mt-4"
                     variant="h2"
                   >
                     {children}
@@ -200,13 +217,28 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps = async (context) => {
   const { cid } = context.params as IParams;
   const { character, content } = getCharacterOverview(cid);
+  const headings = getHeadings(content);
   const mdx = await serialize(content);
+
   return {
     props: {
       character,
       content: mdx,
+      headings,
     },
   };
 };
+
+function getHeadings(source: string) {
+  const headingLines = source.split("\n").filter((line) => {
+    return line.match(/^## *\s/);
+  });
+
+  return headingLines.map((raw) => {
+    const heading = raw.replace(/^##*\s/, "").replace("\r", "");
+    const id = "#" + heading.toLowerCase().replace(/ /g, "-");
+    return { label: heading, id };
+  });
+}
 
 export default Overview;

@@ -31,7 +31,7 @@ export function getCharacterOverview(cid: string) {
   try {
     content = fs.readFileSync(contentPath, "utf8");
   } catch (err) {
-    console.log(err);
+    content = "";
   }
 
   return {
