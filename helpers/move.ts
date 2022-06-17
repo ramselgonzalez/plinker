@@ -25,6 +25,7 @@ export function getMoveDetail(move: RawMove): IMoveDetail {
     block: move.block,
     advBlock: move.advHit || "--",
     advHit: move.advHit || "--",
+    description: move.description,
     dmg: getDmgRange(move.dmg)[0],
     dmgMax: getDmgRange(move.dmg)[1],
     dmgPerHit: move.dmgPerHit,

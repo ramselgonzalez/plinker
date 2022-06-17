@@ -7,7 +7,7 @@ function Page(props: PageProps) {
 
   return (
     <main
-      className={cn("my-0 mx-auto flex w-full xl:w-xl xl:px-4", {
+      className={cn("my-0 mx-auto flex w-full xl:w-xl xl:px-8", {
         [`${className}`]: className,
       })}
     >

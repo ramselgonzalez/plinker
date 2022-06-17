@@ -86,6 +86,7 @@ export interface RawMove {
   advHit: number | null;
   attributes: Array<string>;
   block: Block;
+  description: string;
   dmg: number | string;
   dmgPerHit: number | string | null;
   hit: HitType;
@@ -162,6 +163,7 @@ export interface IMoveDetail {
   advBlock: number | string;
   advHit: number | string;
   block: Block;
+  description: string;
   dmg: number;
   dmgMax: number | null;
   dmgPerHit: string | number | null;

@@ -1,6 +1,8 @@
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { getCharacterIds, getCharacterOverview } from "lib/characters";
 import { ParsedUrlQuery } from "querystring";
 import React from "react";
@@ -37,10 +39,11 @@ function getOpenGraphyImageAlt(name: string) {
 
 interface OverviewProps {
   character: ICharacterOverview;
+  content: MDXRemoteSerializeResult;
 }
 
 const Overview: NextPage<OverviewProps> = (props) => {
-  const { character } = props;
+  const { character, content } = props;
   return (
     <>
       <Head>
@@ -60,11 +63,42 @@ const Overview: NextPage<OverviewProps> = (props) => {
             <TreeItem to="#strategy">Strategy</TreeItem>
           </TreeSection>
         </Tree>
-        <div className="mt-34 mb-16 grid w-page-content grid-cols-[1fr_400px] gap-x-8 pl-8">
+        <div className="mt-34 mb-16 grid w-full grid-cols-[1fr_375px] gap-x-8 pl-8">
           <div>
-            <Typography className="uppercase" color="aqua" component="p" variant="h3">
-              {character.name}
-            </Typography>
+            <header className="mb-2">
+              <Typography className="uppercase" color="aqua" component="p" variant="h3">
+                {character.name}
+              </Typography>
+              <Typography className="uppercase" variant="h1">
+                Overview
+              </Typography>
+            </header>
+            <MDXRemote
+              {...content}
+              components={{
+                Typography,
+                p: ({ children }) => <Typography className="mb-4">{children}</Typography>,
+                h2: ({ children }) => (
+                  <Typography
+                    className="mt-8 mb-2 border-b border-neutral-500 pb-2 uppercase first-of-type:mt-4"
+                    variant="h2"
+                  >
+                    {children}
+                  </Typography>
+                ),
+                h3: ({ children }) => (
+                  <Typography className="uppercase" variant="h3">
+                    {children}
+                  </Typography>
+                ),
+                h4: ({ children }) => (
+                  <Typography className="mb-4 uppercase" variant="h4">
+                    {children}
+                  </Typography>
+                ),
+                ul: ({ children }) => <ul className="list-inside list-disc">{children}</ul>,
+              }}
+            />
           </div>
           <div className="rounded-2xl bg-neutral-800 p-4">
             <div className="relative mb-4 h-96 rounded-2xl border border-neutral-500">
@@ -163,12 +197,14 @@ interface IParams extends ParsedUrlQuery {
   cid: string;
 }
 
-export const getStaticProps: GetStaticProps = (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const { cid } = context.params as IParams;
-  const character = getCharacterOverview(cid);
+  const { character, content } = getCharacterOverview(cid);
+  const mdx = await serialize(content);
   return {
     props: {
       character,
+      content: mdx,
     },
   };
 };

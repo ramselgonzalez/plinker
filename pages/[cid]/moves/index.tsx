@@ -82,7 +82,7 @@ const Moves: NextPage<MovesProps> = (props) => {
               Move List
             </Typography>
           </header>
-          <ul className="my-4 mt-4 grid auto-rows-min gap-y-6 first:mt-0">
+          <ul className="grid gap-y-6">
             {moves.map((m) => (
               <li key={m.id}>
                 <MovePreview>
@@ -96,6 +96,7 @@ const Moves: NextPage<MovesProps> = (props) => {
                         </a>
                       </Link>
                     </StatSectionHeader>
+                    <Row label="Input" value={m.input} />
                     <Row label="Start Up" value={m.startUp} />
                     <Row label="Active" value={m.active} />
                     <Row label="Recovery" value={m.recovery} />

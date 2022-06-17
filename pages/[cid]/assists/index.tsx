@@ -64,13 +64,15 @@ const Assists: NextPage<AssistsProps> = (props) => {
           </TreeSection>
         </Tree>
         <div className="mt-34 mb-8 w-page-content pl-8">
-          <Typography color="aqua" component="p" className="uppercase" variant="h3">
-            {cname}
-          </Typography>
-          <Typography className="uppercase" variant="h1">
-            Assists
-          </Typography>
-          <ul className="mt-4 grid auto-rows-min gap-y-6">
+          <header className="mb-2">
+            <Typography color="aqua" component="p" className="uppercase" variant="h3">
+              {cname}
+            </Typography>
+            <Typography className="uppercase" variant="h1">
+              Assists
+            </Typography>
+          </header>
+          <ul className="grid gap-y-6">
             {assists.map((a) => (
               <li key={a.id} id={a.id}>
                 <MovePreview>

@@ -154,12 +154,7 @@ const Move: NextPage<MoveProps> = (props) => {
                   </div>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-2">
-                  <Typography>
-                    Nostrud aliqua adipisicing est Lorem sunt laboris laboris anim id ut aute excepteur et. Culpa
-                    consectetur non eu et mollit et aliqua ut Lorem. Nostrud anim non tempor fugiat occaecat eiusmod
-                    cupidatat aliquip cillum excepteur. In labore ullamco ad culpa qui. Fugiat non consectetur excepteur
-                    minim do voluptate cillum esse est.
-                  </Typography>
+                  <Typography>{move.description}</Typography>
                 </div>
               </div>
             </div>

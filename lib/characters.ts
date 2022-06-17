@@ -3,6 +3,7 @@ import path from "path";
 import { RawCharacter } from "types";
 import * as helpers from "helpers";
 
+const dataDir = path.join(process.cwd(), "data");
 const json = path.join(process.cwd(), "data", "index.json");
 
 function getFullCharactersJSON(): Array<RawCharacter> {
@@ -25,7 +26,18 @@ export function getCharacterOverview(cid: string) {
   const file = getFullCharactersJSON();
   const [character] = file.filter((c) => c.id === cid);
   const overview = helpers.getCharacterOverview(character);
-  return overview;
+  const contentPath = path.join(dataDir, cid, "overview.mdx");
+  let content = "";
+  try {
+    content = fs.readFileSync(contentPath, "utf8");
+  } catch (err) {
+    console.log(err);
+  }
+
+  return {
+    character: overview,
+    content,
+  };
 }
 
 export function getMoveIds() {
