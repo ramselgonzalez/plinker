@@ -1176,7 +1176,8 @@
         "attributes": ["Ground Bounce", "OTG"],
         "notes": ["Ground bounces airborne opponents"]
       }
-    ]
+    ],
+    "combos": []
   },
   {
     "name": "Amaterasu",
@@ -2660,7 +2661,8 @@
         "characterId": "amaterasu"
       }
     ],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Arthur",
@@ -2721,7 +2723,8 @@
     "xf2SpeedBoost": 0.25,
     "xf3SpeedBoost": 0.35,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "C. Viper",
@@ -2782,7 +2785,8 @@
     "xf2SpeedBoost": 0.225,
     "xf3SpeedBoost": 0.3,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Captain America",
@@ -2843,7 +2847,8 @@
     "xf2SpeedBoost": 0.1,
     "xf3SpeedBoost": 0.15,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Chris",
@@ -2904,7 +2909,8 @@
     "xf2SpeedBoost": 0.05,
     "xf3SpeedBoost": 0.1,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Chun Li",
@@ -2965,7 +2971,8 @@
     "xf2SpeedBoost": 0.35,
     "xf3SpeedBoost": 0.5,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Dante",
@@ -3026,7 +3033,8 @@
     "xf2SpeedBoost": 0.2,
     "xf3SpeedBoost": 0.3,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Deadpool",
@@ -3087,7 +3095,8 @@
     "xf2SpeedBoost": 0.25,
     "xf3SpeedBoost": 0.35,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Doctor Doom",
@@ -3148,7 +3157,8 @@
     "xf2SpeedBoost": 0.2,
     "xf3SpeedBoost": 0.3,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Doctor Strange",
@@ -3209,7 +3219,8 @@
     "xf2SpeedBoost": 0.25,
     "xf3SpeedBoost": 0.3,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Dormammu",
@@ -3270,7 +3281,8 @@
     "xf2SpeedBoost": 0.15,
     "xf3SpeedBoost": 0.2,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Felicia",
@@ -3331,7 +3343,8 @@
     "xf2SpeedBoost": 0.35,
     "xf3SpeedBoost": 0.45,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Firebrand",
@@ -3392,7 +3405,8 @@
     "xf2SpeedBoost": 0.35,
     "xf3SpeedBoost": 0.45,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Frank West",
@@ -3453,7 +3467,8 @@
     "xf2SpeedBoost": 0.1,
     "xf3SpeedBoost": 0.15,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Ghost Rider",
@@ -3514,7 +3529,8 @@
     "xf2SpeedBoost": 0.1,
     "xf3SpeedBoost": 0.15,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Haggar",
@@ -3575,7 +3591,8 @@
     "xf2SpeedBoost": 0.05,
     "xf3SpeedBoost": 0.1,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Hawkeye",
@@ -3636,7 +3653,8 @@
     "xf2SpeedBoost": 0.3,
     "xf3SpeedBoost": 0.4,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Hsien-Ko",
@@ -3697,7 +3715,8 @@
     "xf2SpeedBoost": 0.25,
     "xf3SpeedBoost": 0.35,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Hulk",
@@ -3758,7 +3777,8 @@
     "xf2SpeedBoost": 0,
     "xf3SpeedBoost": 0,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Iron Fist",
@@ -3819,7 +3839,8 @@
     "xf2SpeedBoost": 0.2,
     "xf3SpeedBoost": 0.3,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Iron Man",
@@ -3880,7 +3901,8 @@
     "xf2SpeedBoost": 0.2,
     "xf3SpeedBoost": 0.25,
     "moves": [],
-    "assists": []
+    "assists": [],
+    "combos": []
   },
   {
     "name": "Jill",
@@ -6650,6 +6672,64 @@
         "characterId": "zero"
       }
     ],
-    "assists": []
+    "assists": [
+      {
+        "name": "Ryuenjin H",
+        "id": "ryuenjin-h",
+        "characterId": "zero",
+        "type": "Alpha",
+        "thc": "Rekkoha",
+        "dmg": 102300,
+        "meterGain": 1000,
+        "startUp": 29,
+        "active": 25,
+        "recovery": 116,
+        "recoveryAlt": 86,
+        "hit": "Strike",
+        "block": "Mid",
+        "hits": 5,
+        "dmgPerHit": null,
+        "attributes": [],
+        "notes": []
+      },
+      {
+        "name": "Hadangeki M",
+        "id": "hadangeki-m",
+        "characterId": "zero",
+        "type": "Beta",
+        "thc": "Rekkoha",
+        "dmg": 70000,
+        "meterGain": 560,
+        "startUp": 32,
+        "active": null,
+        "recovery": 126,
+        "recoveryAlt": 96,
+        "hit": "Projectile",
+        "block": "Mid",
+        "hits": 1,
+        "dmgPerHit": null,
+        "attributes": [],
+        "notes": ["Projectile - 3 low durability points"]
+      },
+      {
+        "name": "Shippuga",
+        "id": "shippuga",
+        "characterId": "zero",
+        "type": "Gamma",
+        "thc": "Rekkoha",
+        "dmg": 81200,
+        "meterGain": 720,
+        "startUp": 37,
+        "active": 7,
+        "recovery": 109,
+        "recoveryAlt": 79,
+        "hit": "Strike",
+        "block": "Mid",
+        "hits": 3,
+        "dmgPerHit": null,
+        "attributes": [],
+        "notes": ["Inflicts chip damage"]
+      }
+    ]
   }
 ]

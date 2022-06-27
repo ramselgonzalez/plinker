@@ -76,6 +76,25 @@ export interface RawCharacter {
   xf3SpeedBoost: number;
   moves: Array<RawMove>;
   assists: Array<RawAssist>;
+  combos: Array<RawCombo>;
+}
+
+export interface RawCombo {
+  id: string;
+  assistId: string;
+  damage: number;
+  description: string;
+  difficulty: string;
+  input: string;
+  meterStart: number;
+  meterBuild: number;
+  meterSpend: number;
+  position: string;
+  starter: string;
+  title: string;
+  trial: number;
+  videoId: string;
+  xfactor: number;
 }
 
 export interface RawMove {

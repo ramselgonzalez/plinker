@@ -11,7 +11,7 @@ const colors = {
   white: "bg-neutral-50",
   gray: "bg-neutral-700",
   blue: "bg-blue-600",
-  yellow: "bg-yellow-300",
+  yellow: "bg-yellow-700",
   red: "bg-red-800",
   green: "bg-green-600",
   purple: "bg-purple-700",
@@ -23,7 +23,7 @@ function Chip(props: ChipProps) {
   const { children, color = "gray", className } = props;
   return (
     <div
-      className={cn("inline-flex items-center justify-center rounded-full py-2 px-4", {
+      className={cn("inline-flex items-center justify-center rounded-full py-1 px-4", {
         [`${className}`]: className,
         [colors[color]]: color,
       })}

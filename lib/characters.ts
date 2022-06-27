@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
-import { RawCharacter } from "types";
+import { RawCharacter, RawCombo } from "types";
 import * as helpers from "helpers";
+import matter from "gray-matter";
 
 const dataDir = path.join(process.cwd(), "data");
 const json = path.join(process.cwd(), "data", "index.json");
@@ -136,4 +137,94 @@ export function getAssist(cid: string, aid: string) {
     xf2: character.xf2DamageBoost,
     xf3: character.xf3DamageBoost,
   };
+}
+
+export function getTrialIds() {
+  const file = getFullCharactersJSON();
+  const paths = [];
+  for (const c of file) {
+    const trialDir = getTrialPath(c.id);
+    if (fs.existsSync(trialDir)) {
+      const trials = fs.readdirSync(trialDir);
+      for (const filename of trials) {
+        paths.push({ params: { cid: c.id, tid: getIdFromFilename(filename) } });
+      }
+    }
+  }
+  return paths;
+}
+
+export function getTrials(cid: string) {
+  const file = getFullCharactersJSON();
+  const trialsDir = getTrialPath(cid);
+  const [character] = file.filter((c) => c.id === cid);
+
+  if (fs.existsSync(trialsDir)) {
+    const trialFilenames = fs.readdirSync(trialsDir);
+    const trials = trialFilenames
+      .map((filename) => {
+        const fullPath = path.join(trialsDir, filename);
+        const id = getIdFromFilename(filename);
+        const meta = getMetadataFromFile(fullPath);
+        return { ...meta, id };
+      })
+      .sort((a, b) => (a.trial > b.trial ? 1 : -1));
+
+    return {
+      combos: trials,
+      cname: character.name,
+    };
+  } else {
+    return {
+      combos: [],
+      cname: character.name,
+    };
+  }
+}
+
+export function getTrial(cid: string, tid: string) {
+  const file = getFullCharactersJSON();
+  const [character] = file.filter((c) => c.id === cid);
+  const trialsDir = getTrialPath(cid);
+  const filePath = path.join(trialsDir, `${tid}.mdx`);
+  if (fs.existsSync(trialsDir) && fs.existsSync(filePath)) {
+    const id = getIdFromFilename(filePath);
+    const meta = getMetadataFromFile(filePath);
+    const content = getContentFromFile(filePath);
+    const trial = { ...meta, id };
+
+    const trialFilenames = fs.readdirSync(trialsDir);
+    const trials = trialFilenames
+      .map((filename) => {
+        const fullPath = path.join(trialsDir, filename);
+        const id = getIdFromFilename(filename);
+        const meta = getMetadataFromFile(fullPath);
+        return { ...meta, id };
+      })
+      .sort((a, b) => (a.trial > b.trial ? 1 : -1));
+    return { character, trial, trials, content };
+  } else {
+    return { trials: [], trial: {}, content: "" };
+  }
+}
+
+export function getTrialPath(cid: string) {
+  return path.join(process.cwd(), "data", cid, "trials");
+}
+
+export function getMetadataFromFile(filename: string) {
+  const content = fs.readFileSync(filename, "utf-8");
+  const result = matter(content);
+  const metadata = result.data as RawCombo;
+  return { ...metadata };
+}
+
+export function getContentFromFile(filename: string) {
+  const content = fs.readFileSync(filename, "utf-8");
+  const result = matter(content);
+  return result.content;
+}
+
+export function getIdFromFilename(filename: string) {
+  return filename.replace(/\.mdx$/, "");
 }

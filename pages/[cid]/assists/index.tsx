@@ -6,7 +6,6 @@ import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Page from "components/Page";
 import Row from "components/Row";
-import MovePreview from "components/MovePreview";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
 import Tree from "components/Tree";
@@ -75,7 +74,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
           <ul className="grid gap-y-6">
             {assists.map((a) => (
               <li key={a.id} id={a.id}>
-                <MovePreview>
+                <div className="flex bg-neutral-800 md:rounded-2xl">
                   <StatSection className="w-1/2 py-6 px-6">
                     <StatSectionHeader>
                       <Link href={routes.assist(cid, a.id)}>
@@ -101,7 +100,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
                       objectFit="cover"
                     />
                   </div>
-                </MovePreview>
+                </div>
               </li>
             ))}
           </ul>

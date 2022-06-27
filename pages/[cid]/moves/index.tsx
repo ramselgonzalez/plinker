@@ -6,7 +6,6 @@ import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Chip from "components/Chip";
 import Row from "components/Row";
-import MovePreview from "components/MovePreview";
 import Page from "components/Page";
 import StatSection from "components/StatSection";
 import StatSectionHeader from "components/StatSectionHeader";
@@ -87,8 +86,8 @@ const Moves: NextPage<MovesProps> = (props) => {
           <ul className="grid gap-y-6">
             {moves.map((m) => (
               <li key={m.id}>
-                <MovePreview>
-                  <StatSection className="w-1/2 py-6 px-6">
+                <div className="flex bg-neutral-800 md:rounded-2xl">
+                  <StatSection className="w-1/2 p-6">
                     <StatSectionHeader>
                       <Link href={routes.move(cid, m.id)}>
                         <a id={m.id} className="text-cyan-300 hover:underline">
@@ -102,12 +101,7 @@ const Moves: NextPage<MovesProps> = (props) => {
                       label="Input"
                       value={
                         <Chip className="inline-block" color={getInputColor(m.input)}>
-                          <Typography
-                            color={getInputColor(m.input) === "yellow" ? "black" : "white"}
-                            component="p"
-                            className="mx-2"
-                            variant="h4"
-                          >
+                          <Typography component="p" className="mx-2" variant="h4">
                             {m.input}
                           </Typography>
                         </Chip>
@@ -129,7 +123,7 @@ const Moves: NextPage<MovesProps> = (props) => {
                       objectFit="cover"
                     />
                   </div>
-                </MovePreview>
+                </div>
               </li>
             ))}
           </ul>

@@ -21,6 +21,11 @@ function getNavTabs(currentRoute: string) {
       label: "Assists",
       active: [routes.assists(), routes.assist()].includes(currentRoute),
     },
+    {
+      path: routes.trials,
+      label: "Trials",
+      active: [routes.trials(), routes.trial()].includes(currentRoute),
+    },
   ];
 }
 
@@ -32,16 +37,16 @@ function SecondaryHeader() {
   return (
     <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
       <nav className="relative my-0 mx-auto h-full w-full xl:w-xl">
-        <ul className="flex h-full items-center">
+        <ul className="flex h-full w-full items-center">
           {tabs.map((tab) => (
             <li
               key={tab.label}
-              className={classNames("box-content h-full", {
+              className={classNames("box-content h-full w-1/3 md:w-40", {
                 ["-mb-px border-b border-cyan-300"]: tab.active,
               })}
             >
               <Link href={tab.path(cid)}>
-                <a className="flex h-full w-1/3 items-center justify-center duration-300 ease-out hover:bg-neutral-800 focus:bg-neutral-800 xl:w-40">
+                <a className="flex h-full items-center justify-center duration-300 ease-out hover:bg-neutral-800 focus:bg-neutral-800 ">
                   <Typography color={tab.active ? "aqua" : "white"} className="uppercase" component="p" variant="h4">
                     {tab.label}
                   </Typography>
