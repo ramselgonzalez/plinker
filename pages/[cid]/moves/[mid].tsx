@@ -1,49 +1,27 @@
+import fs from "fs";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Head from "next/head";
-import Image, { ImageProps } from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { getPlaiceholder } from "plaiceholder";
 import Chip from "components/Chip";
+import Head from "components/Head";
 import Page from "components/Page";
 import Tree from "components/Tree";
 import TreeSection from "components/TreeSection";
 import TreeItem from "components/TreeItem";
 import Typography from "components/Typography";
-import { getMoveIds, getMove } from "lib/characters";
-import { IMoveDetail, IMovePreview, RawMove, MoveTypeValues } from "types";
+import { getMoveIds, getMove } from "lib/move";
+import { IMoveDetail, IMovePreview, MoveTypeValues, RawCharacter } from "types";
 import { getInputColor } from "helpers";
 import routes from "routes";
-
-function getPageTitle(name: string, move: string) {
-  return `${name} / ${move} / Plinker`;
-}
-
-function getOpenGraphTitle(name: string, move: string) {
-  return `${name} | ${move}`;
-}
-
-function getOpenGraphImageAlt(name: string, move: string) {
-  return `${name} performing ${move}`;
-}
-
-function getOpenGraphDescription(name: string, move: string) {
-  return `Frame data and details for ${name}'s ${move}.`;
-}
-
-function getOpenGraphImage(cid: string, mid: string) {
-  return `${process.env.NEXT_PUBLIC_HOST}/images/${cid}/moves/${mid}.jpg`;
-}
+import path from "path";
 
 interface MoveProps {
-  cname: string;
+  character: RawCharacter;
   move: IMoveDetail;
   moves: Array<IMovePreview>;
-  previousMove: RawMove;
-  nextMove: RawMove;
-  moveIndex: number;
   minDmgScaling: number;
-  totalMoves: number;
   xf1: number;
   xf2: number;
   xf3: number;
@@ -57,7 +35,7 @@ function getFrameDataColor(adv: number | string) {
 }
 
 const Move: NextPage<MoveProps> = (props) => {
-  const { cname, minDmgScaling, move, moves, blurDataURL } = props;
+  const { character, minDmgScaling, move, moves, blurDataURL } = props;
   const { query } = useRouter();
   const cid = query.cid as string;
   const sections = [];
@@ -69,15 +47,7 @@ const Move: NextPage<MoveProps> = (props) => {
   }
   return (
     <>
-      <Head>
-        <title>{getPageTitle(cname, move.name)}</title>
-        <meta property="og:title" content={getOpenGraphTitle(cname, move.name)} />
-        <meta property="og:description" content={getOpenGraphDescription(cname, move.name)} />
-        <meta property="og:image:type" content="image/jpg" />
-        <meta property="og:image:alt" content={getOpenGraphImageAlt(cname, move.name)} />
-        <meta property="og:image" content={getOpenGraphImage(cid, move.id)} />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
+      <Head page="move" name={character.name} cid={cid} mid={move.id} move={move.name} />
       <Page>
         <Tree>
           {sections.map((s) => (
@@ -93,7 +63,7 @@ const Move: NextPage<MoveProps> = (props) => {
         <div className="mt-34 mb-8 w-page-content pl-8">
           <header className="mb-2">
             <Typography color="aqua" className="uppercase" component="p" variant="h3">
-              {cname}
+              {character.name}
             </Typography>
             <Typography className="uppercase" variant="h1">
               {move.name}
@@ -105,7 +75,7 @@ const Move: NextPage<MoveProps> = (props) => {
                 <Image
                   blurDataURL={blurDataURL}
                   placeholder={blurDataURL ? "blur" : undefined}
-                  alt={`${cname} performing ${move.name}`}
+                  alt={`${character.name} performing ${move.name}`}
                   width={1920}
                   height={1080}
                   key={move.id}
@@ -113,18 +83,13 @@ const Move: NextPage<MoveProps> = (props) => {
                   src={`/images/${cid}/moves/${move.id}.jpg`}
                 />
               </div>
-              <div className="w-1/2">
+              <div className="flex w-1/2 flex-col">
                 <div>
                   <Typography className="mb-2 uppercase" color="gray" variant="h4">
                     Input
                   </Typography>
-                  <Chip className="inline-block" color={getInputColor(move.input)}>
-                    <Typography
-                      color={getInputColor(move.input) === "yellow" ? "black" : "white"}
-                      component="p"
-                      className="mx-2"
-                      variant="h3"
-                    >
+                  <Chip color={getInputColor(move.input)}>
+                    <Typography component="p" variant="h3">
                       {move.input}
                     </Typography>
                   </Chip>
@@ -155,8 +120,26 @@ const Move: NextPage<MoveProps> = (props) => {
                     </Typography>
                   </div>
                 </div>
-                <div className="mt-3 flex border-t border-neutral-700 pt-2">
-                  <Typography>{move.description}</Typography>
+                <div className="flex flex-1 flex-col justify-between">
+                  <div className="my-3 flex border-t border-neutral-700 pt-2">
+                    <Typography>{move.description}</Typography>
+                  </div>
+                  {move.attributes.length > 0 && (
+                    <div>
+                      <Typography color="gray" className="uppercase" variant="h4">
+                        Attributes
+                      </Typography>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {move.attributes.map((a) => (
+                          <Chip key={a}>
+                            <Typography className="uppercase" variant="h4" component="span">
+                              {a}
+                            </Typography>
+                          </Chip>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -251,22 +234,6 @@ const Move: NextPage<MoveProps> = (props) => {
                   ))}
                 </ul>
               </div>
-              <div className="w-2/5">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Attributes
-                </Typography>
-                {move.attributes.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {move.attributes.map((a) => (
-                      <Chip key={a}>
-                        <Typography className="uppercase" variant="h4" component="span">
-                          {a}
-                        </Typography>
-                      </Chip>
-                    ))}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -288,11 +255,14 @@ interface IParams extends ParsedUrlQuery {
 export const getStaticProps: GetStaticProps<MoveProps> = async (context) => {
   const { cid, mid } = context.params as IParams;
   const data = getMove(cid, mid);
+  const imgUrl = `/images/${cid}/moves/${mid}.jpg`;
+  const fullPath = path.join(process.cwd(), "public", imgUrl);
   let base64 = "";
-  try {
-    const res = await getPlaiceholder(`/images/${cid}/moves/${mid}.jpg`, { size: 32 });
+
+  if (fs.existsSync(fullPath)) {
+    const res = await getPlaiceholder(imgUrl, { size: 32 });
     base64 = res.base64;
-  } catch (err) {}
+  }
 
   return {
     props: {

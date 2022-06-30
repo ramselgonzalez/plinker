@@ -1,5 +1,6 @@
 import { IMovePreview, IMoveDetail, RawMove, MoveType } from "types";
-import { getDmgRange, getDmgPreview, getHits } from "helpers";
+import { getDmgRange, getDmgPreview } from "helpers/damage";
+import { getHits } from "helpers";
 
 export function getMovePreview(move: RawMove): IMovePreview {
   return {

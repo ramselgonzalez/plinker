@@ -3,7 +3,7 @@ import Head from "next/head";
 import Page from "components/Page";
 import Typography from "components/Typography";
 import CharacterSelectItem from "components/CharacterSelectItem";
-import { getCharacterPreviews } from "lib/characters";
+import { getCharacterPreviews } from "lib/character";
 import { ICharacterPreview } from "types";
 
 interface HomeProps {
@@ -41,7 +41,7 @@ const Home: NextPage<HomeProps> = (props) => {
               <CharacterSelectItem
                 className={i === 1 ? "col-start-1" : ""}
                 alt={c.name}
-                imageUrl={`/images/thumbnails_${c.id}.webp`}
+                imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}
               />
@@ -60,7 +60,7 @@ const Home: NextPage<HomeProps> = (props) => {
               <CharacterSelectItem
                 className={i === 0 ? "col-start-4" : ""}
                 alt={c.name}
-                imageUrl={`/images/thumbnails_${c.id}.webp`}
+                imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}
               />
@@ -79,7 +79,12 @@ const Home: NextPage<HomeProps> = (props) => {
           </div>
           <div className="fixed bottom-0 left-0 grid w-full grid-cols-50 gap-x-3 overflow-x-scroll border-t border-t-neutral-500 bg-neutral-900 p-4">
             {mobileSort.map((c) => (
-              <CharacterSelectItem alt={c.name} imageUrl={`/images/thumbnails_${c.id}.webp`} key={c.id} value={c} />
+              <CharacterSelectItem
+                alt={c.name}
+                imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
+                key={c.id}
+                value={c}
+              />
             ))}
           </div>
         </div>

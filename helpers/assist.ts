@@ -1,4 +1,5 @@
-import { getHits, getDmgPreview, getMeterGain } from "helpers";
+import { getHits } from "helpers";
+import { getDmgPreview, getMeterGain } from "helpers/damage";
 import { IAssistDetail, IAssistPreview, RawAssist } from "types";
 
 export function getAssistPreview(a: RawAssist): IAssistPreview {
@@ -23,6 +24,7 @@ export function getAssistDetail(a: RawAssist): IAssistDetail {
     active: a.active || "--",
     attributes: a.attributes,
     block: a.block,
+    description: a.description || "",
     dmg: a.dmg,
     dmgPerHit: a.dmgPerHit || null,
     hit: a.hit,

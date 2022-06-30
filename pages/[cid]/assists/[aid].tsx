@@ -1,70 +1,37 @@
 import { ParsedUrlQuery } from "querystring";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
-import Head from "next/head";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/image";
 import Chip from "components/Chip";
+import Head from "components/Head";
 import Page from "components/Page";
-import Row from "components/Row";
-import StatSection from "components/StatSection";
-import StatSectionHeader from "components/StatSectionHeader";
 import Typography from "components/Typography";
 import Tree from "components/Tree";
 import TreeSection from "components/TreeSection";
-import { getAssistIds, getAssist } from "lib/characters";
-import { IAssistDetail, IAssistPreview, IMoveLink } from "types";
-import { getMeterGain } from "helpers";
-import routes from "routes";
 import TreeItem from "components/TreeItem";
-
-function getPageTitle(name: string, assist: string) {
-  return `${name} / ${assist} / Plinker`;
-}
-
-function getOpenGraphTitle(name: string, assist: string) {
-  return `${name} | ${assist}`;
-}
-
-function getOpenGraphImageAlt(name: string, assist: string) {
-  return `${name} performing ${assist}`;
-}
-
-function getOpenGraphDescription(name: string, assist: string) {
-  return `Frame data and details for ${name}'s ${assist} assist.`;
-}
-
-function getOpenGraphImage(cid: string, mid: string) {
-  return `${process.env.NEXT_PUBLIC_HOST}/images/${cid}/moves/${mid}.jpg`;
-}
+import { MarkdownComponents } from "helpers/markdown";
+import { getAssistIds, getAssist } from "lib/assist";
+import { IAssistDetail, IAssistPreview } from "types";
+import routes from "routes";
+import { getAssistTypeColor } from "helpers";
 
 interface AssistProps {
   cname: string;
+  content: MDXRemoteSerializeResult;
   assist: IAssistDetail;
   assists: Array<IAssistPreview>;
-  previousAssist: IMoveLink;
-  nextAssist: IMoveLink;
-  assistIndex: number;
   minDmgScaling: number;
-  xf1: number;
-  xf2: number;
-  xf3: number;
 }
 
 const Assist: NextPage<AssistProps> = (props) => {
-  const { assist, assists, cname, minDmgScaling, xf1, xf2, xf3 } = props;
+  const { assist, assists, cname, content, minDmgScaling } = props;
   const router = useRouter();
   const cid = router.query.cid as string;
   return (
     <>
-      <Head>
-        <title>{getPageTitle(cname, assist.name)}</title>
-        <meta property="og:title" content={getOpenGraphTitle(cname, assist.name)} />
-        <meta property="og:description" content={getOpenGraphDescription(cname, assist.name)} />
-        <meta property="og:image" content={getOpenGraphImage(cid, assist.id)} />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:alt" content={getOpenGraphImageAlt(cname, assist.name)} />
-        <meta name="twitter:card" content="summary_large_image" />
-      </Head>
+      <Head page="assist" name={cname} cid={cid} move={assist.name} mid={assist.id} />
       <Page>
         <Tree>
           <TreeSection label="Assists">
@@ -101,8 +68,8 @@ const Assist: NextPage<AssistProps> = (props) => {
                   <Typography className="mb-2 uppercase" color="gray" variant="h4">
                     Assist Type
                   </Typography>
-                  <Chip className="inline-block">
-                    <Typography component="p" className="mx-2 uppercase" variant="h3">
+                  <Chip className={getAssistTypeColor(assist.type)}>
+                    <Typography component="p" className="uppercase" variant="h3">
                       {assist.type}
                     </Typography>
                   </Chip>
@@ -134,16 +101,28 @@ const Assist: NextPage<AssistProps> = (props) => {
                   </div>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-2">
-                  <Typography>
-                    Ea sint consequat eu adipisicing voluptate proident mollit labore laboris reprehenderit. Enim
-                    occaecat est adipisicing qui duis proident sunt aute. Proident eiusmod ullamco non esse duis enim
-                    nisi esse. Nulla duis exercitation nulla commodo ex dolore aliqua adipisicing irure.
-                  </Typography>
+                  <Typography>{assist.description}</Typography>
                 </div>
+                {assist.attributes.length > 0 && (
+                  <div>
+                    <Typography color="gray" className="uppercase" variant="h4">
+                      Attributes
+                    </Typography>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {assist.attributes.map((a) => (
+                        <Chip key={a}>
+                          <Typography className="uppercase" variant="h4" component="span">
+                            {a}
+                          </Typography>
+                        </Chip>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-3">
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+            <div className="flex rounded-2xl bg-neutral-800 p-4">
+              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Start Up
                 </Typography>
@@ -151,7 +130,7 @@ const Assist: NextPage<AssistProps> = (props) => {
                   {assist.startUp}
                 </Typography>
               </div>
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Active
                 </Typography>
@@ -159,7 +138,7 @@ const Assist: NextPage<AssistProps> = (props) => {
                   {assist.active}
                 </Typography>
               </div>
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Recovery
                 </Typography>
@@ -167,7 +146,7 @@ const Assist: NextPage<AssistProps> = (props) => {
                   {assist.recovery}
                 </Typography>
               </div>
-              <div className="flex-auto px-2 text-center">
+              <div className="flex-1 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Alt. Recovery
                 </Typography>
@@ -176,8 +155,8 @@ const Assist: NextPage<AssistProps> = (props) => {
                 </Typography>
               </div>
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-3">
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+            <div className="flex rounded-2xl bg-neutral-800 p-4">
+              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Damage
                 </Typography>
@@ -185,7 +164,7 @@ const Assist: NextPage<AssistProps> = (props) => {
                   {assist.dmg}
                 </Typography>
               </div>
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
+              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Max Scaled Damage
                 </Typography>
@@ -193,7 +172,7 @@ const Assist: NextPage<AssistProps> = (props) => {
                   {assist.dmg * minDmgScaling}
                 </Typography>
               </div>
-              <div className="flex-auto px-2 text-center">
+              <div className="flex-1 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
                   Meter Gain
                 </Typography>
@@ -202,33 +181,8 @@ const Assist: NextPage<AssistProps> = (props) => {
                 </Typography>
               </div>
             </div>
-            <div className="flex gap-x-8">
-              <div className="w-3/5">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Usage and Extra Info
-                </Typography>
-                <ul className="list-inside list-disc">
-                  {assist.notes.map((n, i) => (
-                    <li key={i}>{n}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="w-2/5">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Attributes
-                </Typography>
-                {assist.attributes.length > 0 && (
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {assist.attributes.map((a) => (
-                      <Chip key={a}>
-                        <Typography className="uppercase" variant="h4" component="span">
-                          {a}
-                        </Typography>
-                      </Chip>
-                    ))}
-                  </div>
-                )}
-              </div>
+            <div className="w-4/5">
+              <MDXRemote {...content} components={MarkdownComponents} />
             </div>
           </div>
         </div>
@@ -247,12 +201,12 @@ interface IParams extends ParsedUrlQuery {
   aid: string;
 }
 
-export const getStaticProps: GetStaticProps<AssistProps> = (context) => {
+export const getStaticProps: GetStaticProps<AssistProps> = async (context) => {
   const { cid, aid } = context.params as IParams;
-  const data = getAssist(cid, aid);
-
+  const { content, ...rest } = getAssist(cid, aid);
+  const mdx = await serialize(content);
   return {
-    props: { ...data },
+    props: { ...rest, content: mdx },
   };
 };
 

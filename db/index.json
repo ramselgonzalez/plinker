@@ -6677,6 +6677,7 @@
         "name": "Ryuenjin H",
         "id": "ryuenjin-h",
         "characterId": "zero",
+        "description": "A multi-hitting DP assist without any invincibility that appears slightly in front of the player.",
         "type": "Alpha",
         "thc": "Rekkoha",
         "dmg": 102300,
@@ -6694,6 +6695,7 @@
       },
       {
         "name": "Hadangeki M",
+        "description": "A single hit, fast moving projectile.",
         "id": "hadangeki-m",
         "characterId": "zero",
         "type": "Beta",
@@ -6713,6 +6715,7 @@
       },
       {
         "name": "Shippuga",
+        "description": "A slower assist that sends Zero forward with his saber out.",
         "id": "shippuga",
         "characterId": "zero",
         "type": "Gamma",

@@ -10,22 +10,26 @@ interface RowProps extends ComponentPropsWithoutRef<"div"> {
 function Row(props: RowProps) {
   const { label, value, className } = props;
   return (
-    <div
+    <tr
       className={cn("flex items-center justify-between border-b border-b-neutral-700 py-2 last:border-b-0", {
         [`${className}`]: className,
       })}
     >
-      <Typography color="gray" className="uppercase" variant="h4">
-        {label}
-      </Typography>
-      {typeof value === "string" || typeof value === "number" ? (
-        <Typography component="p" className="uppercase" variant="h3">
-          {value}
+      <th scope="row">
+        <Typography component="p" color="gray" className="uppercase" variant="h4">
+          {label}
         </Typography>
-      ) : (
-        value
-      )}
-    </div>
+      </th>
+      <td>
+        {typeof value === "string" || typeof value === "number" ? (
+          <Typography component="p" className="uppercase" variant="h3">
+            {value}
+          </Typography>
+        ) : (
+          value
+        )}
+      </td>
+    </tr>
   );
 }
 

@@ -11,7 +11,7 @@ export function getHits(hits: number | string) {
   return [hitsMinNum, hitsMaxNum];
 }
 
-export function getInputColor(input: string) {
+export function getInputColor(input: string): InputColor {
   let color: InputColor = undefined;
   if (input.includes("L")) {
     color = "blue";
@@ -36,7 +36,32 @@ export function getInputColor(input: string) {
   return color;
 }
 
-export * from "./character";
-export * from "./move";
-export * from "./assist";
-export * from "./damage";
+export function getTrialDifficultyColor(difficulty: string) {
+  switch (difficulty) {
+    case "Very Easy":
+      return "bg-green-700";
+    case "Easy":
+      return "bg-green-800";
+    case "Medium":
+      return "bg-yellow-700";
+    case "Hard":
+      return "bg-red-600";
+    case "Very Hard":
+      return "bg-red-900";
+    default:
+      return "";
+  }
+}
+
+export function getAssistTypeColor(type: string) {
+  switch (type) {
+    case "Alpha":
+      return "bg-pink-800";
+    case "Beta":
+      return "bg-blue-600";
+    case "Gamma":
+      return "bg-green-700";
+    default:
+      return "";
+  }
+}

@@ -9,15 +9,15 @@ function StatSectionHeader(props: StatSectionHeaderProps) {
 
   if (typeof children === "string") {
     return (
-      <div className="flex items-center justify-between border-b border-neutral-400 py-3">
-        <Typography variant="h3" className="uppercase">
+      <caption className="border-b border-t-3 border-t-neutral-300 border-b-neutral-400 py-3 text-left">
+        <Typography variant="h3" component="h2" className="uppercase">
           {children}
         </Typography>
-      </div>
+      </caption>
     );
   }
 
-  return <div className="flex items-center justify-between border-b border-neutral-400 py-3">{children}</div>;
+  return <caption className="border-b border-neutral-400 py-3 text-left">{children}</caption>;
 }
 
 export default StatSectionHeader;

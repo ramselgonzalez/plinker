@@ -25,7 +25,7 @@ const variants: VariantMappings = {
 const colors = {
   white: "text-neutral-50",
   gray: "text-neutral-400",
-  blue: "",
+  blue: "text-blue-500",
   yellow: "",
   red: "text-red-400",
   green: "text-green-500",

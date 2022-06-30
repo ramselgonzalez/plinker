@@ -7,11 +7,11 @@ interface StatSectionFooterProps {
 function StatSectionFooter(props: StatSectionFooterProps) {
   const { children } = props;
   return (
-    <div className="flex justify-end py-3">
+    <tr className="flex justify-end py-3">
       <Typography className="uppercase" color="gray" component="p" variant="h4">
         {children}
       </Typography>
-    </div>
+    </tr>
   );
 }
 

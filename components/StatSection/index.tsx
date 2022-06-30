@@ -5,17 +5,16 @@ interface StatSectionProps extends React.ComponentPropsWithoutRef<"section"> {
 }
 
 function StatSection(props: StatSectionProps) {
-  const { children, divider, className } = props;
+  const { children, className } = props;
 
   return (
-    <section
-      className={cn("-mt-3", {
+    <table
+      className={cn("w-full", {
         [`${className}`]: className,
-        ["mt-0 border-t-3 border-neutral-300"]: divider,
       })}
     >
       {children}
-    </section>
+    </table>
   );
 }
 

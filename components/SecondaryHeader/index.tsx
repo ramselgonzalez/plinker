@@ -1,8 +1,7 @@
 import { useRouter } from "next/router";
-import Link from "next/link";
+import cn from "classnames";
+import Link from "components/Link";
 import routes from "routes";
-import Typography from "components/Typography";
-import classNames from "classnames";
 
 function getNavTabs(currentRoute: string) {
   return [
@@ -36,21 +35,22 @@ function SecondaryHeader() {
 
   return (
     <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
-      <nav className="relative my-0 mx-auto h-full w-full xl:w-xl">
+      <nav className="relative my-0 mx-auto h-full w-full xl:w-xl" aria-label="Character Navigation Tabs">
         <ul className="flex h-full w-full items-center">
           {tabs.map((tab) => (
             <li
               key={tab.label}
-              className={classNames("box-content h-full w-1/3 md:w-40", {
+              className={cn("box-content h-full w-1/3 md:w-40", {
                 ["-mb-px border-b border-cyan-300"]: tab.active,
               })}
             >
-              <Link href={tab.path(cid)}>
-                <a className="flex h-full items-center justify-center duration-300 ease-out hover:bg-neutral-800 focus:bg-neutral-800 ">
-                  <Typography color={tab.active ? "aqua" : "white"} className="uppercase" component="p" variant="h4">
-                    {tab.label}
-                  </Typography>
-                </a>
+              <Link
+                href={tab.path(cid)}
+                className="flex h-full items-center justify-center uppercase duration-300 ease-out hover:bg-neutral-800 focus:bg-neutral-800"
+                variant="h4"
+                color={tab.active ? "aqua" : "white"}
+              >
+                {tab.label}
               </Link>
             </li>
           ))}
