@@ -76,8 +76,8 @@ const Move: NextPage<MoveProps> = (props) => {
                   blurDataURL={blurDataURL}
                   placeholder={blurDataURL ? "blur" : undefined}
                   alt={`${character.name} performing ${move.name}`}
-                  width={1920}
-                  height={1080}
+                  width={853}
+                  height={480}
                   key={move.id}
                   priority
                   src={`/images/${cid}/moves/${move.id}.jpg`}
