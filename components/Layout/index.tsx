@@ -15,7 +15,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           <Link href={routes.home} className="inline-block rounded-2xl px-4 uppercase" color="white" variant="h4">
             Plinker
           </Link>
-          <ul className="ml-2 border-l border-neutral-500">
+          <ul className="ml-2 border-l border-neutral-500 pl-2">
             <li className="group relative hidden lg:block">
               <button className="flex cursor-pointer items-center gap-x-2 rounded-2xl py-2 px-4 duration-300 ease-out hover:bg-neutral-800">
                 <Typography className="uppercase" color="gray" component="p" variant="h4">

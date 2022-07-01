@@ -24,8 +24,8 @@ function Chip(props: ChipProps) {
   return (
     <div
       className={cn("inline-flex items-center justify-center rounded-full py-1 px-4", {
-        [`${className}`]: className,
         [colors[color]]: color,
+        [`${className}`]: className,
       })}
     >
       {children}
