@@ -152,14 +152,12 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { cid, tid } = context.params as IParams;
-  const { character, trial, trials, content } = getTrial(cid, tid);
-  const mdx = await serialize(content);
+  const { content: mdx, ...rest } = getTrial(cid, tid);
+  const content = await serialize(mdx);
   return {
     props: {
-      content: mdx,
-      character,
-      trial,
-      trials,
+      ...rest,
+      content,
     },
   };
 };

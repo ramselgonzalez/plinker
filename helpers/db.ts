@@ -61,6 +61,10 @@ export function getCharacterMovesPath(cid: string) {
   return path.join(DB_DIR, cid, "moves");
 }
 
+export function getMovePath(cid: string, mid: string) {
+  return path.join(DB_DIR, cid, "moves", mid + ".mdx");
+}
+
 export function getCharacterAssistsPath(cid: string) {
   return path.join(DB_DIR, cid, "assists");
 }

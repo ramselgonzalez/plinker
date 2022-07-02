@@ -1,6 +1,6 @@
-import { getAllCharactersJSON, getCharacterJSON } from "helpers/db";
+import fs from "fs";
+import { getAllCharactersJSON, getCharacterJSON, getContentFromFile, getMovePath } from "helpers/db";
 import { getMovePreview, getMoveDetail } from "helpers/move";
-import { getMinDmgScaling } from "helpers/move";
 
 export function getMoveIds() {
   const file = getAllCharactersJSON();
@@ -15,7 +15,7 @@ export function getMoveIds() {
 
 export function getMovePreviews(cid: string) {
   const character = getCharacterJSON(cid);
-  const moves = character.moves.map(getMovePreview);
+  const moves = character.moves.map((m) => getMovePreview(m, character));
   return {
     character,
     moves,
@@ -24,22 +24,19 @@ export function getMovePreviews(cid: string) {
 
 export function getMove(cid: string, mid: string) {
   const character = getCharacterJSON(cid);
-  const previews = character.moves.map(getMovePreview);
+  const moves = character.moves.map((m) => getMovePreview(m, character));
   const [m] = character.moves.filter((m) => m.id === mid);
-  const move = getMoveDetail(m);
-  const minDmgScaling = getMinDmgScaling(
-    move.type,
-    character.minDmgScalingNormal,
-    character.minDmgScalingSpecial,
-    character.minDmgScalingSuper
-  );
+  const move = getMoveDetail(m, character);
+  const filePath = getMovePath(cid, mid);
+  let content = "";
+  if (fs.existsSync(filePath)) {
+    content = getContentFromFile(filePath);
+  }
+
   return {
     character,
-    minDmgScaling: minDmgScaling,
-    move: move,
-    moves: previews,
-    xf1: character.xf1DamageBoost,
-    xf2: character.xf2DamageBoost,
-    xf3: character.xf3DamageBoost,
+    content,
+    move,
+    moves,
   };
 }

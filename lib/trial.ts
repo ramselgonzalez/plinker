@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { getAllCharactersJSON } from "helpers/db";
+import { getAllCharactersJSON, getTrialPath } from "helpers/db";
 import { getIdFromFilename, getCharacterTrialsPath, getMetadataFromFile, getContentFromFile } from "helpers/db";
 import { RawCombo } from "types";
 
@@ -44,13 +44,12 @@ export function getTrial(cid: string, tid: string) {
   const file = getAllCharactersJSON();
   const [character] = file.filter((c) => c.id === cid);
   const trialsDir = getCharacterTrialsPath(cid);
-  const filePath = path.join(trialsDir, tid + ".mdx");
+  const filePath = getTrialPath(cid, tid);
   if (fs.existsSync(trialsDir) && fs.existsSync(filePath)) {
     const id = getIdFromFilename(filePath);
     const meta = getMetadataFromFile(filePath) as RawCombo;
     const content = getContentFromFile(filePath);
     const trial = { ...meta, id };
-
     const trialFilenames = fs.readdirSync(trialsDir);
     const trials = trialFilenames
       .map((filename) => {

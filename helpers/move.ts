@@ -1,15 +1,17 @@
-import { IMovePreview, IMoveDetail, RawMove, MoveType } from "types";
+import { IMovePreview, IMoveDetail, RawMove, RawCharacter } from "types";
 import { getDmgRange, getDmgPreview } from "helpers/damage";
 import { getHits } from "helpers";
 
-export function getMovePreview(move: RawMove): IMovePreview {
+export function getMovePreview(move: RawMove, character: RawCharacter): IMovePreview {
   return {
+    id: move.id,
     active: move.active || "--",
     advBlock: move.advBlock || "--",
     advHit: move.advHit || "--",
     attributes: move.attributes,
     dmg: getDmgPreview(move.dmg),
-    id: move.id,
+    imgUrl: getMoveImgUrl(move.id, character.id),
+    imgAlt: getMoveImgAlt(move.name, character.name),
     input: move.input,
     name: move.name,
     recovery: move.recovery || "--",
@@ -18,7 +20,7 @@ export function getMovePreview(move: RawMove): IMovePreview {
   };
 }
 
-export function getMoveDetail(move: RawMove): IMoveDetail {
+export function getMoveDetail(move: RawMove, character: RawCharacter): IMoveDetail {
   return {
     id: move.id,
     active: move.active || "--",
@@ -27,14 +29,14 @@ export function getMoveDetail(move: RawMove): IMoveDetail {
     advBlock: move.advHit || "--",
     advHit: move.advHit || "--",
     description: move.description || "",
-    dmg: getDmgRange(move.dmg)[0],
+    dmg: getDmgPreview(move.dmg),
     dmgMax: getDmgRange(move.dmg)[1],
     dmgPerHit: move.dmgPerHit,
     hit: move.hit,
     hits: getHits(move.hits)[0],
     hitsMax: getHits(move.hits)[1],
-    imageUrl: "",
-    imageAlt: "",
+    imgUrl: getMoveImgUrl(move.id, character.id),
+    imgAlt: getMoveImgAlt(move.name, character.name),
     input: move.input,
     isLevelThree: move.attributes.includes("Level 3 Super"),
     meterGain: move.meterGain,
@@ -54,24 +56,10 @@ export function getNextMoveIndex(moveIndex: number, totalMoves: number) {
   return moveIndex + 1 === totalMoves ? 0 : moveIndex + 1;
 }
 
-export function getMinDmgScaling(moveType: MoveType, normalFactor: number, specialFactor: number, superFactor: number) {
-  const UNSCALED_FACTOR = 1;
-  switch (moveType) {
-    case "Normal":
-      return normalFactor;
-    case "Command Normal":
-      return normalFactor;
-    case "Throw":
-      return UNSCALED_FACTOR;
-    case "Air Exchange":
-      return specialFactor;
-    case "Snap Back":
-      return normalFactor;
-    case "Special":
-      return specialFactor;
-    case "Super":
-      return superFactor;
-    default:
-      return UNSCALED_FACTOR;
-  }
+export function getMoveImgUrl(mid: string, cid: string) {
+  return `/images/${cid}/moves/${mid}.jpg`;
+}
+
+export function getMoveImgAlt(move: string, character: string) {
+  return `${character} performing ${move}`;
 }

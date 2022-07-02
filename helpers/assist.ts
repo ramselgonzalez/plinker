@@ -25,7 +25,7 @@ export function getAssistDetail(a: RawAssist): IAssistDetail {
     attributes: a.attributes,
     block: a.block,
     description: a.description || "",
-    dmg: a.dmg,
+    dmg: getDmgPreview(a.dmg),
     dmgPerHit: a.dmgPerHit || null,
     hit: a.hit,
     hits: getHits(a.hits)[0],

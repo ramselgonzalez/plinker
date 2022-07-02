@@ -195,6 +195,8 @@ export interface IMovePreview {
   advBlock: number | string;
   advHit: number | string;
   dmg: string | number;
+  imgUrl: string;
+  imgAlt: string;
   input: string;
   name: string;
   startUp: number | string;
@@ -210,14 +212,14 @@ export interface IMoveDetail {
   advHit: number | string;
   block: Block;
   description: string;
-  dmg: number;
+  dmg: string;
   dmgMax: number | null;
   dmgPerHit: string | number | null;
   hit: HitType;
   hits: number;
   hitsMax: number | null;
-  imageUrl: string;
-  imageAlt: string;
+  imgUrl: string;
+  imgAlt: string;
   input: string;
   isLevelThree: boolean;
   meterGain: number;
@@ -270,7 +272,7 @@ export interface IAssistDetail {
   active: number | string;
   block: Block;
   description: string;
-  dmg: number;
+  dmg: string;
   dmgPerHit: string | number | null;
   hit: HitType;
   hits: number;

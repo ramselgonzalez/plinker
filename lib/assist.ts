@@ -34,9 +34,5 @@ export function getAssist(cid: string, aid: string) {
     assist: assist,
     assists: assists,
     content,
-    minDmgScaling: character.minDmgScalingSpecial,
-    xf1: character.xf1DamageBoost,
-    xf2: character.xf2DamageBoost,
-    xf3: character.xf3DamageBoost,
   };
 }

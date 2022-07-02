@@ -1,10 +1,14 @@
 import fs from "fs";
-import { NextPage, GetStaticPaths, GetStaticProps } from "next";
+import path from "path";
 import { ParsedUrlQuery } from "querystring";
-import Image from "next/image";
+import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
 import { getPlaiceholder } from "plaiceholder";
 import Chip from "components/Chip";
+import DataItem from "components/DataItem";
 import Head from "components/Head";
 import Page from "components/Page";
 import Tree from "components/Tree";
@@ -13,19 +17,16 @@ import TreeItem from "components/TreeItem";
 import Typography from "components/Typography";
 import { getMoveIds, getMove } from "lib/move";
 import { IMoveDetail, IMovePreview, MoveTypeValues, RawCharacter } from "types";
+import { MarkdownComponents } from "helpers/markdown";
 import { getInputColor } from "helpers";
 import routes from "routes";
-import path from "path";
 
 interface MoveProps {
+  blurDataURL: string;
+  content: MDXRemoteSerializeResult;
   character: RawCharacter;
   move: IMoveDetail;
   moves: Array<IMovePreview>;
-  minDmgScaling: number;
-  xf1: number;
-  xf2: number;
-  xf3: number;
-  blurDataURL: string;
 }
 
 function getFrameDataColor(adv: number | string) {
@@ -35,7 +36,7 @@ function getFrameDataColor(adv: number | string) {
 }
 
 const Move: NextPage<MoveProps> = (props) => {
-  const { character, minDmgScaling, move, moves, blurDataURL } = props;
+  const { content, character, move, moves, blurDataURL } = props;
   const { query } = useRouter();
   const cid = query.cid as string;
   const sections = [];
@@ -73,14 +74,14 @@ const Move: NextPage<MoveProps> = (props) => {
             <div className="flex gap-x-4">
               <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500 ">
                 <Image
-                  blurDataURL={blurDataURL}
-                  placeholder={blurDataURL ? "blur" : undefined}
-                  alt={`${character.name} performing ${move.name}`}
+                  key={move.id}
+                  src={move.imgUrl}
+                  alt={move.imgAlt}
                   width={853}
                   height={480}
-                  key={move.id}
+                  blurDataURL={blurDataURL}
+                  placeholder={blurDataURL ? "blur" : undefined}
                   priority
-                  src={`/images/${cid}/moves/${move.id}.jpg`}
                 />
               </div>
               <div className="flex w-1/2 flex-col">
@@ -88,37 +89,14 @@ const Move: NextPage<MoveProps> = (props) => {
                   <Typography className="mb-2 uppercase" color="gray" variant="h4">
                     Input
                   </Typography>
-                  <Chip color={getInputColor(move.input)}>
-                    <Typography component="p" variant="h3">
-                      {move.input}
-                    </Typography>
+                  <Chip color={getInputColor(move.input)} className="h3">
+                    {move.input}
                   </Chip>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-3">
-                  <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                    <Typography color="gray" className="uppercase" variant="h4">
-                      Class
-                    </Typography>
-                    <Typography component="p" className="uppercase" variant="h3">
-                      {move.type}
-                    </Typography>
-                  </div>
-                  <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                    <Typography color="gray" className="uppercase" variant="h4">
-                      Block
-                    </Typography>
-                    <Typography component="p" className="uppercase" variant="h3">
-                      {move.block}
-                    </Typography>
-                  </div>
-                  <div className="flex-auto px-2 text-center">
-                    <Typography color="gray" className="uppercase" variant="h4">
-                      Hit Type
-                    </Typography>
-                    <Typography component="p" className="uppercase" variant="h3">
-                      {move.hit}
-                    </Typography>
-                  </div>
+                  <DataItem label="Class" value={move.type} />
+                  <DataItem label="Block" value={move.block} />
+                  <DataItem label="Hit Type" value={move.hit} />
                 </div>
                 <div className="flex flex-1 flex-col justify-between">
                   <div className="my-3 flex border-t border-neutral-700 pt-2">
@@ -131,10 +109,8 @@ const Move: NextPage<MoveProps> = (props) => {
                       </Typography>
                       <div className="mt-2 flex flex-wrap gap-2">
                         {move.attributes.map((a) => (
-                          <Chip key={a}>
-                            <Typography className="uppercase" variant="h4" component="span">
-                              {a}
-                            </Typography>
+                          <Chip className="h4 uppercase" key={a}>
+                            {a}
                           </Chip>
                         ))}
                       </div>
@@ -144,96 +120,19 @@ const Move: NextPage<MoveProps> = (props) => {
               </div>
             </div>
             <div className="flex rounded-2xl bg-neutral-800 p-3">
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Start Up
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {move.startUp}
-                </Typography>
-              </div>
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Active
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {move.active}
-                </Typography>
-              </div>
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Recovery
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {move.recovery}
-                </Typography>
-              </div>
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Block Adv.
-                </Typography>
-                <Typography color={getFrameDataColor(move.advBlock)} component="p" className="uppercase" variant="h3">
-                  {move.advBlock}
-                </Typography>
-              </div>
-              <div className="flex-auto px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Hit Adv.
-                </Typography>
-                <Typography color={getFrameDataColor(move.advHit)} component="p" className="uppercase" variant="h3">
-                  {move.advHit}
-                </Typography>
-              </div>
+              <DataItem label="Start Up" value={move.startUp} />
+              <DataItem label="Active" value={move.active} />
+              <DataItem label="Recovery" value={move.recovery} />
+              <DataItem color={getFrameDataColor(move.advBlock)} label="Block Adv." value={move.advBlock} />
+              <DataItem color={getFrameDataColor(move.advHit)} label="Hit Adv." value={move.advHit} />
             </div>
             <div className="flex rounded-2xl bg-neutral-800 p-3">
-              <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Damage
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {move.dmg}
-                </Typography>
-              </div>
-              {move.dmgMax && (
-                <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                  <Typography color="gray" className="uppercase" variant="h4">
-                    Max Damage
-                  </Typography>
-                  <Typography component="p" className="uppercase" variant="h3">
-                    {move.dmgMax}
-                  </Typography>
-                </div>
-              )}
-              {!move.isLevelThree && (
-                <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                  <Typography color="gray" className="uppercase" variant="h4">
-                    Max Scaled Damage
-                  </Typography>
-                  <Typography component="p" className="uppercase" variant="h3">
-                    {move.dmg * minDmgScaling}
-                  </Typography>
-                </div>
-              )}
-              <div className="flex-auto px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Meter Gain
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {move.meterGain}
-                </Typography>
-              </div>
+              <DataItem label="Hits" value={move.hits} />
+              <DataItem label="Damage" value={move.dmg} />
+              <DataItem label="Meter Gain" value={move.meterGain} />
             </div>
-            <div className="flex gap-x-8">
-              <div className="w-3/5">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Usage and Extra Info
-                </Typography>
-                <ul className="list-inside list-disc">
-                  {move.notes.map((n, i) => (
-                    <li key={i}>{n}</li>
-                  ))}
-                </ul>
-              </div>
+            <div className="-mt-4 w-4/5">
+              <MDXRemote {...content} components={MarkdownComponents} />
             </div>
           </div>
         </div>
@@ -254,20 +153,21 @@ interface IParams extends ParsedUrlQuery {
 
 export const getStaticProps: GetStaticProps<MoveProps> = async (context) => {
   const { cid, mid } = context.params as IParams;
-  const data = getMove(cid, mid);
-  const imgUrl = `/images/${cid}/moves/${mid}.jpg`;
-  const fullPath = path.join(process.cwd(), "public", imgUrl);
-  let base64 = "";
-
+  const { content: mdx, move, ...rest } = getMove(cid, mid);
+  const content = await serialize(mdx);
+  const fullPath = path.join(process.cwd(), "public", move.imgUrl);
+  let blurDataURL = "";
   if (fs.existsSync(fullPath)) {
-    const res = await getPlaiceholder(imgUrl, { size: 32 });
-    base64 = res.base64;
+    const { base64 } = await getPlaiceholder(move.imgUrl, { size: 32 });
+    blurDataURL = base64;
   }
 
   return {
     props: {
-      ...data,
-      blurDataURL: base64,
+      ...rest,
+      content,
+      move,
+      blurDataURL,
     },
   };
 };

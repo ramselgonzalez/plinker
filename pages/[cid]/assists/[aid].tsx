@@ -22,11 +22,10 @@ interface AssistProps {
   content: MDXRemoteSerializeResult;
   assist: IAssistDetail;
   assists: Array<IAssistPreview>;
-  minDmgScaling: number;
 }
 
 const Assist: NextPage<AssistProps> = (props) => {
-  const { assist, assists, cname, content, minDmgScaling } = props;
+  const { assist, assists, cname, content } = props;
   const router = useRouter();
   const cid = router.query.cid as string;
   return (
@@ -158,18 +157,18 @@ const Assist: NextPage<AssistProps> = (props) => {
             <div className="flex rounded-2xl bg-neutral-800 p-4">
               <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
-                  Damage
+                  Hits
                 </Typography>
                 <Typography component="p" className="uppercase" variant="h3">
-                  {assist.dmg}
+                  {assist.hits}
                 </Typography>
               </div>
               <div className="flex-1 border-r border-neutral-700 px-2 text-center">
                 <Typography color="gray" className="uppercase" variant="h4">
-                  Max Scaled Damage
+                  Damage
                 </Typography>
                 <Typography component="p" className="uppercase" variant="h3">
-                  {assist.dmg * minDmgScaling}
+                  {assist.dmg}
                 </Typography>
               </div>
               <div className="flex-1 px-2 text-center">
