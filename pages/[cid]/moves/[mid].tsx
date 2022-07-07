@@ -61,7 +61,7 @@ const Move: NextPage<MoveProps> = (props) => {
             </TreeSection>
           ))}
         </Tree>
-        <div className="mt-34 mb-8 w-page-content pl-8">
+        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
             <Typography color="aqua" className="uppercase" component="p" variant="h3">
               {character.name}
@@ -71,20 +71,21 @@ const Move: NextPage<MoveProps> = (props) => {
             </Typography>
           </header>
           <div className="flex flex-col gap-y-4">
-            <div className="flex gap-x-4">
-              <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500 ">
+            <div className="flex flex-col gap-x-4 md:flex-row">
+              <div className="relative mb-2 flex h-auto overflow-hidden rounded-2xl border border-neutral-500 md:mb-0 md:w-1/2">
                 <Image
                   key={move.id}
                   src={move.imgUrl}
                   alt={move.imgAlt}
                   width={853}
                   height={480}
+                  objectFit="cover"
                   blurDataURL={blurDataURL}
                   placeholder={blurDataURL ? "blur" : undefined}
                   priority
                 />
               </div>
-              <div className="flex w-1/2 flex-col">
+              <div className="flex flex-col md:w-1/2">
                 <div>
                   <Typography className="mb-2 uppercase" color="gray" variant="h4">
                     Input
@@ -94,8 +95,8 @@ const Move: NextPage<MoveProps> = (props) => {
                   </Chip>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-3">
-                  <DataItem label="Class" value={move.type} />
-                  <DataItem label="Block" value={move.block} />
+                  <DataItem className="border-r" label="Class" value={move.type} />
+                  <DataItem className="border-r" label="Block" value={move.block} />
                   <DataItem label="Hit Type" value={move.hit} />
                 </div>
                 <div className="flex flex-1 flex-col justify-between">
@@ -119,14 +120,14 @@ const Move: NextPage<MoveProps> = (props) => {
                 </div>
               </div>
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-3">
+            <div className="flex flex-wrap gap-y-4 rounded-2xl bg-neutral-800 p-3 shadow-md shadow-black/30">
               <DataItem label="Start Up" value={move.startUp} />
               <DataItem label="Active" value={move.active} />
               <DataItem label="Recovery" value={move.recovery} />
               <DataItem color={getFrameDataColor(move.advBlock)} label="Block Adv." value={move.advBlock} />
               <DataItem color={getFrameDataColor(move.advHit)} label="Hit Adv." value={move.advHit} />
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-3">
+            <div className="flex flex-wrap gap-y-4 rounded-2xl bg-neutral-800 p-3 shadow-md shadow-black/30">
               <DataItem label="Hits" value={move.hits} />
               <DataItem label="Damage" value={move.dmg} />
               <DataItem label="Meter Gain" value={move.meterGain} />

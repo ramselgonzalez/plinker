@@ -38,7 +38,7 @@ const Trials: NextPage<TrialsProps> = (props) => {
             ))}
           </TreeSection>
         </Tree>
-        <div className="mt-34 mb-8 w-page-content pl-8">
+        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
             <Typography color="aqua" component="p" className="uppercase" variant="h3">
               {character.name}
@@ -47,18 +47,22 @@ const Trials: NextPage<TrialsProps> = (props) => {
               Trials
             </Typography>
           </header>
-          <ul className="grid w-3/5 gap-y-6">
+          <ul className="grid w-full gap-y-4 md:gap-y-6 lg:w-[800px]">
             {trials.map((c) => (
-              <li key={c.id} className="flex items-start gap-x-4 bg-neutral-800 p-6 md:rounded-2xl">
-                <div className="mt-1 flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-neutral-600 text-xl font-semibold">
-                  {c.trial}
+              <li key={c.id} className="rounded-2xl bg-neutral-800 p-6 shadow-md shadow-black/30">
+                <div className="flex items-center gap-x-2">
+                  <div className="mt-1 flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-neutral-600 text-xl font-semibold">
+                    {c.trial}
+                  </div>
+                  <div className="w-full">
+                    <Link href={routes.trial(cid, c.id)} className="uppercase" color="white" variant="h3">
+                      {c.title}
+                    </Link>
+                  </div>
                 </div>
-                <div className="w-full">
-                  <Link href={routes.trial(cid, c.id)} className="uppercase" variant="h3">
-                    {c.title}
-                  </Link>
-                  <Typography>{c.description}</Typography>
-                  <div className="mt-2 flex gap-x-2 border-t border-neutral-500 pt-2">
+                <div>
+                  <Typography className="border-b border-neutral-500 pb-2">{c.description}</Typography>
+                  <div className="mt-2 flex flex-wrap gap-2">
                     <Chip className={getTrialDifficultyColor(c.difficulty)}>
                       <Typography component="span" className="uppercase" variant="h4">
                         {c.difficulty}

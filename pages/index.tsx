@@ -35,7 +35,7 @@ const Home: NextPage<HomeProps> = (props) => {
       </Head>
       <Page className="mt-4 px-4 pt-34 md:mt-0">
         {/* desktop view */}
-        <div className="hidden w-full md:flex">
+        <div className="hidden w-full lg:flex">
           <div className="grid-rows-7 grid grid-cols-4 gap-x-3 gap-y-3">
             {capcom.map((c, i) => (
               <CharacterSelectItem

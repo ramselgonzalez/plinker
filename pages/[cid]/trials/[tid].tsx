@@ -12,6 +12,7 @@ import { getTrial, getTrialIds } from "lib/trial";
 import routes from "routes";
 import { RawCharacter, RawCombo } from "types";
 import Head from "components/Head";
+import DataItem from "components/DataItem";
 
 interface TrialProps {
   character: RawCharacter;
@@ -35,9 +36,9 @@ const Trial: NextPage<TrialProps> = (props) => {
             ))}
           </TreeSection>
         </Tree>
-        <div className="mt-34 mb-8 w-page-content pl-8">
-          <header>
-            <header className="mb-2">
+        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
+          <div className="flex flex-col gap-y-4 lg:w-4/5">
+            <header>
               <Typography color="aqua" component="p" className="uppercase" variant="h3">
                 {character.name}
               </Typography>
@@ -45,15 +46,13 @@ const Trial: NextPage<TrialProps> = (props) => {
                 {trial.title}
               </Typography>
             </header>
-          </header>
-          <div className="flex w-4/5 flex-col gap-y-4">
-            <div className="relative h-0 w-full rounded-2xl pb-[56.25%]">
+            <div className="relative h-0 w-full pb-[56.25%]">
               <iframe
                 allowFullScreen
-                className="absolute top-0 left-0 h-full w-full rounded-3xl"
+                className="absolute top-0 left-0 h-full w-full rounded-2xl"
                 frameBorder="0"
                 title="Trial video"
-                src={`https://www.youtube.com/embed/${trial.videoId}`}
+                src={`https://www.youtube.com/embed/${trial.videoId}?modestbranding=1`}
               />
             </div>
             <div className="rounded-2xl bg-neutral-800 p-4">
@@ -62,73 +61,17 @@ const Trial: NextPage<TrialProps> = (props) => {
               </Typography>
               <Typography className="font-medium tracking-wider">{trial.input}</Typography>
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-4">
-              <div className="flex-1 border-r border-neutral-700 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Difficulty
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.difficulty}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Position
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.position}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Starter
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.starter}
-                </Typography>
-              </div>
-              <div className="flex-1 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  X-Factor
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.xfactor || "--"}
-                </Typography>
-              </div>
+            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
+              <DataItem label="Difficulty" value={trial.difficulty} />
+              <DataItem label="Position" value={trial.position} />
+              <DataItem label="Starter" value={trial.starter} />
+              <DataItem label="X-Factor" value={trial.xfactor || "--"} />
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-4">
-              <div className="flex-1 border-r border-neutral-700 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Damage
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.damage.toLocaleString("en")}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Meter Start
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.meterStart}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Meter Build
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.meterBuild}
-                </Typography>
-              </div>
-              <div className="flex-1 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Meter Spend
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {trial.meterSpend}
-                </Typography>
-              </div>
+            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
+              <DataItem label="Damage" value={trial.damage.toLocaleString("en")} />
+              <DataItem label="Meter Start" value={trial.meterStart} />
+              <DataItem label="Meter Build" value={trial.meterBuild} />
+              <DataItem label="Meter Spend" value={trial.meterSpend} />
             </div>
             <div>
               <MDXRemote {...content} components={MarkdownComponents} />

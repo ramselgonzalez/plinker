@@ -14,6 +14,9 @@ import { getMovePreviews } from "lib/move";
 import routes from "routes";
 import { MoveTypeValues, IMovePreview, RawCharacter } from "types";
 import { BLUR_DATA_URL } from "helpers/images";
+import Chip from "components/Chip";
+import { getInputColor } from "helpers";
+import Link from "components/Link";
 
 interface MovesProps {
   character: RawCharacter;
@@ -22,7 +25,7 @@ interface MovesProps {
 
 const Moves: NextPage<MovesProps> = (props) => {
   const { character, moves } = props;
-  const { query } = useRouter();
+  const { query, push } = useRouter();
   const cid = query.cid as string;
   const sections = [];
   for (const type of MoveTypeValues) {
@@ -47,7 +50,7 @@ const Moves: NextPage<MovesProps> = (props) => {
             </TreeSection>
           ))}
         </Tree>
-        <div className="mt-34 mb-8 w-page-content pl-8">
+        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
             <Typography className="uppercase" color="aqua" component="p" variant="h3">
               {character.name}
@@ -56,19 +59,31 @@ const Moves: NextPage<MovesProps> = (props) => {
               Move List
             </Typography>
           </header>
-          <ul className="grid gap-y-6">
+          <ul className="grid gap-y-4 md:gap-y-6">
             {moves.map((m) => (
-              <li key={m.id} className="flex bg-neutral-800 md:rounded-2xl">
-                <div className="w-1/2 p-6">
+              <li
+                key={m.id}
+                className="group flex cursor-pointer rounded-2xl border-neutral-500 bg-neutral-800 shadow-md shadow-black/30"
+                onClick={() => push(routes.move(cid, m.id))}
+              >
+                <div className="p-4 md:hidden">
+                  <Link href={routes.move(cid, m.id)} variant="h3" color="white" className="mb-1 block uppercase">
+                    {m.name}
+                  </Link>
+                  <Chip className="h4 normal-case" color={getInputColor(m.input)}>
+                    {m.input}
+                  </Chip>
+                </div>
+                <div className="hidden w-1/2 p-6 md:block">
                   <MovePreview cid={cid} move={m} />
                 </div>
-                <div className="relative w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700">
+                <div className="relative hidden w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700 md:block">
                   <Image
-                    alt={`${character.name} performing ${m.name}`}
+                    alt={m.imgAlt}
                     layout="fill"
                     placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
-                    src={`/images/${cid}/moves/${m.id}.jpg`}
+                    src={m.imgUrl}
                     objectFit="cover"
                   />
                 </div>

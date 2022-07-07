@@ -36,29 +36,31 @@ const Overview: NextPage<OverviewProps> = (props) => {
             ))}
           </TreeSection>
         </Tree>
-        <div className="mt-34 mb-16 grid w-full grid-cols-[1fr_375px] gap-x-8 pl-8">
-          <div>
-            <header className="mb-2">
-              <Typography className="uppercase" color="aqua" component="p" variant="h3">
-                {character.name}
-              </Typography>
-              <Typography className="uppercase" variant="h1">
-                Overview
-              </Typography>
-            </header>
-            <MDXRemote {...content} components={MarkdownComponents} />
-          </div>
-          <div className="h-max rounded-2xl bg-neutral-800 p-4">
-            <div className="relative mb-4 h-96 overflow-hidden rounded-2xl border border-neutral-500">
-              <Image alt={character.imgAlt} layout="fill" objectFit="cover" src={character.imgUrl} />
+        <div className="mt-30 mb-16 w-full md:mt-34 lg:pl-8">
+          <header className="mb-2 md:mb-0">
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
+              {character.name}
+            </Typography>
+            <Typography className="uppercase" variant="h1">
+              Overview
+            </Typography>
+          </header>
+          <div className="flex flex-col-reverse gap-x-8 md:flex-row">
+            <div className="md:-mt-2">
+              <MDXRemote {...content} components={MarkdownComponents} />
             </div>
-            <Tables.BasicStats character={character} />
-            <Tables.DamageScaling character={character} />
-            <Tables.XfactorMultipliers character={character} />
-            <Tables.GroundDashes character={character} />
-            <Tables.AirDashes character={character} />
-            <Tables.JumpDurations character={character} />
-            <Tables.CrossoverAttack character={character} />
+            <div className="h-max flex-shrink-0 rounded-2xl bg-neutral-800 p-4 shadow-md shadow-black/30 md:w-[375px]">
+              <div className="relative mb-4 h-96 overflow-hidden rounded-2xl border border-neutral-500">
+                <Image alt={character.imgAlt} layout="fill" objectFit="cover" src={character.imgUrl} />
+              </div>
+              <Tables.BasicStats character={character} />
+              <Tables.DamageScaling character={character} />
+              <Tables.XfactorMultipliers character={character} />
+              <Tables.GroundDashes character={character} />
+              {character.airDashArchetype !== "None" && <Tables.AirDashes character={character} />}
+              <Tables.JumpDurations character={character} />
+              <Tables.CrossoverAttack character={character} />
+            </div>
           </div>
         </div>
       </Page>

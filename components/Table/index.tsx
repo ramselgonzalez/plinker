@@ -1,3 +1,4 @@
+import cn from "classnames";
 import Chip from "components/Chip";
 import Link from "components/Link";
 import Typography from "components/Typography";
@@ -11,7 +12,9 @@ function Caption(props: React.ComponentPropsWithoutRef<"caption">) {
   const { children, className, ...rest } = props;
   return (
     <caption
-      className={`border-b border-t-3 border-t-neutral-300 border-b-neutral-400 py-3 text-left ${className}`}
+      className={cn("border-b border-t-3 border-t-neutral-300 border-b-neutral-400 py-3 text-left", {
+        [`${className}`]: className,
+      })}
       {...rest}
     >
       {children}
@@ -20,9 +23,14 @@ function Caption(props: React.ComponentPropsWithoutRef<"caption">) {
 }
 
 function Tr(props: React.ComponentPropsWithoutRef<"tr">) {
-  const { children, ...rest } = props;
+  const { children, className, ...rest } = props;
   return (
-    <tr {...rest} className="border-b border-b-neutral-700 last:border-b-0">
+    <tr
+      {...rest}
+      className={cn("border-b border-b-neutral-700 last:border-b-0 ", {
+        [`${className}`]: className,
+      })}
+    >
       {children}
     </tr>
   );
@@ -31,7 +39,12 @@ function Tr(props: React.ComponentPropsWithoutRef<"tr">) {
 function Td(props: React.ComponentPropsWithoutRef<"td">) {
   const { children, className, ...rest } = props;
   return (
-    <td className={`h3 py-2 text-right uppercase ${className}`} {...rest}>
+    <td
+      className={cn("h3 py-2 text-right uppercase", {
+        [`${className}`]: className,
+      })}
+      {...rest}
+    >
       {children}
     </td>
   );
@@ -40,7 +53,12 @@ function Td(props: React.ComponentPropsWithoutRef<"td">) {
 function Th(props: React.ComponentPropsWithoutRef<"th">) {
   const { children, className, ...rest } = props;
   return (
-    <th className={`h4 py-2 text-left uppercase text-neutral-400 ${className}`} {...rest}>
+    <th
+      className={cn("h4 py-2 text-left uppercase text-neutral-400", {
+        [`${className}`]: className,
+      })}
+      {...rest}
+    >
       {children}
     </th>
   );
@@ -60,23 +78,23 @@ function BasicStats({ character }: IOverviewTableProps) {
         </Typography>
       </Caption>
       <tbody>
-        <Tr>
+        <Tr className="flex justify-between">
           <Th scope="row">Health</Th>
           <Td>{character.health}</Td>
         </Tr>
-        <Tr>
+        <Tr className="flex justify-between">
           <Th scope="row">Magic Series</Th>
           <Td>{character.chainComboArchetype}</Td>
         </Tr>
-        <Tr>
+        <Tr className="flex justify-between">
           <Th scope="row">Air Dash</Th>
           <Td>{character.airDashArchetype}</Td>
         </Tr>
-        <Tr>
+        <Tr className="flex justify-between">
           <Th scope="row">Archetype</Th>
           <Td>{character.archetype}</Td>
         </Tr>
-        <Tr>
+        <Tr className="flex justify-between">
           <Th scope="row">Recommended Position</Th>
           <Td>{character.recommendedPosition}</Td>
         </Tr>
@@ -324,7 +342,7 @@ function MovePreview({ move, cid }: IMovePreviewTableProps) {
   return (
     <table className="w-full">
       <Caption className="border-t-0 pt-0">
-        <Link href={routes.move(cid, move.id)} className="uppercase" variant="h3">
+        <Link href={routes.move(cid, move.id)} className="uppercase group-hover:underline" color="white" variant="h3">
           {move.name}
         </Link>
       </Caption>
@@ -339,19 +357,19 @@ function MovePreview({ move, cid }: IMovePreviewTableProps) {
           <Th scope="row">Start Up</Th>
           <Td>{move.startUp}</Td>
         </Tr>
-        <Tr>
+        <Tr className="hidden md:table-row">
           <Th scope="row">Active</Th>
           <Td>{move.active}</Td>
         </Tr>
-        <Tr>
+        <Tr className="hidden md:table-row">
           <Th scope="row">Recovery</Th>
           <Td>{move.recovery}</Td>
         </Tr>
-        <Tr>
+        <Tr className="hidden md:table-row">
           <Th scope="row">Block Adv.</Th>
           <Td>{move.advBlock}</Td>
         </Tr>
-        <Tr>
+        <Tr className="hidden md:table-row">
           <Th scope="row">Hit Adv.</Th>
           <Td>{move.advHit}</Td>
         </Tr>
@@ -369,7 +387,12 @@ function AssistPreview({ assist, cid }: IAssistPreviewTableProps) {
   return (
     <table className="w-full">
       <Caption className="border-t-0 pt-0">
-        <Link href={routes.assist(cid, assist.id)} className="uppercase" variant="h3">
+        <Link
+          href={routes.assist(cid, assist.id)}
+          color="white"
+          className="uppercase group-hover:underline"
+          variant="h3"
+        >
           {assist.name}
         </Link>
       </Caption>

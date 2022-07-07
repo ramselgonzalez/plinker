@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
+import Chip from "components/Chip";
+import Link from "components/Link";
 import Head from "components/Head";
 import Page from "components/Page";
 import { AssistPreview } from "components/Table";
@@ -9,10 +11,11 @@ import Tree from "components/Tree";
 import TreeItem from "components/TreeItem";
 import TreeSection from "components/TreeSection";
 import Typography from "components/Typography";
+import { getAssistTypeColor } from "helpers";
 import { getCharacterIds } from "lib/character";
 import { getAssistPreviews } from "lib/assist";
-import { IAssistPreview } from "types";
 import routes from "routes";
+import { IAssistPreview } from "types";
 
 interface AssistsProps {
   cname: string;
@@ -21,8 +24,8 @@ interface AssistsProps {
 
 const Assists: NextPage<AssistsProps> = (props) => {
   const { cname, assists } = props;
-  const router = useRouter();
-  const cid = router.query.cid as string;
+  const { query, push } = useRouter();
+  const cid = query.cid as string;
   return (
     <>
       <Head page="assists" cid={cid} name={cname} />
@@ -36,7 +39,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
             ))}
           </TreeSection>
         </Tree>
-        <div className="mt-34 mb-8 w-page-content pl-8">
+        <div className="mt-34 mb-8 w-page-content lg:pl-8">
           <header className="mb-2">
             <Typography color="aqua" component="p" className="uppercase" variant="h3">
               {cname}
@@ -45,21 +48,35 @@ const Assists: NextPage<AssistsProps> = (props) => {
               Assists
             </Typography>
           </header>
-          <ul className="grid gap-y-6">
+          <ul className="grid gap-y-4 md:gap-y-6">
             {assists.map((a) => (
-              <li key={a.id} id={a.id}>
-                <div className="flex bg-neutral-800 md:rounded-2xl">
-                  <div className="w-1/2 p-6">
-                    <AssistPreview cid={cid} assist={a} />
-                  </div>
-                  <div className="relative w-1/2 overflow-hidden rounded-r-2xl border-l border-l-neutral-500 bg-neutral-700">
-                    <Image
-                      alt={`${cname} being called in as an assist performing ${a.name}`}
-                      layout="fill"
-                      src={`/images/${cid}/assists/${a.id}.jpg`}
-                      objectFit="cover"
-                    />
-                  </div>
+              <li
+                key={a.id}
+                id={a.id}
+                className="group flex cursor-pointer flex-col rounded-2xl bg-neutral-800 shadow-md shadow-black/30 md:flex-row"
+                onClick={() => push(routes.assist(cid, a.id))}
+              >
+                <div className="hidden w-1/2 p-6 md:block">
+                  <AssistPreview cid={cid} assist={a} />
+                </div>
+                <div className="p-4 md:hidden">
+                  <Link
+                    href={routes.assist(cid, a.id)}
+                    variant="h3"
+                    color="white"
+                    className="mb-1 block uppercase group-hover:underline"
+                  >
+                    {a.name}
+                  </Link>
+                  <Chip className={`h4 uppercase ${getAssistTypeColor(a.type)}`}>{a.type}</Chip>
+                </div>
+                <div className="relative mx-4 mb-4 h-52 overflow-hidden rounded-2xl border-neutral-500 bg-neutral-700 md:mx-0 md:mb-0 md:block md:h-auto md:w-1/2 md:rounded-l-none md:border-l">
+                  <Image
+                    alt={`${cname} being called in as an assist performing ${a.name}`}
+                    layout="fill"
+                    src={`/images/${cid}/assists/${a.id}.jpg`}
+                    objectFit="cover"
+                  />
                 </div>
               </li>
             ))}

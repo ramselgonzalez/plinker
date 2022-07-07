@@ -35,12 +35,12 @@ function SecondaryHeader() {
 
   return (
     <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
-      <nav className="relative my-0 mx-auto h-full w-full xl:w-xl" aria-label="Character Navigation Tabs">
-        <ul className="flex h-full w-full items-center">
+      <nav className="relative mx-auto h-full w-full xl:w-xl" aria-label="Character Navigation Tabs">
+        <ul className="flex h-full items-center overflow-x-scroll md:overflow-x-visible">
           {tabs.map((tab) => (
             <li
               key={tab.label}
-              className={cn("box-content h-full w-1/3 md:w-40", {
+              className={cn("box-content h-full w-38 flex-shrink-0", {
                 ["-mb-px border-b border-cyan-300"]: tab.active,
               })}
             >
@@ -56,6 +56,7 @@ function SecondaryHeader() {
           ))}
         </ul>
       </nav>
+      <div className="pointer-events-none absolute right-0 h-full w-16 bg-gradient-to-l from-neutral-900 md:hidden" />
     </div>
   );
 }

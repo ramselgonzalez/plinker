@@ -8,7 +8,6 @@ interface VariantMappings {
   subheading1: "h6";
   body1: "p";
   body2: "p";
-  default: "p";
 }
 
 const variants: VariantMappings = {
@@ -19,7 +18,6 @@ const variants: VariantMappings = {
   subheading1: "h6",
   body1: "p",
   body2: "p",
-  default: "p",
 };
 
 const colors = {
@@ -38,11 +36,11 @@ interface TypographyProps extends React.ComponentPropsWithoutRef<"p"> {
   children: React.ReactNode;
   component?: "h1" | "h2" | "h3" | "h4" | "p" | "span";
   color?: "white" | "gray" | "blue" | "yellow" | "red" | "green" | "purple" | "aqua" | "black";
-  variant?: "h1" | "h2" | "h3" | "h4" | "subheading1" | "body1" | "body2" | "default";
+  variant?: "h1" | "h2" | "h3" | "h4" | "subheading1" | "body1" | "body2";
 }
 
 function Typography(props: TypographyProps) {
-  const { children, className, component, color = "white", variant = "default", ...rest } = props;
+  const { children, className, component, color = "white", variant = "body1", ...rest } = props;
 
   const Component = component ? component : variants[variant];
 

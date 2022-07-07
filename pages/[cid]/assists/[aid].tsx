@@ -5,6 +5,7 @@ import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Image from "next/image";
 import Chip from "components/Chip";
+import DataItem from "components/DataItem";
 import Head from "components/Head";
 import Page from "components/Page";
 import Typography from "components/Typography";
@@ -41,7 +42,7 @@ const Assist: NextPage<AssistProps> = (props) => {
             ))}
           </TreeSection>
         </Tree>
-        <div className="mt-34 mb-8 w-page-content pl-8">
+        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
             <Typography color="aqua" className="uppercase" component="p" variant="h3">
               {cname}
@@ -51,8 +52,8 @@ const Assist: NextPage<AssistProps> = (props) => {
             </Typography>
           </header>
           <div className="flex flex-col gap-y-4">
-            <div className="flex gap-x-4">
-              <div className="flex h-auto w-1/2 overflow-hidden rounded-2xl border border-neutral-500">
+            <div className="flex flex-col gap-x-4 md:flex-row">
+              <div className="mb-2 flex h-auto overflow-hidden rounded-2xl border border-neutral-500 md:mb-0 md:w-1/2">
                 <Image
                   alt={`${cname} being called in as an assist performing ${assist.name}`}
                   width={1920}
@@ -62,7 +63,7 @@ const Assist: NextPage<AssistProps> = (props) => {
                   loading="eager"
                 />
               </div>
-              <div className="w-1/2">
+              <div className="md:w-1/2">
                 <div>
                   <Typography className="mb-2 uppercase" color="gray" variant="h4">
                     Assist Type
@@ -74,30 +75,9 @@ const Assist: NextPage<AssistProps> = (props) => {
                   </Chip>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-3">
-                  <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                    <Typography color="gray" className="uppercase" variant="h4">
-                      Team Hyper Combo
-                    </Typography>
-                    <Typography component="p" className="uppercase" variant="h3">
-                      {assist.thc}
-                    </Typography>
-                  </div>
-                  <div className="flex-auto border-r border-neutral-700 px-2 text-center">
-                    <Typography color="gray" className="uppercase" variant="h4">
-                      Block
-                    </Typography>
-                    <Typography component="p" className="uppercase" variant="h3">
-                      {assist.block}
-                    </Typography>
-                  </div>
-                  <div className="flex-auto px-2 text-center">
-                    <Typography color="gray" className="uppercase" variant="h4">
-                      Hit Type
-                    </Typography>
-                    <Typography component="p" className="uppercase" variant="h3">
-                      {assist.hit}
-                    </Typography>
-                  </div>
+                  <DataItem label="Team Hyper Combo" value={assist.thc} className="border-r border-neutral-700" />
+                  <DataItem label="Block" value={assist.block} className="border-r border-neutral-700" />
+                  <DataItem label="Hit Type" value={assist.hit} />
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-2">
                   <Typography>{assist.description}</Typography>
@@ -120,67 +100,18 @@ const Assist: NextPage<AssistProps> = (props) => {
                 )}
               </div>
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-4">
-              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Start Up
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.startUp}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Active
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.active}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Recovery
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.recovery}
-                </Typography>
-              </div>
-              <div className="flex-1 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Alt. Recovery
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.recoveryAlt}
-                </Typography>
-              </div>
+            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
+              <DataItem label="Start Up" value={assist.startUp} />
+              <DataItem label="Active" value={assist.active} />
+              <DataItem label="Recovery" value={assist.recovery} />
+              <DataItem label="Alt. Recovery" value={assist.recoveryAlt} />
             </div>
-            <div className="flex rounded-2xl bg-neutral-800 p-4">
-              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Hits
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.hits}
-                </Typography>
-              </div>
-              <div className="flex-1 border-r border-neutral-700 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Damage
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.dmg}
-                </Typography>
-              </div>
-              <div className="flex-1 px-2 text-center">
-                <Typography color="gray" className="uppercase" variant="h4">
-                  Meter Gain
-                </Typography>
-                <Typography component="p" className="uppercase" variant="h3">
-                  {assist.meterGain}
-                </Typography>
-              </div>
+            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
+              <DataItem label="Hits" value={assist.hits} />
+              <DataItem label="Damage" value={assist.dmg} />
+              <DataItem label="Meter Gain" value={assist.meterGain} />
             </div>
-            <div className="w-4/5">
+            <div className="lg:w-4/5">
               <MDXRemote {...content} components={MarkdownComponents} />
             </div>
           </div>
