@@ -27,11 +27,11 @@ const Home: NextPage<HomeProps> = (props) => {
     <>
       <Head>
         <title>Plinker</title>
-        <meta property="og:title" content="Home | Plinker: Frama Data for Ultimate Marvel vs. Capcom 3" />
-        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} />
-        <meta property="og:description" content="Frame data and details for Ultimate Marvel vs. Capcom 3." />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:alt" content="Akuma performaing Gohadoken L" />
+        <meta content="Home | Plinker: Frama Data for Ultimate Marvel vs. Capcom 3" property="og:title" />
+        <meta content={`${process.env.NEXT_PUBLIC_HOST}/images/moves/akuma-fireball.png`} property="og:image" />
+        <meta content="Frame data and details for Ultimate Marvel vs. Capcom 3." property="og:description" />
+        <meta content="image/png" property="og:image:type" />
+        <meta content="Akuma performaing Gohadoken L" property="og:image:alt" />
       </Head>
       <Page className="mt-4 px-4 pt-34 md:mt-0">
         {/* desktop view */}
@@ -39,8 +39,8 @@ const Home: NextPage<HomeProps> = (props) => {
           <div className="grid-rows-7 grid grid-cols-4 gap-x-3 gap-y-3">
             {capcom.map((c, i) => (
               <CharacterSelectItem
-                className={i === 1 ? "col-start-1" : ""}
                 alt={c.name}
+                className={i === 1 ? "col-start-1" : ""}
                 imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}
@@ -58,8 +58,8 @@ const Home: NextPage<HomeProps> = (props) => {
           <div className="grid-rows-7 grid grid-cols-4 gap-x-3 gap-y-3">
             {marvel.map((c, i) => (
               <CharacterSelectItem
-                className={i === 0 ? "col-start-4" : ""}
                 alt={c.name}
+                className={i === 0 ? "col-start-4" : ""}
                 imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
                 value={c}

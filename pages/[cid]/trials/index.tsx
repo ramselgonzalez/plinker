@@ -27,7 +27,7 @@ const Trials: NextPage<TrialsProps> = (props) => {
 
   return (
     <>
-      <Head name={character.name} cid={character.id} page="trials" />
+      <Head cid={character.id} name={character.name} page="trials" />
       <Page>
         <Tree>
           <TreeSection label="Trials">
@@ -40,7 +40,7 @@ const Trials: NextPage<TrialsProps> = (props) => {
         </Tree>
         <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
-            <Typography color="aqua" component="p" className="uppercase" variant="h3">
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
               {character.name}
             </Typography>
             <Typography className="uppercase" variant="h1">
@@ -49,13 +49,13 @@ const Trials: NextPage<TrialsProps> = (props) => {
           </header>
           <ul className="grid w-full gap-y-4 md:gap-y-6 lg:w-[800px]">
             {trials.map((c) => (
-              <li key={c.id} className="rounded-2xl bg-neutral-800 p-6 shadow-md shadow-black/30">
+              <li className="rounded-2xl bg-neutral-800 p-6 shadow-md shadow-black/30" key={c.id}>
                 <div className="flex items-center gap-x-2">
                   <div className="mt-1 flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-neutral-600 text-xl font-semibold">
                     {c.trial}
                   </div>
                   <div className="w-full">
-                    <Link href={routes.trial(cid, c.id)} className="uppercase" color="white" variant="h3">
+                    <Link className="uppercase" color="white" href={routes.trial(cid, c.id)} variant="h3">
                       {c.title}
                     </Link>
                   </div>
@@ -64,22 +64,22 @@ const Trials: NextPage<TrialsProps> = (props) => {
                   <Typography className="border-b border-neutral-500 pb-2">{c.description}</Typography>
                   <div className="mt-2 flex flex-wrap gap-2">
                     <Chip className={getTrialDifficultyColor(c.difficulty)}>
-                      <Typography component="span" className="uppercase" variant="h4">
+                      <Typography className="uppercase" component="span" variant="h4">
                         {c.difficulty}
                       </Typography>
                     </Chip>
                     <Chip>
-                      <Typography component="span" className="uppercase" variant="h4">
+                      <Typography className="uppercase" component="span" variant="h4">
                         {c.position}
                       </Typography>
                     </Chip>
                     <Chip>
-                      <Typography component="span" className="uppercase" variant="h4">
+                      <Typography className="uppercase" component="span" variant="h4">
                         {c.starter}
                       </Typography>
                     </Chip>
                     <Chip>
-                      <Typography component="span" className="uppercase" variant="h4">
+                      <Typography className="uppercase" component="span" variant="h4">
                         {c.assistId ? "Assited" : "Solo"}
                       </Typography>
                     </Chip>

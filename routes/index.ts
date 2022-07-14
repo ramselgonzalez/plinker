@@ -1,4 +1,4 @@
-export default {
+const routes = {
   home: "/",
   overview: (cid: string = "[cid]") => `/${cid}/overview`,
   moves: (cid: string = "[cid]") => `/${cid}/moves`,
@@ -8,3 +8,5 @@ export default {
   trials: (cid: string = "[cid]") => `/${cid}/trials`,
   trial: (cid: string = "[cid]", tid: string = "[tid]") => `/${cid}/trials/${tid}`,
 };
+
+export default routes;

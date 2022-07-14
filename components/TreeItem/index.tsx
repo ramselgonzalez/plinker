@@ -9,9 +9,9 @@ function TreeItem(props: TreeItemProps) {
   return (
     <li {...rest}>
       <Link
-        href={to}
         className="mt-1 -ml-1px block border-l border-neutral-500 px-4 hover:border-neutral-50 hover:text-neutral-50"
         color="gray"
+        href={to}
       >
         {children}
       </Link>

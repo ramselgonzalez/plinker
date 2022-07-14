@@ -16,7 +16,7 @@ function Tree(props: TreeProps) {
       })}
     >
       {label && (
-        <Typography component="span" className="uppercase" variant="h4">
+        <Typography className="uppercase" component="span" variant="h4">
           {label}
         </Typography>
       )}

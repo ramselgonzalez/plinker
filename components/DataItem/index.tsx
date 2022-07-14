@@ -15,10 +15,10 @@ function DataItem(props: IDataItemProps) {
         [`${className}`]: className,
       })}
     >
-      <Typography color="gray" className="uppercase" variant="h4">
+      <Typography className="uppercase" color="gray" variant="h4">
         {label}
       </Typography>
-      <Typography color={color} component="p" className="uppercase" variant="h3">
+      <Typography className="uppercase" color={color} component="p" variant="h3">
         {value}
       </Typography>
     </div>

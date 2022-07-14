@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { useState } from "react";
 import { ParsedUrlQuery } from "querystring";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -20,6 +21,8 @@ import { IMoveDetail, IMovePreview, MoveTypeValues, RawCharacter } from "types";
 import { MarkdownComponents } from "helpers/markdown";
 import { getInputColor } from "helpers";
 import routes from "routes";
+import Drawer from "components/Drawer";
+import { ChevronRight, List } from "components/Icon";
 
 interface MoveProps {
   blurDataURL: string;
@@ -37,6 +40,7 @@ function getFrameDataColor(adv: number | string) {
 
 const Move: NextPage<MoveProps> = (props) => {
   const { content, character, move, moves, blurDataURL } = props;
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { query } = useRouter();
   const cid = query.cid as string;
   const sections = [];
@@ -48,7 +52,7 @@ const Move: NextPage<MoveProps> = (props) => {
   }
   return (
     <>
-      <Head page="move" name={character.name} cid={cid} mid={move.id} move={move.name} />
+      <Head cid={cid} mid={move.id} move={move.name} name={character.name} page="move" />
       <Page>
         <Tree>
           {sections.map((s) => (
@@ -63,7 +67,7 @@ const Move: NextPage<MoveProps> = (props) => {
         </Tree>
         <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
-            <Typography color="aqua" className="uppercase" component="p" variant="h3">
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
               {character.name}
             </Typography>
             <Typography className="uppercase" variant="h1">
@@ -74,15 +78,15 @@ const Move: NextPage<MoveProps> = (props) => {
             <div className="flex flex-col gap-x-4 md:flex-row">
               <div className="relative mb-2 flex h-auto overflow-hidden rounded-2xl border border-neutral-500 md:mb-0 md:w-1/2">
                 <Image
-                  key={move.id}
-                  src={move.imgUrl}
                   alt={move.imgAlt}
-                  width={853}
-                  height={480}
-                  objectFit="cover"
                   blurDataURL={blurDataURL}
+                  height={480}
+                  key={move.id}
+                  objectFit="cover"
                   placeholder={blurDataURL ? "blur" : undefined}
                   priority
+                  src={move.imgUrl}
+                  width={853}
                 />
               </div>
               <div className="flex flex-col md:w-1/2">
@@ -90,7 +94,7 @@ const Move: NextPage<MoveProps> = (props) => {
                   <Typography className="mb-2 uppercase" color="gray" variant="h4">
                     Input
                   </Typography>
-                  <Chip color={getInputColor(move.input)} className="h3">
+                  <Chip className="h3" color={getInputColor(move.input)}>
                     {move.input}
                   </Chip>
                 </div>
@@ -105,7 +109,7 @@ const Move: NextPage<MoveProps> = (props) => {
                   </div>
                   {move.attributes.length > 0 && (
                     <div>
-                      <Typography color="gray" className="uppercase" variant="h4">
+                      <Typography className="uppercase" color="gray" variant="h4">
                         Attributes
                       </Typography>
                       <div className="mt-2 flex flex-wrap gap-2">
@@ -137,6 +141,30 @@ const Move: NextPage<MoveProps> = (props) => {
             </div>
           </div>
         </div>
+        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+          <List />
+        </button>
+        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
+            <button onClick={() => setDrawerOpen(false)}>
+              <ChevronRight />
+            </button>
+            <Typography className="uppercase" variant="h4">
+              Move List
+            </Typography>
+          </div>
+          <ul className="-mt-2 px-5 py-4">
+            {sections.map((s) => (
+              <TreeSection key={s.label} label={s.label}>
+                {s.items.map((n) => (
+                  <TreeItem key={n.id} onClick={() => setDrawerOpen(false)} to={routes.move(cid, n.id)}>
+                    {n.name}
+                  </TreeItem>
+                ))}
+              </TreeSection>
+            ))}
+          </ul>
+        </Drawer>
       </Page>
     </>
   );

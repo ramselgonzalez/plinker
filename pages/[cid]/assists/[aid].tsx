@@ -31,7 +31,7 @@ const Assist: NextPage<AssistProps> = (props) => {
   const cid = router.query.cid as string;
   return (
     <>
-      <Head page="assist" name={cname} cid={cid} move={assist.name} mid={assist.id} />
+      <Head cid={cid} mid={assist.id} move={assist.name} name={cname} page="assist" />
       <Page>
         <Tree>
           <TreeSection label="Assists">
@@ -44,7 +44,7 @@ const Assist: NextPage<AssistProps> = (props) => {
         </Tree>
         <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <header className="mb-2">
-            <Typography color="aqua" className="uppercase" component="p" variant="h3">
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
               {cname}
             </Typography>
             <Typography className="uppercase" variant="h1">
@@ -56,11 +56,11 @@ const Assist: NextPage<AssistProps> = (props) => {
               <div className="mb-2 flex h-auto overflow-hidden rounded-2xl border border-neutral-500 md:mb-0 md:w-1/2">
                 <Image
                   alt={`${cname} being called in as an assist performing ${assist.name}`}
-                  width={1920}
                   height={1080}
-                  src={`/images/${cid}/assists/${assist.id}.jpg`}
-                  placeholder="empty"
                   loading="eager"
+                  placeholder="empty"
+                  src={`/images/${cid}/assists/${assist.id}.jpg`}
+                  width={1920}
                 />
               </div>
               <div className="md:w-1/2">
@@ -69,14 +69,14 @@ const Assist: NextPage<AssistProps> = (props) => {
                     Assist Type
                   </Typography>
                   <Chip className={getAssistTypeColor(assist.type)}>
-                    <Typography component="p" className="uppercase" variant="h3">
+                    <Typography className="uppercase" component="p" variant="h3">
                       {assist.type}
                     </Typography>
                   </Chip>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-3">
-                  <DataItem label="Team Hyper Combo" value={assist.thc} className="border-r border-neutral-700" />
-                  <DataItem label="Block" value={assist.block} className="border-r border-neutral-700" />
+                  <DataItem className="border-r border-neutral-700" label="Team Hyper Combo" value={assist.thc} />
+                  <DataItem className="border-r border-neutral-700" label="Block" value={assist.block} />
                   <DataItem label="Hit Type" value={assist.hit} />
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-2">
@@ -84,13 +84,13 @@ const Assist: NextPage<AssistProps> = (props) => {
                 </div>
                 {assist.attributes.length > 0 && (
                   <div>
-                    <Typography color="gray" className="uppercase" variant="h4">
+                    <Typography className="uppercase" color="gray" variant="h4">
                       Attributes
                     </Typography>
                     <div className="mt-2 flex flex-wrap gap-2">
                       {assist.attributes.map((a) => (
                         <Chip key={a}>
-                          <Typography className="uppercase" variant="h4" component="span">
+                          <Typography className="uppercase" component="span" variant="h4">
                             {a}
                           </Typography>
                         </Chip>

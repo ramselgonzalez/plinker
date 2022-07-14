@@ -41,7 +41,7 @@ const Moves: NextPage<MovesProps> = (props) => {
 
   return (
     <>
-      <Head page="moves" name={character.name} cid={cid} />
+      <Head cid={cid} name={character.name} page="moves" />
       <Page>
         <Tree>
           {sections.map((s) => (
@@ -66,12 +66,12 @@ const Moves: NextPage<MovesProps> = (props) => {
           <ul className="grid gap-y-4 md:gap-y-6">
             {moves.map((m) => (
               <li
-                key={m.id}
                 className="paper group flex cursor-pointer overflow-hidden"
+                key={m.id}
                 onClick={() => push(routes.move(cid, m.id))}
               >
                 <div className="p-4 md:hidden">
-                  <Link href={routes.move(cid, m.id)} variant="h3" color="white" className="mb-1 block uppercase">
+                  <Link className="mb-1 block uppercase" color="white" href={routes.move(cid, m.id)} variant="h3">
                     {m.name}
                   </Link>
                   <Chip className="h4 normal-case" color={getInputColor(m.input)}>
@@ -84,26 +84,26 @@ const Moves: NextPage<MovesProps> = (props) => {
                 <div className="relative hidden w-1/2 overflow-hidden border-l border-l-neutral-500 bg-neutral-700 md:block">
                   <Image
                     alt={m.imgAlt}
-                    layout="fill"
-                    placeholder="blur"
                     blurDataURL={BLUR_DATA_URL}
-                    src={m.imgUrl}
+                    layout="fill"
                     objectFit="cover"
+                    placeholder="blur"
+                    src={m.imgUrl}
                   />
                 </div>
               </li>
             ))}
           </ul>
         </div>
-        <button onClick={() => setDrawerOpen(true)} className="fab lg:hidden">
+        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
           <List />
         </button>
-        <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} position="right">
+        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
           <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
             <button onClick={() => setDrawerOpen(false)}>
               <ChevronRight />
             </button>
-            <Typography variant="h4" className="uppercase">
+            <Typography className="uppercase" variant="h4">
               Move List
             </Typography>
           </div>
@@ -111,7 +111,7 @@ const Moves: NextPage<MovesProps> = (props) => {
             {sections.map((s) => (
               <TreeSection key={s.label} label={s.label}>
                 {s.items.map((n) => (
-                  <TreeItem key={n.id} to={routes.move(cid, n.id)}>
+                  <TreeItem key={n.id} onClick={() => setDrawerOpen(false)} to={routes.move(cid, n.id)}>
                     {n.name}
                   </TreeItem>
                 ))}

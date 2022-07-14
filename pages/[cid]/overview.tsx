@@ -25,7 +25,7 @@ const Overview: NextPage<OverviewProps> = (props) => {
   const { character, content, headings } = props;
   return (
     <>
-      <Head page="overview" name={character.name} cid={character.id} />
+      <Head cid={character.id} name={character.name} page="overview" />
       <Page>
         <Tree>
           <TreeSection label="Content">

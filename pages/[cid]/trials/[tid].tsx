@@ -25,7 +25,7 @@ const Trial: NextPage<TrialProps> = (props) => {
   const { character, content, trial, trials } = props;
   return (
     <>
-      <Head name={character.name} cid={character.id} move={trial.title} page="trial" />
+      <Head cid={character.id} move={trial.title} name={character.name} page="trial" />
       <Page>
         <Tree>
           <TreeSection label="Trials">
@@ -39,7 +39,7 @@ const Trial: NextPage<TrialProps> = (props) => {
         <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
           <div className="flex flex-col gap-y-4 lg:w-4/5">
             <header>
-              <Typography color="aqua" component="p" className="uppercase" variant="h3">
+              <Typography className="uppercase" color="aqua" component="p" variant="h3">
                 {character.name}
               </Typography>
               <Typography className="uppercase" variant="h1">
@@ -51,12 +51,12 @@ const Trial: NextPage<TrialProps> = (props) => {
                 allowFullScreen
                 className="absolute top-0 left-0 h-full w-full rounded-2xl"
                 frameBorder="0"
-                title="Trial video"
                 src={`https://www.youtube.com/embed/${trial.videoId}?modestbranding=1`}
+                title="Trial video"
               />
             </div>
             <div className="rounded-2xl bg-neutral-800 p-4">
-              <Typography color="gray" className="uppercase" variant="h4">
+              <Typography className="uppercase" color="gray" variant="h4">
                 Input
               </Typography>
               <Typography className="font-medium tracking-wider">{trial.input}</Typography>

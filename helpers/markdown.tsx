@@ -12,15 +12,15 @@ function getIdFromChildren(children: React.ReactNode) {
 export const MarkdownComponents: React.ComponentProps<typeof mdx.MDXProvider>["components"] = {
   Typography,
   a: ({ children, href }) => (
-    <a href={href} target="_blank" rel="noreferrer" className="text-cyan-300 hover:underline">
+    <a className="text-cyan-300 hover:underline" href={href} rel="noreferrer" target="_blank">
       {children}
     </a>
   ),
   p: ({ children }) => <Typography className="mb-4">{children}</Typography>,
   h2: ({ children }) => (
     <Typography
-      id={getIdFromChildren(children)}
       className="mt-8 mb-2 scroll-mt-28 border-b border-neutral-500 pb-2 uppercase first-of-type:mt-4"
+      id={getIdFromChildren(children)}
       variant="h2"
     >
       {children}

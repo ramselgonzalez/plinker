@@ -73,7 +73,7 @@ function BasicStats({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           Basic Stats
         </Typography>
       </Caption>
@@ -107,7 +107,7 @@ function DamageScaling({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           Min. Damage Scaling
         </Typography>
       </Caption>
@@ -133,7 +133,7 @@ function XfactorMultipliers({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           X-Factor Multipliers
         </Typography>
       </Caption>
@@ -169,7 +169,7 @@ function GroundDashes({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           Ground Dashes
         </Typography>
       </Caption>
@@ -200,7 +200,7 @@ function AirDashes({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           Air Dashes
         </Typography>
       </Caption>
@@ -277,7 +277,7 @@ function JumpDurations({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           Jump Durations
         </Typography>
       </Caption>
@@ -311,7 +311,7 @@ function CrossoverAttack({ character }: IOverviewTableProps) {
   return (
     <table className="w-full">
       <Caption>
-        <Typography variant="h3" className="uppercase">
+        <Typography className="uppercase" variant="h3">
           Crossover Attack
         </Typography>
       </Caption>
@@ -342,7 +342,7 @@ function MovePreview({ move, cid }: IMovePreviewTableProps) {
   return (
     <table className="w-full">
       <Caption className="border-t-0 pt-0">
-        <Link href={routes.move(cid, move.id)} className="uppercase group-hover:underline" color="white" variant="h3">
+        <Link className="uppercase group-hover:underline" color="white" href={routes.move(cid, move.id)} variant="h3">
           {move.name}
         </Link>
       </Caption>
@@ -388,9 +388,9 @@ function AssistPreview({ assist, cid }: IAssistPreviewTableProps) {
     <table className="w-full">
       <Caption className="border-t-0 pt-0">
         <Link
-          href={routes.assist(cid, assist.id)}
-          color="white"
           className="uppercase group-hover:underline"
+          color="white"
+          href={routes.assist(cid, assist.id)}
           variant="h3"
         >
           {assist.name}

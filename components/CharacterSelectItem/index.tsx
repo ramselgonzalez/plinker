@@ -15,14 +15,14 @@ function CharacterSelectItem(props: CharacterSelectItemProps) {
   const { alt, imageUrl, value, className } = props;
   return (
     <Link
-      href={routes.overview(value.id)}
-      color="black"
       className={cn(
         "relative h-22 w-22 overflow-hidden rounded-lg border border-neutral-500 bg-white duration-200 hover:scale-110",
         {
           [`${className}`]: className,
         }
       )}
+      color="black"
+      href={routes.overview(value.id)}
     >
       <Image alt={alt} layout="fill" priority src={imageUrl} />
     </Link>

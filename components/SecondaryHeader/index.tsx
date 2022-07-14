@@ -35,20 +35,20 @@ function SecondaryHeader() {
 
   return (
     <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
-      <nav className="relative mx-auto h-full w-full xl:w-xl" aria-label="Character Navigation Tabs">
+      <nav aria-label="Character Navigation Tabs" className="relative mx-auto h-full w-full xl:w-xl">
         <ul className="relative flex h-full items-center overflow-x-scroll md:overflow-x-visible">
           {tabs.map((tab) => (
             <li
-              key={tab.label}
               className={cn("box-content h-full w-38 flex-shrink-0", {
                 ["border-b border-cyan-300"]: tab.active,
               })}
+              key={tab.label}
             >
               <Link
-                href={tab.path(cid)}
                 className="flex h-full items-center justify-center uppercase duration-300 ease-out hover:bg-neutral-800 focus:bg-neutral-800"
-                variant="h4"
                 color={tab.active ? "aqua" : "white"}
+                href={tab.path(cid)}
+                variant="h4"
               >
                 {tab.label}
               </Link>

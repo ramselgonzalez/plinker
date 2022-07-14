@@ -28,7 +28,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
   const cid = query.cid as string;
   return (
     <>
-      <Head page="assists" cid={cid} name={cname} />
+      <Head cid={cid} name={cname} page="assists" />
       <Page>
         <Tree>
           <TreeSection label="Assists">
@@ -41,7 +41,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
         </Tree>
         <div className="mt-34 mb-8 w-page-content lg:pl-8">
           <header className="mb-2">
-            <Typography color="aqua" component="p" className="uppercase" variant="h3">
+            <Typography className="uppercase" color="aqua" component="p" variant="h3">
               {cname}
             </Typography>
             <Typography className="uppercase" variant="h1">
@@ -51,20 +51,20 @@ const Assists: NextPage<AssistsProps> = (props) => {
           <ul className="grid gap-y-4 md:gap-y-6">
             {assists.map((a) => (
               <li
-                key={a.id}
-                id={a.id}
                 className="group flex cursor-pointer flex-col rounded-2xl bg-neutral-800 shadow-md shadow-black/30 md:flex-row"
+                id={a.id}
+                key={a.id}
                 onClick={() => push(routes.assist(cid, a.id))}
               >
                 <div className="hidden w-1/2 p-6 md:block">
-                  <AssistPreview cid={cid} assist={a} />
+                  <AssistPreview assist={a} cid={cid} />
                 </div>
                 <div className="p-4 md:hidden">
                   <Link
+                    className="mb-1 block uppercase group-hover:underline"
+                    color="white"
                     href={routes.assist(cid, a.id)}
                     variant="h3"
-                    color="white"
-                    className="mb-1 block uppercase group-hover:underline"
                   >
                     {a.name}
                   </Link>
@@ -74,8 +74,8 @@ const Assists: NextPage<AssistsProps> = (props) => {
                   <Image
                     alt={`${cname} being called in as an assist performing ${a.name}`}
                     layout="fill"
-                    src={`/images/${cid}/assists/${a.id}.jpg`}
                     objectFit="cover"
+                    src={`/images/${cid}/assists/${a.id}.jpg`}
                   />
                 </div>
               </li>

@@ -16,12 +16,12 @@ function Head(props: IHeadProps) {
   return (
     <NextHead>
       <title>{title}</title>
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image:type" content="image/png" />
-      <meta property="og:image:alt" content={imgAlt} />
-      <meta property="og:image" content={imgUrl} />
-      <meta name="twitter:card" content="summary_large_image" />
+      <meta content={title} property="og:title" />
+      <meta content={description} property="og:description" />
+      <meta content="image/png" property="og:image:type" />
+      <meta content={imgAlt} property="og:image:alt" />
+      <meta content={imgUrl} property="og:image" />
+      <meta content="summary_large_image" name="twitter:card" />
     </NextHead>
   );
 }

@@ -16,8 +16,8 @@ function TreeSection(props: TreeSectionProps) {
         <Link href={to}>
           <a>
             <Typography
-              color="gray"
               className="mt-1 -ml-1px block border-l border-neutral-500 px-4 hover:border-neutral-50 hover:text-neutral-50 hover:underline"
+              color="gray"
             >
               {label}
             </Typography>
