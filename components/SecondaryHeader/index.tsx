@@ -36,12 +36,12 @@ function SecondaryHeader() {
   return (
     <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
       <nav className="relative mx-auto h-full w-full xl:w-xl" aria-label="Character Navigation Tabs">
-        <ul className="flex h-full items-center overflow-x-scroll md:overflow-x-visible">
+        <ul className="relative flex h-full items-center overflow-x-scroll md:overflow-x-visible">
           {tabs.map((tab) => (
             <li
               key={tab.label}
               className={cn("box-content h-full w-38 flex-shrink-0", {
-                ["-mb-px border-b border-cyan-300"]: tab.active,
+                ["border-b border-cyan-300"]: tab.active,
               })}
             >
               <Link

@@ -15,6 +15,7 @@ class MyDocument extends Document {
         </Head>
         <body className="overflow-y-scroll bg-neutral-900 text-neutral-50">
           <Main />
+          <div id="modal" />
           <NextScript />
         </body>
       </Html>

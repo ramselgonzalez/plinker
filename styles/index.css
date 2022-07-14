@@ -18,4 +18,16 @@
   .h4 {
     @apply text-[13px] font-semibold tracking-wider;
   }
+
+  .hover {
+    @apply duration-300 ease-out hover:bg-neutral-800;
+  }
+
+  .fab {
+    @apply fixed bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-neutral-700 shadow-lg shadow-black/30;
+  }
+
+  .paper {
+    @apply rounded-2xl bg-neutral-800 shadow-md shadow-black/30;
+  }
 }
