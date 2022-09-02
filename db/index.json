@@ -5627,7 +5627,7 @@
         "meterGain": 280,
         "attributes": [],
         "notes": ["Effective as a pushblock bait by linking Standing Light into itself"],
-        "description": "A quick jab with not much utility outside of converting tight air confirms into a grounded string and setting up frame traps. A rarely used button since buster charging is recommended with L.",
+        "description": "Zero quickly swipes his sword vertically in front of him.",
         "order": 1,
         "id": "zero-standing-light",
         "characterId": "zero"
@@ -5649,7 +5649,7 @@
         "meterGain": 424,
         "attributes": [],
         "notes": ["Moves Zero slightly forward", "Standing Medium has a small hitbox behind Zero which allow"],
-        "description": "A decent poke that moves Zero slightly forward. Standing Medium isn't used much outside of some combo routes.",
+        "description": "Zero swipes his sword horizontally.",
         "order": 2,
         "id": "zero-standing-medium",
         "characterId": "zero"
@@ -5671,7 +5671,7 @@
         "meterGain": 600,
         "attributes": [],
         "notes": [],
-        "description": "One of Zero's best normals and one of the best normals in the game. Standing Heavy has a very large hitbox in front of and above him that can be used as an anti-air and a pressure tool.",
+        "description": "Zero does a large vertical slash with his sword.",
         "order": 3,
         "id": "zero-standing-heavy",
         "characterId": "zero"
@@ -5693,7 +5693,7 @@
         "meterGain": 240,
         "attributes": ["Launcher"],
         "notes": [],
-        "description": "A standard launcher with a good hitbox above Zero's head. Not worth using as an anti-air when Standing Heavy and Crouching Heavy exist.",
+        "description": "Zero swings his sword above him.",
         "order": 4,
         "id": "zero-special",
         "characterId": "zero"
@@ -5715,7 +5715,7 @@
         "meterGain": 448,
         "attributes": [],
         "notes": [],
-        "description": "Crouching Light is Zero's fastest normal and one of the fastest lows in the game. A great button for setting up staggers for frame traps as well as for high/low mixups. Players must be comfortable with buster switching to get the most utility out of this button.",
+        "description": "Zero does a low hitting kick.",
         "order": 5,
         "id": "zero-crouching-light",
         "characterId": "zero"
@@ -5737,7 +5737,7 @@
         "meterGain": 560,
         "attributes": [],
         "notes": [],
-        "description": "Crouching Medium is a fantastic low poke with good range that shrinks Zero's hurtbox down. It moves Zero forward while also able to hit behind creating strong mixups in certain situations.",
+        "description": "Zero swings his blade across the ground.",
         "order": 6,
         "id": "zero-crouching-medium",
         "characterId": "zero"
@@ -5759,7 +5759,7 @@
         "meterGain": 640,
         "attributes": [],
         "notes": [],
-        "description": "Another one of Zero's great anti-airs. Also useful early in combos to add good damage without heavily scaling combo like Standing Heavy and Shippuga (6H).",
+        "description": "Zero rolls forward with his sword out.",
         "order": 7,
         "id": "zero-crouching-heavy",
         "characterId": "zero"
@@ -5781,7 +5781,7 @@
         "meterGain": 264,
         "attributes": [],
         "notes": [],
-        "description": "Air Light is a quick kick that appears slightly below him. It's more useful as a falling button rather than rising, except when using it as an instant overhead.",
+        "description": "Zero kicks in the air slightly below him.",
         "order": 8,
         "id": "zero-air-light",
         "characterId": "zero"
@@ -5803,7 +5803,7 @@
         "meterGain": 440,
         "attributes": [],
         "notes": [],
-        "description": "A great air poke with a hitbox above him that makes it useful for calling out opponent's air actions. It's especially powerful when Level 3 Buster is charged since it leads to full confirms.",
+        "description": "Zero swings his sword in the air below him.",
         "order": 9,
         "id": "zero-air-medium",
         "characterId": "zero"
@@ -5825,7 +5825,7 @@
         "meterGain": 600,
         "attributes": [],
         "notes": [],
-        "description": "A good button with a great hitbox that is nearly impossible to punish. It's hardly used since it's not special cancellable and because Kuenzan, \"pizza cutter\", is all around a better option.",
+        "description": "Zero spins forward with his sword out.",
         "order": 10,
         "id": "zero-air-heavy",
         "characterId": "zero"
@@ -5847,7 +5847,7 @@
         "meterGain": 600,
         "attributes": ["Launcher"],
         "notes": [],
-        "description": "A slower air poke than Air Medium but has a a much larger hitbox above it making it still very strong in some situations. Very useful for super jump confirms since it has a ton of hitstun and pushes the opponent down.",
+        "description": "Zero swings his sword above him in the air.",
         "order": 11,
         "id": "zero-air-special",
         "characterId": "zero"
@@ -5869,7 +5869,7 @@
         "meterGain": 720,
         "attributes": [],
         "notes": ["Cancelable from any basic attack"],
-        "description": "Shippuga is a great pressure tool with a large hitbox in front of Zero while also moving him forward. One of Zero's most important pressure tools since it can negate bad pushblock timings as well as lead to infinite blockstrings and unblockables when in Sougenmu.",
+        "description": "Zero advances forward while swinging his sword in front of him horizontally.",
         "order": 12,
         "id": "shippuga",
         "characterId": "zero"
@@ -5891,7 +5891,7 @@
         "meterGain": 600,
         "attributes": [],
         "notes": ["Reverses the direction Zero spins"],
-        "description": "Kuenzan, a.k.a \"pizza cutter\", is one of the best buttons in the whole game. It's massive hitbox makes it nearly impossible to throw or anti-air. It can be used pretty freely without worry. The only downside is that it is not special or buster cancellable.",
+        "description": "Zero spins backwards with his sword out.",
         "order": 13,
         "id": "kuenzan",
         "characterId": "zero"
@@ -5913,7 +5913,7 @@
         "meterGain": 880,
         "attributes": [],
         "notes": [],
-        "description": null,
+        "description": "Mimics Zero's Kuenzan animation.",
         "order": 14,
         "id": "zero-air-exchange-up",
         "characterId": "zero"
@@ -5935,7 +5935,7 @@
         "meterGain": 800,
         "attributes": ["Forced Wall Bounce"],
         "notes": [],
-        "description": null,
+        "description": "Mimics Zero's Shippuga animation.",
         "order": 15,
         "id": "zero-air-exchange-side",
         "characterId": "zero"
@@ -5957,7 +5957,7 @@
         "meterGain": 800,
         "attributes": ["Forced Ground Bounce"],
         "notes": [],
-        "description": null,
+        "description": "Mimics Zero's Air Heavy animation.",
         "order": 16,
         "id": "zero-air-exchange-down",
         "characterId": "zero"
@@ -5979,7 +5979,7 @@
         "meterGain": 800,
         "attributes": ["Hard Knockdown"],
         "notes": [],
-        "description": null,
+        "description": "Zero grabs the opponent and fires multiple blue busters into their body.",
         "order": 17,
         "id": "zero-front-throw",
         "characterId": "zero"
@@ -6001,7 +6001,7 @@
         "meterGain": 800,
         "attributes": ["Hard Knockdown"],
         "notes": [],
-        "description": null,
+        "description": "Zero teleports behind the opponent and shoots them with a red buster.",
         "order": 18,
         "id": "zero-back-throw",
         "characterId": "zero"
@@ -6023,7 +6023,7 @@
         "meterGain": 800,
         "attributes": ["Hard Knockdown"],
         "notes": [],
-        "description": null,
+        "description": "Zero grabs the opponent and fires multiple blue busters into their body.",
         "order": 19,
         "id": "zero-front-air-throw",
         "characterId": "zero"
@@ -6045,7 +6045,7 @@
         "meterGain": 800,
         "attributes": ["Hard Knockdown"],
         "notes": [],
-        "description": null,
+        "description": "Zero teleports behind the opponent and shoots them with a red buster.",
         "order": 20,
         "id": "zero-back-air-throw",
         "characterId": "zero"
@@ -6067,7 +6067,7 @@
         "meterGain": 500,
         "attributes": [],
         "notes": [],
-        "description": null,
+        "description": "Mimics Zero's Shippuga animation.",
         "order": 21,
         "id": "zero-snap-back",
         "characterId": "zero"
@@ -6088,8 +6088,8 @@
         "advBlock": -2,
         "meterGain": 560,
         "attributes": [],
-        "notes": ["Projectile - 3 low durability point"],
-        "description": "The slowest moving version of Hadangeki with the longest startup. The tradeoff of its longer startup is its superior frame data and it has the shortest recovery which makes great for stacking fireballs together or walking in behind it.",
+        "notes": [],
+        "description": "Zero shoots a slow moving blade projectile.",
         "order": 22,
         "id": "hadangeki-l",
         "characterId": "zero"
@@ -6110,8 +6110,8 @@
         "advBlock": -8,
         "meterGain": 560,
         "attributes": [],
-        "notes": ["Projectile - 3 low durability point"],
-        "description": "The fastest moving version of Hadangeki with the fastest startup. This is probably to most commonly used version due to its fast speed. ",
+        "notes": [],
+        "description": "Zero shoots a fast blade projectile.",
         "order": 23,
         "id": "hadangeki-m",
         "characterId": "zero"
@@ -6132,8 +6132,8 @@
         "advBlock": -8,
         "meterGain": 880,
         "attributes": [],
-        "notes": ["Each Projectile - 3 low durability point"],
-        "description": "Hadangeki H is the middle point in terms of speed and startup. It fires two projectiles and has the most damage and durability of the 3 versions. Zero is capable of putting out a ton of projectile durability when Hadangeki H is cancelled into Level 3 Buster.",
+        "notes": [],
+        "description": "Zero shoots two slower moving projectiles stacked on top of each other.",
         "order": 24,
         "id": "hadangeki-h",
         "characterId": "zero"
@@ -6155,7 +6155,7 @@
         "meterGain": 560,
         "attributes": [],
         "notes": [],
-        "description": "A short range DP without any invincibility frames. One of Zero's more useless moves. Ryuenjin L doesn't hit or travel very high so trying to use it as an anti-air is pointless.",
+        "description": "Zero performs a fiery uppercut with his sword.",
         "order": 25,
         "id": "ryuenjin-l",
         "characterId": "zero"
@@ -6177,7 +6177,7 @@
         "meterGain": 720,
         "attributes": [],
         "notes": [],
-        "description": "Similar to Ryuenjin L, not very useful in neutral as an anti-air. It does have some uses in some combos since there is a bit of guaranteed hitstun at the end of the special where the opponent falls down slightly, giving you some extra time to charge buster, normalize the height, and continue the combo with a buster cancel.",
+        "description": "Zero performs a fiery uppercut with his sword.",
         "order": 26,
         "id": "ryuenjin-m",
         "characterId": "zero"
@@ -6199,7 +6199,7 @@
         "meterGain": 1000,
         "attributes": [],
         "notes": [],
-        "description": "The most viable version of Ryuenjin. It has a pretty large and active hitbox that makes it decent as anti-air even though it has no invincibility. When combined with an assist like Jam Session, it becomes even more viable as it allows Zero to confirm the hit at any height.",
+        "description": "Zero performs a fiery uppercut with his sword.",
         "order": 27,
         "id": "ryuenjin-h",
         "characterId": "zero"
@@ -6220,8 +6220,8 @@
         "advBlock": 17,
         "meterGain": 1000,
         "attributes": ["Soft Knockdown"],
-        "notes": ["Soft Knockdown on airborne opponents", "Can pass through opponents"],
-        "description": "Raikousen L sends Zero down at a 45 degree angle. It's most commonly used for combo extensions with buster cancels and for incoming mixups since it can pass through opponents. It's the key to Zero's \"lightning loop\".",
+        "notes": [],
+        "description": "Zero travels down forward at a 45 degree angle leaving a trail of lightning behind him.",
         "order": 28,
         "id": "raikousen-l",
         "characterId": "zero"
@@ -6242,8 +6242,8 @@
         "advBlock": 4,
         "meterGain": 1000,
         "attributes": ["Soft Knockdown"],
-        "notes": ["Soft Knockdown on airborne opponents", "Can pass through opponents"],
-        "description": "Raikousen M sends Zero across the screen in a straight line. It's more commonly used as a movement tool or a long range poke with a buster cancel available. The guaranteed soft knockdown is a great way to call out air movement at any height.",
+        "notes": [],
+        "description": "Zero travels forward horizontally leaving a trail of lightning behind him.",
         "order": 29,
         "id": "raikousen-m",
         "characterId": "zero"
@@ -6264,8 +6264,8 @@
         "advBlock": -15,
         "meterGain": 1000,
         "attributes": ["Soft Knockdown"],
-        "notes": ["Soft Knockdown on airborne opponents", "Can pass through opponents"],
-        "description": "Raikousen H shoots Zero up at a 45 degree angle. It is another one of Zero's great anti-air tools when combined with an instant buster cancel. Also incredibly useful at getting Zero to super jump height without having to use his command dash.",
+        "notes": [],
+        "description": "Zero travels up forward at a 45 dgree angle leaving a trail of lightning behind him.",
         "order": 30,
         "id": "raikousen-h",
         "characterId": "zero"
@@ -6286,8 +6286,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": [],
-        "notes": ["Can pass through opponents"],
-        "description": "A short fast moving dash that can pass through opponents. Effective at either creating fast left/right mixups with Level 3 Buster or negating pushblocks.",
+        "notes": [],
+        "description": "Zero quickly glides a short distance forward.",
         "order": 31,
         "id": "hienkyaku-l",
         "characterId": "zero"
@@ -6308,8 +6308,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": [],
-        "notes": ["Can pass through opponents"],
-        "description": "Hienkyaku M moves in the same trajectory as Hienkyaku L but travels much further. Even better at creating left/right mixups because it can still put Zero behind the opponent even his previous button was pushblocked.",
+        "notes": [],
+        "description": "Zero quickly glides a longer distance forward.",
         "order": 32,
         "id": "hienkyaku-m",
         "characterId": "zero"
@@ -6330,8 +6330,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": [],
-        "notes": ["Can pass through opponents"],
-        "description": "Hienkyaku H sends very up and then back down in a very tight parabolic angle. It's capabable of stealing the corner from the opponent allowing for ambiguious mixups. Zero is able to perform any actions as soon as he reaches the peak of the command dash.",
+        "notes": [],
+        "description": "Zero quickly shoots up and back down in a tight parabolic angle.",
         "order": 33,
         "id": "hienkyaku-h",
         "characterId": "zero"
@@ -6352,8 +6352,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": [],
-        "notes": ["Moves Zero to the ground", "Can pass through opponents"],
-        "description": "Instead of moving forward like its grounded version, Air Hienkyaku L sends Zero straight to the ground. One of his key components to his great air movement allowing to go from super jump height to the ground in an instant.",
+        "notes": [],
+        "description": "Zero quickly drops down until he hits the ground.",
         "order": 34,
         "id": "air-hienkyaku-l",
         "characterId": "zero"
@@ -6374,8 +6374,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": [],
-        "notes": ["Can pass through opponents"],
-        "description": "Follows the same trajectory of his grounded Hienkyaku M. Useful for clearing horizontal space quickly without having to use Zero's air dash.",
+        "notes": [],
+        "description": "Zero quickly glides forward across the air.",
         "order": 35,
         "id": "air-hienkyaku-m",
         "characterId": "zero"
@@ -6396,8 +6396,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": [],
-        "notes": ["Can pass through opponents"],
-        "description": "Follows the same trajectory of his grounded Hienkyaku H. Allows Zero to get incredibly high in the air without having to super jump to retain the ability to call assists.",
+        "notes": [],
+        "description": "Zero quickly shoots up and back down in a tight parabolic angle.",
         "order": 36,
         "id": "air-hienkyaku-h",
         "characterId": "zero"
@@ -6419,7 +6419,7 @@
         "meterGain": 0,
         "attributes": [],
         "notes": [],
-        "description": "Acts as a sort of fake out move that freezes Zero in place for a couple of frames. Useful for stalling out in the air or faking out a Raikousen.",
+        "description": "Zero fakes out pulling his sword and stalls out in the air.",
         "order": 37,
         "id": "sentsuizan-l",
         "characterId": "zero"
@@ -6440,8 +6440,8 @@
         "advBlock": 8,
         "meterGain": 480,
         "attributes": ["OTG", "Launcher"],
-        "notes": ["Launcher properties when used in air combo after Standing S"],
-        "description": "A divekick that sends Zero down at a very steep angle. A good alternative to Air Hienkyaku L to quickly advance to the floor while also putting a hitbox below him.",
+        "notes": [],
+        "description": "Zero launches down at a steep angle with his sword out.",
         "order": 38,
         "id": "sentsuizan-m",
         "characterId": "zero"
@@ -6462,8 +6462,8 @@
         "advBlock": 8,
         "meterGain": 640,
         "attributes": ["OTG", "Launcher"],
-        "notes": ["Launcher properties when used in air combo after Standing S"],
-        "description": "A divekick that sends Zero down at a 45 degree angle used as his primary OTG. The wider angle of this version over Sentsuizan M can be used to create mixups from super jump height when combined with mixup.",
+        "notes": [],
+        "description": "Zero launches down at a 45 degree angle with his sword out.",
         "order": 39,
         "id": "sentsuizan-h",
         "characterId": "zero"
@@ -6484,8 +6484,8 @@
         "advBlock": -7,
         "meterGain": 320,
         "attributes": [],
-        "notes": ["Requires 30 frames of charging", "Projectile - 2 low durability point"],
-        "description": "Upon release, Zero shoots out a tiny slow moving blue buster. Not incredibly useful outside of some scenarios where you are trying to frame trap an opponent.",
+        "notes": [],
+        "description": "Zero shoots out a tiny slow moving blue buster.",
         "order": 40,
         "id": "hyper-zero-blaster-level-1",
         "characterId": "zero"
@@ -6506,8 +6506,8 @@
         "advBlock": -5,
         "meterGain": 560,
         "attributes": [],
-        "notes": ["Requires 70 frames of charging", "Projectile - 4 low durability point"],
-        "description": "A slightly more durable, faster, and more damaging projectile than the level 1 buster. The main difference is that it cannot be destroyed with normals unlike the level 1 buster.",
+        "notes": [],
+        "description": "Zero shoots a green buster projectile.",
         "order": 41,
         "id": "hyper-zero-blaster-level-2",
         "characterId": "zero"
@@ -6528,8 +6528,8 @@
         "advBlock": 2,
         "meterGain": 960,
         "attributes": ["Soft Knockdown"],
-        "notes": ["Requires 150 frames of charging", "Beam - 3 frames x 3 low durability point"],
-        "description": "Level 3 Buster is one of the biggest neutral defining tools in the game. Its a projectile with beam durability pierces through opponents and beats out almost every non-super projectile in the game. It opens up his neutral immensely since nearly all of his normals and all of his specials are Level 3 Buster cancellable.",
+        "notes": [],
+        "description": "Zero shoots a large fast moving red buster.",
         "order": 42,
         "id": "hyper-zero-blaster-level-3",
         "characterId": "zero"
@@ -6550,8 +6550,8 @@
         "advBlock": -7,
         "meterGain": 320,
         "attributes": [],
-        "notes": ["Requires 30 frames of charging", "Projectile - 2 low durability point"],
-        "description": "Air Level 1 Buster carries all the same properties of its grounded version except Zero shoots it down at a 45 degree angle. Not much utility outside using it to stall in the air in some matchups.",
+        "notes": [],
+        "description": "Zero shoots out a tiny slow moving blue buster down at a 45 degree angle.",
         "order": 43,
         "id": "air-hyper-zero-blaster-level-1",
         "characterId": "zero"
@@ -6572,8 +6572,8 @@
         "advBlock": -5,
         "meterGain": 560,
         "attributes": [],
-        "notes": ["Requires 70 frames of charging", "Projectile - 4 low durability point"],
-        "description": "Shoots a green buster down at 45 degree angle. Similar to Level 1, you wont use this much outside of trying to stall in the air or pepper the screen with extra projectiles.",
+        "notes": [],
+        "description": "Zero shoots a green buster projectile at a 45 degree angle.",
         "order": 44,
         "id": "air-hyper-zero-blaster-level-2",
         "characterId": "zero"
@@ -6594,8 +6594,8 @@
         "advBlock": 2,
         "meterGain": 960,
         "attributes": ["Soft Knockdown"],
-        "notes": ["Requires 150 frames of charging", "Beam - 3 frames x 3 low durability point"],
-        "description": "Just like its grounded variant, Air Level 3 Buster enables Zero to set the pace of neutral with buster cancelled specials. Since it's a guaranteed soft knockdown, you can use it to confirm any hit from any height.",
+        "notes": [],
+        "description": "Zero shoots a large fast moving red buster at a 45 degree angle.",
         "order": 45,
         "id": "air-hyper-zero-blaster-level-3",
         "characterId": "zero"
@@ -6615,9 +6615,9 @@
         "advHit": 1,
         "advBlock": -14,
         "meterGain": 0,
-        "attributes": ["OTG", "Soft Knockdown"],
-        "notes": ["Beam - 30 frames x 1 high durability point"],
-        "description": "Rekkoha is a rarely used combo finisher, especially since lightning loops exist. Due to its rather slow startup, it will only work in specific combo routes.",
+        "attributes": ["OTG"],
+        "notes": [],
+        "description": "Zero slams his arm into the ground followed by a laser pillar to shoot from the sky.",
         "order": 46,
         "id": "rekkoha",
         "characterId": "zero"
@@ -6638,13 +6638,8 @@
         "advBlock": null,
         "meterGain": 0,
         "attributes": ["Full Invincibility"],
-        "notes": [
-          "Creates a shadow that mimics Zero 16 frames later",
-          "Shadow lasts for 300 frames and disappears if Zero uses any other super",
-          "Zero does not gain any meter while Sougenmu is active",
-          "Invincible from frames 9-10"
-        ],
-        "description": "Arguably the best install super in the game. Sougenmu creates a clone of himself that mimics every action 16 frames later. This lets Zero put out double the durability with his projectiles, create unblockables, and generally bully his opponents with buttons.",
+        "notes": [],
+        "description": "Zero creates a shadow clone of himself.",
         "order": 47,
         "id": "sougenmu",
         "characterId": "zero"
@@ -6665,8 +6660,8 @@
         "advBlock": -36,
         "meterGain": 0,
         "attributes": ["Full Invincibility", "Hard Knockdown"],
-        "notes": ["Projectile - 100 high durability point", "Invincible from frames 1-24"],
-        "description": "Zero's level 3 super that sends out a massive projectile across the screen. Genmu Zero is a useful ender in happy birthday combos to avoid combo drops during lightning loops when an assist dies.",
+        "notes": [],
+        "description": "Zero sends out a massive projectile clearing the screen.",
         "order": 48,
         "id": "genmu-zero",
         "characterId": "zero"
@@ -6677,7 +6672,7 @@
         "name": "Ryuenjin H",
         "id": "ryuenjin-h",
         "characterId": "zero",
-        "description": "A multi-hitting DP assist without any invincibility that appears slightly in front of the player.",
+        "description": "Zero performs a fiery uppercut with his sword.",
         "type": "Alpha",
         "thc": "Rekkoha",
         "dmg": 102300,
@@ -6695,7 +6690,7 @@
       },
       {
         "name": "Hadangeki M",
-        "description": "A single hit, fast moving projectile.",
+        "description": "Zero shoots a fast blade projectile.",
         "id": "hadangeki-m",
         "characterId": "zero",
         "type": "Beta",
@@ -6715,7 +6710,7 @@
       },
       {
         "name": "Shippuga",
-        "description": "A slower assist that sends Zero forward with his saber out.",
+        "description": "Zero advances forward while swinging his sword in front of him horizontally.",
         "id": "shippuga",
         "characterId": "zero",
         "type": "Gamma",

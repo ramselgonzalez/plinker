@@ -49,11 +49,9 @@ const Trials: NextPage<TrialsProps> = (props) => {
           </header>
           <ul className="grid w-full gap-y-4 md:gap-y-6 lg:w-[800px]">
             {trials.map((c) => (
-              <li className="rounded-2xl bg-neutral-800 p-6 shadow-md shadow-black/30" key={c.id}>
+              <li className="paper p-6" key={c.id}>
                 <div className="flex items-center gap-x-2">
-                  <div className="mt-1 flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-neutral-600 text-xl font-semibold">
-                    {c.trial}
-                  </div>
+                  <div className="avatar">{c.trial}</div>
                   <div className="w-full">
                     <Link className="uppercase" color="white" href={routes.trial(cid, c.id)} variant="h3">
                       {c.title}

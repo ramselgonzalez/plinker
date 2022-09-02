@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ParsedUrlQuery } from "querystring";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
@@ -17,6 +18,8 @@ import { getAssistIds, getAssist } from "lib/assist";
 import { IAssistDetail, IAssistPreview } from "types";
 import routes from "routes";
 import { getAssistTypeColor } from "helpers";
+import { ChevronRight, List } from "components/Icon";
+import Drawer from "components/Drawer";
 
 interface AssistProps {
   cname: string;
@@ -27,6 +30,7 @@ interface AssistProps {
 
 const Assist: NextPage<AssistProps> = (props) => {
   const { assist, assists, cname, content } = props;
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const router = useRouter();
   const cid = router.query.cid as string;
   return (
@@ -75,12 +79,12 @@ const Assist: NextPage<AssistProps> = (props) => {
                   </Chip>
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-3">
-                  <DataItem className="border-r border-neutral-700" label="Team Hyper Combo" value={assist.thc} />
-                  <DataItem className="border-r border-neutral-700" label="Block" value={assist.block} />
-                  <DataItem label="Hit Type" value={assist.hit} />
+                  <DataItem className="flex-auto border-r" label="Team Hyper Combo" value={assist.thc} />
+                  <DataItem className="flex-auto border-r" label="Block" value={assist.block} />
+                  <DataItem className="flex-auto" label="Hit Type" value={assist.hit} />
                 </div>
                 <div className="mt-3 flex border-t border-neutral-700 pt-2">
-                  <Typography>{assist.description}</Typography>
+                  <Typography className="italic">{assist.description}</Typography>
                 </div>
                 {assist.attributes.length > 0 && (
                   <div>
@@ -100,22 +104,44 @@ const Assist: NextPage<AssistProps> = (props) => {
                 )}
               </div>
             </div>
-            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
-              <DataItem label="Start Up" value={assist.startUp} />
-              <DataItem label="Active" value={assist.active} />
-              <DataItem label="Recovery" value={assist.recovery} />
-              <DataItem label="Alt. Recovery" value={assist.recoveryAlt} />
+            <div className="paper flex flex-wrap gap-4 p-4">
+              <DataItem className="flex-auto" label="Start Up" value={assist.startUp} />
+              <DataItem className="flex-auto" label="Active" value={assist.active} />
+              <DataItem className="flex-auto" label="Recovery" value={assist.recovery} />
+              <DataItem className="flex-auto" label="Alt. Recovery" value={assist.recoveryAlt} />
             </div>
-            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
-              <DataItem label="Hits" value={assist.hits} />
-              <DataItem label="Damage" value={assist.dmg} />
-              <DataItem label="Meter Gain" value={assist.meterGain} />
+            <div className="paper flex flex-wrap gap-4 p-4">
+              <DataItem className="flex-auto" label="Hits" value={assist.hits} />
+              <DataItem className="flex-auto" label="Damage" value={assist.dmg} />
+              <DataItem className="flex-auto" label="Meter Gain" value={assist.meterGain} />
             </div>
-            <div className="lg:w-4/5">
+            <div>
               <MDXRemote {...content} components={MarkdownComponents} />
             </div>
           </div>
         </div>
+        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+          <List />
+        </button>
+        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
+            <button onClick={() => setDrawerOpen(false)}>
+              <ChevronRight />
+            </button>
+            <Typography className="uppercase" variant="h4">
+              Assists
+            </Typography>
+          </div>
+          <ul className="-mt-2 px-5 py-4">
+            <TreeSection label="Assists">
+              {assists.map((a) => (
+                <TreeItem key={a.id} to={routes.assist(cid, a.id)}>
+                  {a.name}
+                </TreeItem>
+              ))}
+            </TreeSection>
+          </ul>
+        </Drawer>
       </Page>
     </>
   );

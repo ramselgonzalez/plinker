@@ -11,11 +11,11 @@ function DataItem(props: IDataItemProps) {
   const { className, color, label, value } = props;
   return (
     <div
-      className={cn("flex-auto border-neutral-700 px-4 text-center last:border-r-0", {
+      className={cn("border-neutral-700 px-4 text-center last:border-r-0", {
         [`${className}`]: className,
       })}
     >
-      <Typography className="uppercase" color="gray" variant="h4">
+      <Typography className="whitespace-nowrap uppercase" color="gray" variant="h4">
         {label}
       </Typography>
       <Typography className="uppercase" color={color} component="p" variant="h3">

@@ -55,23 +55,26 @@ const Trial: NextPage<TrialProps> = (props) => {
                 title="Trial video"
               />
             </div>
-            <div className="rounded-2xl bg-neutral-800 p-4">
+            <div className="paper p-4">
               <Typography className="uppercase" color="gray" variant="h4">
                 Input
               </Typography>
-              <Typography className="font-medium tracking-wider">{trial.input}</Typography>
+              <div
+                className="mt-2 rounded-xl bg-neutral-900 p-4 font-mono text-sm"
+                dangerouslySetInnerHTML={{ __html: trial.inputHTML }}
+              />
             </div>
-            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
-              <DataItem label="Difficulty" value={trial.difficulty} />
-              <DataItem label="Position" value={trial.position} />
-              <DataItem label="Starter" value={trial.starter} />
-              <DataItem label="X-Factor" value={trial.xfactor || "--"} />
+            <div className="paper flex flex-wrap gap-4 p-4">
+              <DataItem className="flex-1" label="Difficulty" value={trial.difficulty} />
+              <DataItem className="flex-1" label="Position" value={trial.position} />
+              <DataItem className="flex-1" label="Starter" value={trial.starter} />
+              <DataItem className="flex-1" label="X-Factor" value={trial.xfactor || "--"} />
             </div>
-            <div className="flex flex-wrap gap-4 rounded-2xl bg-neutral-800 p-4">
-              <DataItem label="Damage" value={trial.damage.toLocaleString("en")} />
-              <DataItem label="Meter Start" value={trial.meterStart} />
-              <DataItem label="Meter Build" value={trial.meterBuild} />
-              <DataItem label="Meter Spend" value={trial.meterSpend} />
+            <div className="paper flex flex-wrap gap-4 p-4">
+              <DataItem className="flex-1" label="Damage" value={trial.damage.toLocaleString("en")} />
+              <DataItem className="flex-1" label="Meter Start" value={trial.meterStart} />
+              <DataItem className="flex-1" label="Meter Build" value={trial.meterBuild} />
+              <DataItem className="flex-1" label="Meter Spend" value={trial.meterSpend} />
             </div>
             <div>
               <MDXRemote {...content} components={MarkdownComponents} />

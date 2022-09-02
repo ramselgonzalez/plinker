@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+  .avatar {
+    @apply flex h-10 w-10 shrink-0 select-none items-center justify-center rounded-full bg-neutral-600 text-xl font-semibold;
+  }
+
   .h1 {
     @apply text-2xl font-semibold tracking-wider;
   }

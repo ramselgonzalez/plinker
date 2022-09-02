@@ -6,8 +6,8 @@ export function getMovePreview(move: RawMove, character: RawCharacter): IMovePre
   return {
     id: move.id,
     active: move.active || "--",
-    advBlock: move.advBlock || "--",
-    advHit: move.advHit || "--",
+    advBlock: getAdvantage(move.advBlock),
+    advHit: getAdvantage(move.advHit),
     attributes: move.attributes,
     dmg: getDmgPreview(move.dmg),
     imgUrl: getMoveImgUrl(move.id, character.id),
@@ -26,8 +26,8 @@ export function getMoveDetail(move: RawMove, character: RawCharacter): IMoveDeta
     active: move.active || "--",
     attributes: move.attributes,
     block: move.block,
-    advBlock: move.advHit || "--",
-    advHit: move.advHit || "--",
+    advBlock: getAdvantage(move.advBlock),
+    advHit: getAdvantage(move.advHit),
     description: move.description || "",
     dmg: getDmgPreview(move.dmg),
     dmgMax: getDmgRange(move.dmg)[1],
@@ -62,4 +62,12 @@ export function getMoveImgUrl(mid: string, cid: string) {
 
 export function getMoveImgAlt(move: string, character: string) {
   return `${character} performing ${move}`;
+}
+
+export function getAdvantage(adv: number | null) {
+  if (adv === null) {
+    return "--";
+  }
+
+  return adv;
 }

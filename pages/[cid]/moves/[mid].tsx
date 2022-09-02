@@ -98,15 +98,13 @@ const Move: NextPage<MoveProps> = (props) => {
                     {move.input}
                   </Chip>
                 </div>
-                <div className="mt-3 flex border-t border-neutral-700 pt-3">
-                  <DataItem className="border-r" label="Class" value={move.type} />
-                  <DataItem className="border-r" label="Block" value={move.block} />
-                  <DataItem label="Hit Type" value={move.hit} />
+                <div className="mt-3 flex border-y border-neutral-700 py-3">
+                  <DataItem className="flex-auto border-r" label="Class" value={move.type} />
+                  <DataItem className="flex-auto border-r" label="Block" value={move.block} />
+                  <DataItem className="flex-auto" label="Hit Type" value={move.hit} />
                 </div>
-                <div className="flex flex-1 flex-col justify-between">
-                  <div className="my-3 flex border-t border-neutral-700 pt-2">
-                    <Typography>{move.description}</Typography>
-                  </div>
+                <div className="mt-2 flex flex-1 flex-col justify-between gap-y-4">
+                  <Typography className="italic">{move.description}</Typography>
                   {move.attributes.length > 0 && (
                     <div>
                       <Typography className="uppercase" color="gray" variant="h4">
@@ -124,19 +122,29 @@ const Move: NextPage<MoveProps> = (props) => {
                 </div>
               </div>
             </div>
-            <div className="flex flex-wrap gap-y-4 rounded-2xl bg-neutral-800 p-3 shadow-md shadow-black/30">
-              <DataItem label="Start Up" value={move.startUp} />
-              <DataItem label="Active" value={move.active} />
-              <DataItem label="Recovery" value={move.recovery} />
-              <DataItem color={getFrameDataColor(move.advBlock)} label="Block Adv." value={move.advBlock} />
-              <DataItem color={getFrameDataColor(move.advHit)} label="Hit Adv." value={move.advHit} />
+            <div className="paper flex flex-wrap gap-y-4 p-4">
+              <DataItem className="flex-auto" label="Start Up" value={move.startUp} />
+              <DataItem className="flex-auto" label="Active" value={move.active} />
+              <DataItem className="flex-auto" label="Recovery" value={move.recovery} />
+              <DataItem
+                className="flex-auto"
+                color={getFrameDataColor(move.advBlock)}
+                label="Block Adv."
+                value={move.advBlock}
+              />
+              <DataItem
+                className="flex-auto"
+                color={getFrameDataColor(move.advHit)}
+                label="Hit Adv."
+                value={move.advHit}
+              />
             </div>
-            <div className="flex flex-wrap gap-y-4 rounded-2xl bg-neutral-800 p-3 shadow-md shadow-black/30">
-              <DataItem label="Hits" value={move.hits} />
-              <DataItem label="Damage" value={move.dmg} />
-              <DataItem label="Meter Gain" value={move.meterGain} />
+            <div className="paper flex flex-wrap gap-y-4 p-4">
+              <DataItem className="flex-auto" label="Hits" value={move.hits} />
+              <DataItem className="flex-auto" label="Damage" value={move.dmg} />
+              <DataItem className="flex-auto" label="Meter Gain" value={move.meterGain} />
             </div>
-            <div className="-mt-4 w-4/5">
+            <div className="-mt-4">
               <MDXRemote {...content} components={MarkdownComponents} />
             </div>
           </div>

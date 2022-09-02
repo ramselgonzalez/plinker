@@ -24,7 +24,7 @@ const colors = {
   white: "text-neutral-50",
   gray: "text-neutral-400",
   blue: "text-blue-500",
-  yellow: "",
+  yellow: "text-yellow-400",
   red: "text-red-400",
   green: "text-green-500",
   purple: "",

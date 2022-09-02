@@ -16,6 +16,9 @@ import { getCharacterIds } from "lib/character";
 import { getAssistPreviews } from "lib/assist";
 import routes from "routes";
 import { IAssistPreview } from "types";
+import { ChevronRight, List } from "components/Icon";
+import Drawer from "components/Drawer";
+import { useState } from "react";
 
 interface AssistsProps {
   cname: string;
@@ -24,6 +27,7 @@ interface AssistsProps {
 
 const Assists: NextPage<AssistsProps> = (props) => {
   const { cname, assists } = props;
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { query, push } = useRouter();
   const cid = query.cid as string;
   return (
@@ -51,7 +55,7 @@ const Assists: NextPage<AssistsProps> = (props) => {
           <ul className="grid gap-y-4 md:gap-y-6">
             {assists.map((a) => (
               <li
-                className="group flex cursor-pointer flex-col rounded-2xl bg-neutral-800 shadow-md shadow-black/30 md:flex-row"
+                className="paper group flex cursor-pointer flex-col md:flex-row"
                 id={a.id}
                 key={a.id}
                 onClick={() => push(routes.assist(cid, a.id))}
@@ -82,6 +86,28 @@ const Assists: NextPage<AssistsProps> = (props) => {
             ))}
           </ul>
         </div>
+        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+          <List />
+        </button>
+        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
+            <button onClick={() => setDrawerOpen(false)}>
+              <ChevronRight />
+            </button>
+            <Typography className="uppercase" variant="h4">
+              Assists
+            </Typography>
+          </div>
+          <ul className="-mt-2 px-5 py-4">
+            <TreeSection label="Assists">
+              {assists.map((a) => (
+                <TreeItem key={a.id} to={routes.assist(cid, a.id)}>
+                  {a.name}
+                </TreeItem>
+              ))}
+            </TreeSection>
+          </ul>
+        </Drawer>
       </Page>
     </>
   );

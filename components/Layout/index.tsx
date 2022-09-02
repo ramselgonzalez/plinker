@@ -14,8 +14,8 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex">
-      <header className="fixed z-20 flex h-14 w-full border-b border-b-neutral-500 bg-neutral-900 px-4">
-        <nav className="mx-auto my-0 flex w-full items-center gap-4 xl:w-xl ">
+      <header className="fixed z-20 flex h-14 w-full border-b border-b-neutral-500 bg-neutral-900">
+        <nav className="mx-auto my-0 flex w-full items-center gap-4 px-4 md:px-8 xl:w-xl">
           <button className="lg:hidden" onClick={() => setDrawerOpen(true)}>
             <Menu />
           </button>

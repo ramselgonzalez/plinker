@@ -3,6 +3,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: "Barlow",
+      mono: "Roboto Mono",
     },
     letterSpacing: {
       wider: "2px",

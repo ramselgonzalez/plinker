@@ -86,6 +86,7 @@ export interface RawCombo {
   description: string;
   difficulty: string;
   input: string;
+  inputHTML: string;
   meterStart: number;
   meterBuild: number;
   meterSpend: number;
