@@ -7,7 +7,6 @@ import Tree from "components/Tree";
 import TreeItem from "components/TreeItem";
 import TreeSection from "components/TreeSection";
 import Typography from "components/Typography";
-import { MarkdownComponents } from "helpers/markdown";
 import { getTrial, getTrialIds } from "lib/trial";
 import routes from "routes";
 import { RawCharacter, RawCombo } from "types";
@@ -81,7 +80,7 @@ const Trial: NextPage<TrialProps> = (props) => {
               <DataItem className="flex-1" label="Meter Spend" value={trial.meterSpend} />
             </div>
             <div>
-              <MDXRemote {...content} components={MarkdownComponents} />
+              <MDXRemote {...content} />
             </div>
           </div>
         </div>
