@@ -1,112 +1,59 @@
-import Image from "next/image";
+// packages
 import { useRouter } from "next/router";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
 import { ParsedUrlQuery } from "querystring";
-import Chip from "components/Chip";
+// components
 import Link from "components/Link";
 import Head from "components/Head";
 import Page from "components/Page";
-import { AssistPreview } from "components/Table";
-import Tree from "components/Tree";
-import TreeItem from "components/TreeItem";
-import TreeSection from "components/TreeSection";
 import Typography from "components/Typography";
 import { getAssistTypeColor } from "helpers";
 import { getCharacterIds } from "lib/character";
 import { getAssistPreviews } from "lib/assist";
 import routes from "routes";
-import { IAssistPreview } from "types";
-import { ChevronRight, List } from "components/Icon";
+import { IAssistPreview, RawCharacter } from "types";
+import { ChevronLeft, ChevronRight, List } from "components/Icon";
 import Drawer from "components/Drawer";
 import { useState } from "react";
+import TableOfContents, { TableOfContentsItem } from "components/TableOfContents";
+import AssistCard from "components/AssistCard";
+import PageHeader from "components/PageHeader";
+import PageFooter, { PageFooterLinkType } from "components/PageFooter";
 
 interface AssistsProps {
-  cname: string;
   assists: Array<IAssistPreview>;
+  character: RawCharacter;
+  nextRoute: PageFooterLinkType;
+  previousRoute: PageFooterLinkType;
+  toc: Array<TableOfContentsItem>;
 }
 
 const Assists: NextPage<AssistsProps> = (props) => {
-  const { cname, assists } = props;
+  const { assists, character, nextRoute, previousRoute, toc } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { query, push } = useRouter();
   const cid = query.cid as string;
   return (
     <>
-      <Head cid={cid} name={cname} page="assists" />
+      <Head cid={cid} name={character.name} page="assists" />
       <Page>
-        <Tree>
-          <TreeSection label="Assists">
-            {assists.map((s) => (
-              <TreeItem key={s.id} to={routes.assist(cid, s.id)}>
-                {s.name}
-              </TreeItem>
-            ))}
-          </TreeSection>
-        </Tree>
+        <TableOfContents contents={toc} label="Assists" />
         <div className="mt-34 mb-8 w-page-content lg:pl-8">
-          <header className="mb-2">
-            <Typography className="uppercase" color="aqua" component="p" variant="h3">
-              {cname}
-            </Typography>
-            <Typography className="uppercase" variant="h1">
-              Assists
-            </Typography>
-          </header>
-          <ul className="grid gap-y-4 md:gap-y-6">
+          <PageHeader heading="Trials" subheading={character.name} />
+          <ul className="mt-4 grid gap-y-4 md:gap-y-6">
             {assists.map((a) => (
-              <li
-                className="paper group flex cursor-pointer flex-col md:flex-row"
-                id={a.id}
-                key={a.id}
-                onClick={() => push(routes.assist(cid, a.id))}
-              >
-                <div className="hidden w-1/2 p-6 md:block">
-                  <AssistPreview assist={a} cid={cid} />
-                </div>
-                <div className="p-4 md:hidden">
-                  <Link
-                    className="mb-1 block uppercase group-hover:underline"
-                    color="white"
-                    href={routes.assist(cid, a.id)}
-                    variant="h3"
-                  >
-                    {a.name}
-                  </Link>
-                  <Chip className={`h4 uppercase ${getAssistTypeColor(a.type)}`}>{a.type}</Chip>
-                </div>
-                <div className="relative mx-4 mb-4 h-52 overflow-hidden rounded-2xl border-neutral-500 bg-neutral-700 md:mx-0 md:mb-0 md:block md:h-auto md:w-1/2 md:rounded-l-none md:border-l">
-                  <Image
-                    alt={`${cname} being called in as an assist performing ${a.name}`}
-                    layout="fill"
-                    objectFit="cover"
-                    src={`/images/${cid}/assists/${a.id}.jpg`}
-                  />
-                </div>
+              <li key={a.id}>
+                <AssistCard assist={a} href={routes.assist(cid, a.id)} />
               </li>
             ))}
           </ul>
+          <PageFooter nextRoute={nextRoute} previousRoute={previousRoute} />
         </div>
         <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
           <List />
         </button>
-        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
-          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
-            <button onClick={() => setDrawerOpen(false)}>
-              <ChevronRight />
-            </button>
-            <Typography className="uppercase" variant="h4">
-              Assists
-            </Typography>
-          </div>
-          <ul className="-mt-2 px-5 py-4">
-            <TreeSection label="Assists">
-              {assists.map((a) => (
-                <TreeItem key={a.id} to={routes.assist(cid, a.id)}>
-                  {a.name}
-                </TreeItem>
-              ))}
-            </TreeSection>
-          </ul>
+        <Drawer heading="Assists" onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+          <TableOfContents contents={toc} isDrawerToc label="Contents" onSelectItem={() => setDrawerOpen(false)} />
         </Drawer>
       </Page>
     </>
@@ -125,13 +72,27 @@ interface IParams extends ParsedUrlQuery {
   cid: string;
 }
 
+function getTableOfContents(cid: string, assists: Array<IAssistPreview>): Array<TableOfContentsItem> {
+  return assists.map((a) => ({
+    label: a.name,
+    depth: 0,
+    to: routes.assist(cid, a.id),
+  }));
+}
+
 export const getStaticProps: GetStaticProps<AssistsProps> = (context) => {
   const { cid } = context.params as IParams;
-  const data = getAssistPreviews(cid);
+  const { assists, character } = getAssistPreviews(cid);
+  const toc = getTableOfContents(cid, assists);
+  const nextRoute = { heading: "Trials", subheading: character.name, href: routes.trials(character.id) };
+  const previousRoute = { heading: "Moves", subheading: character.name, href: routes.moves(character.id) };
   return {
     props: {
-      cname: data.cname,
-      assists: data.assists,
+      assists,
+      character,
+      nextRoute,
+      previousRoute,
+      toc,
     },
   };
 };

@@ -13,7 +13,6 @@ import Typography from "components/Typography";
 import Tree from "components/Tree";
 import TreeSection from "components/TreeSection";
 import TreeItem from "components/TreeItem";
-import { MarkdownComponents } from "helpers/markdown";
 import { getAssistIds, getAssist } from "lib/assist";
 import { IAssistDetail, IAssistPreview } from "types";
 import routes from "routes";
@@ -116,14 +115,14 @@ const Assist: NextPage<AssistProps> = (props) => {
               <DataItem className="flex-auto" label="Meter Gain" value={assist.meterGain} />
             </div>
             <div>
-              <MDXRemote {...content} components={MarkdownComponents} />
+              <MDXRemote {...content} />
             </div>
           </div>
         </div>
         <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
           <List />
         </button>
-        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+        <Drawer heading="Assists" onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
           <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
             <button onClick={() => setDrawerOpen(false)}>
               <ChevronRight />

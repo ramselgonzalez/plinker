@@ -12,11 +12,22 @@ export type AssistType = "Alpha" | "Beta" | "Gamma";
 export type AirDashArchetype = "1-Way" | "2-Way" | "3-Way" | "8-Way" | "None" | null;
 export type Block = "Low" | "Mid" | "High" | "Unblockable" | "Throw" | "No Hit";
 export type ChainComboArchetype = "Hunter Series" | "Marvel Series" | "2-Hit Limited" | "3-Hit Alternating";
-export type Difficulty = "Easy" | "Medium" | "Hard";
-export type Franchise = "marvel" | "capcom";
+export enum Difficulty {
+  Easy = "Easy",
+  Medium = "Medium",
+  Hard = "Hard",
+}
+export enum Franchise {
+  Marvel = "marvel",
+  Capcom = "capcom",
+}
+export enum RecommendedPosition {
+  Point = "Point",
+  Middle = "Middle",
+  Anchor = "Anchor",
+}
 export type HitType = "Strike" | "Projectile" | "Throw" | "No Hit";
 export type MoveType = typeof MoveTypeValues[number];
-export type RecommendedPosition = "Point" | "Middle" | "Anchor";
 
 export interface RawCharacter {
   name: string;
@@ -258,6 +269,8 @@ export interface IAssistPreview {
   active: string | number | null;
   block: Block;
   dmg: string;
+  imgAlt: string;
+  imgUrl: string;
   meterGain: string;
   name: string;
   recovery: number;

@@ -32,10 +32,9 @@ function SecondaryHeader() {
   const { route, query } = useRouter();
   const cid = query.cid as string;
   const tabs = getNavTabs(route);
-
   return (
     <div className="fixed top-14 z-10 flex h-12 w-full border-b border-b-neutral-500 bg-neutral-900">
-      <nav aria-label="Character Navigation Tabs" className="relative mx-auto h-full w-full xl:w-xl">
+      <nav className="relative mx-auto h-full w-full xl:w-xl">
         <ul className="relative flex h-full items-center overflow-x-scroll md:overflow-x-visible">
           {tabs.map((tab) => (
             <li
@@ -56,7 +55,8 @@ function SecondaryHeader() {
           ))}
         </ul>
       </nav>
-      <div className="pointer-events-none absolute right-0 h-full w-16 bg-gradient-to-l from-neutral-900 md:hidden" />
+      <div className="pointer-events-none absolute left-0 h-full w-8 bg-gradient-to-r from-neutral-900 md:hidden" />
+      <div className="pointer-events-none absolute right-0 h-full w-8 bg-gradient-to-l from-neutral-900 md:hidden" />
     </div>
   );
 }

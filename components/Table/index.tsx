@@ -27,7 +27,7 @@ function Tr(props: React.ComponentPropsWithoutRef<"tr">) {
   return (
     <tr
       {...rest}
-      className={cn("border-b border-b-neutral-700 last:border-b-0 ", {
+      className={cn("border-b border-b-neutral-700 last:border-b-0", {
         [`${className}`]: className,
       })}
     >
@@ -334,15 +334,15 @@ function CrossoverAttack({ character }: IOverviewTableProps) {
 }
 
 interface IMovePreviewTableProps {
-  cid: string;
+  href: string;
   move: IMovePreview;
 }
 
-function MovePreview({ move, cid }: IMovePreviewTableProps) {
+function MovePreview({ move, href }: IMovePreviewTableProps) {
   return (
     <table className="w-full">
       <Caption className="border-t-0 pt-0">
-        <Link className="uppercase group-hover:underline" color="white" href={routes.move(cid, move.id)} variant="h3">
+        <Link className="uppercase group-hover:underline" color="white" href={href} variant="h3">
           {move.name}
         </Link>
       </Caption>
@@ -379,20 +379,15 @@ function MovePreview({ move, cid }: IMovePreviewTableProps) {
 }
 
 interface IAssistPreviewTableProps {
-  cid: string;
+  href: string;
   assist: IAssistPreview;
 }
 
-function AssistPreview({ assist, cid }: IAssistPreviewTableProps) {
+function AssistPreview({ assist, href }: IAssistPreviewTableProps) {
   return (
     <table className="w-full">
       <Caption className="border-t-0 pt-0">
-        <Link
-          className="uppercase group-hover:underline"
-          color="white"
-          href={routes.assist(cid, assist.id)}
-          variant="h3"
-        >
+        <Link className="uppercase group-hover:underline" color="white" href={href} variant="h3">
           {assist.name}
         </Link>
       </Caption>

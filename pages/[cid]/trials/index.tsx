@@ -1,94 +1,63 @@
+// packages
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
+// components
+import Drawer from "components/Drawer";
 import Head from "components/Head";
-import Chip from "components/Chip";
-import Link from "components/Link";
+import { List } from "components/Icon";
 import Page from "components/Page";
-import Tree from "components/Tree";
-import TreeItem from "components/TreeItem";
-import TreeSection from "components/TreeSection";
+import PageFooter, { PageFooterLinkType } from "components/PageFooter";
+import TableOfContents, { TableOfContentsItem } from "components/TableOfContents";
+import TrialCard from "components/TrialCard";
 import Typography from "components/Typography";
+// utils
 import { getCharacterIds } from "lib/character";
 import { getTrials } from "lib/trial";
-import { getTrialDifficultyColor } from "helpers";
 import routes from "routes";
 import { RawCharacter, RawCombo } from "types";
+import PageHeader from "components/PageHeader";
 
 interface TrialsProps {
-  trials: Array<RawCombo>;
   character: RawCharacter;
+  previousRoute: PageFooterLinkType;
+  toc: Array<TableOfContentsItem>;
+  trials: Array<RawCombo>;
 }
 
 const Trials: NextPage<TrialsProps> = (props) => {
-  const { character, trials } = props;
+  const { character, previousRoute, toc, trials } = props;
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { query } = useRouter();
   const cid = query.cid as string;
-
   return (
-    <>
+    <Page>
       <Head cid={character.id} name={character.name} page="trials" />
-      <Page>
-        <Tree>
-          <TreeSection label="Trials">
-            {trials.map((c) => (
-              <TreeItem key={c.title} to={routes.trial(cid, c.id)}>
-                {`${c.trial}. ${c.title}`}
-              </TreeItem>
-            ))}
-          </TreeSection>
-        </Tree>
-        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
-          <header className="mb-2">
-            <Typography className="uppercase" color="aqua" component="p" variant="h3">
-              {character.name}
-            </Typography>
-            <Typography className="uppercase" variant="h1">
-              Trials
-            </Typography>
-          </header>
-          <ul className="grid w-full gap-y-4 md:gap-y-6 lg:w-[800px]">
-            {trials.map((c) => (
-              <li className="paper p-6" key={c.id}>
-                <div className="flex items-center gap-x-2">
-                  <div className="avatar">{c.trial}</div>
-                  <div className="w-full">
-                    <Link className="uppercase" color="white" href={routes.trial(cid, c.id)} variant="h3">
-                      {c.title}
-                    </Link>
-                  </div>
-                </div>
-                <div>
-                  <Typography className="border-b border-neutral-500 pb-2">{c.description}</Typography>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <Chip className={getTrialDifficultyColor(c.difficulty)}>
-                      <Typography className="uppercase" component="span" variant="h4">
-                        {c.difficulty}
-                      </Typography>
-                    </Chip>
-                    <Chip>
-                      <Typography className="uppercase" component="span" variant="h4">
-                        {c.position}
-                      </Typography>
-                    </Chip>
-                    <Chip>
-                      <Typography className="uppercase" component="span" variant="h4">
-                        {c.starter}
-                      </Typography>
-                    </Chip>
-                    <Chip>
-                      <Typography className="uppercase" component="span" variant="h4">
-                        {c.assistId ? "Assited" : "Solo"}
-                      </Typography>
-                    </Chip>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Page>
-    </>
+      <TableOfContents label="Trials" contents={toc} />
+      <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
+        <PageHeader heading="Trials" subheading={character.name} />
+        <ul className="mt-4 grid w-full gap-y-4 md:gap-y-6">
+          {trials.map((c) => (
+            <li key={c.id}>
+              <TrialCard trial={c} href={routes.trial(cid, c.id)} />
+            </li>
+          ))}
+        </ul>
+        <PageFooter previousRoute={previousRoute} />
+      </div>
+      <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+        <List />
+      </button>
+      <Drawer heading="Trials" onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+        <TableOfContents
+          contents={toc}
+          isDrawerToc
+          label="Table of Contents"
+          onSelectItem={() => setDrawerOpen(false)}
+        />
+      </Drawer>
+    </Page>
   );
 };
 
@@ -104,11 +73,26 @@ interface IParams extends ParsedUrlQuery {
   cid: string;
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+function getTableOfContents(cid: string, trials: Array<RawCombo>): Array<TableOfContentsItem> {
+  return trials.map((t) => ({
+    label: `${t.trial}. ${t.title}`,
+    depth: 0,
+    to: routes.trial(cid, t.id),
+  }));
+}
+
+export const getStaticProps: GetStaticProps<TrialsProps> = async (context) => {
   const { cid } = context.params as IParams;
-  const data = getTrials(cid);
+  const { character, trials } = getTrials(cid);
+  const toc = getTableOfContents(character.id, trials);
+  const previousRoute = { heading: "Assists", subheading: character.name, href: routes.assists(character.id) };
   return {
-    props: { ...data },
+    props: {
+      character,
+      previousRoute,
+      toc,
+      trials,
+    },
   };
 };
 

@@ -3,11 +3,8 @@ import { getCharacterJSON, getAllCharactersJSON, getContentFromFile, getAssistPa
 
 export function getAssistPreviews(cid: string) {
   const character = getCharacterJSON(cid);
-  const assists = character.assists.map(getAssistPreview);
-  return {
-    cname: character.name,
-    assists,
-  };
+  const assists = character.assists.map((a) => getAssistPreview(a, character));
+  return { character, assists };
 }
 
 export function getAssistIds() {
@@ -26,7 +23,7 @@ export function getAssist(cid: string, aid: string) {
   const [character] = file.filter((c) => c.id === cid);
   const [a] = character.assists.filter((a) => a.id === aid);
   const assist = getAssistDetail(a);
-  const assists = character.assists.map(getAssistPreview);
+  const assists = character.assists.map((a) => getAssistPreview(a, character));
   const filename = getAssistPath(cid, aid);
   const content = getContentFromFile(filename);
   return {

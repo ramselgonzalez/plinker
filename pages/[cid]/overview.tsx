@@ -1,104 +1,51 @@
-import { NextPage, GetStaticPaths, GetStaticProps } from "next";
-import Image from "next/image";
-import { serialize } from "next-mdx-remote/serialize";
-import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
-import { getCharacterIds, getCharacterOverview } from "lib/character";
-import { ParsedUrlQuery } from "querystring";
+// packages
 import React, { useState } from "react";
-import Head from "components/Head";
-import Page from "components/Page";
-import Typography from "components/Typography";
-import Tree from "components/Tree";
-import TreeSection from "components/TreeSection";
-import { MarkdownComponents } from "helpers/markdown";
-import { ICharacterOverview } from "types";
-import TreeItem from "components/TreeItem";
-import * as Tables from "components/Table";
-import { ChevronRight, List } from "components/Icon";
+import { NextPage, GetStaticPaths, GetStaticProps } from "next";
+import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+import { serialize } from "next-mdx-remote/serialize";
+import { ParsedUrlQuery } from "querystring";
+// components
+import CharacterInfoBox from "components/CharacterInfoBox";
 import Drawer from "components/Drawer";
+import Head from "components/Head";
+import { List } from "components/Icon";
+import Page from "components/Page";
+import PageFooter, { PageFooterLinkType } from "components/PageFooter";
+import PageHeader from "components/PageHeader";
+import TableOfContents, { TableOfContentsItem } from "components/TableOfContents";
+// utils
+import { getCharacterIds, getCharacterOverview } from "lib/character";
+import routes from "routes";
+import { ICharacterOverview } from "types";
 
 interface OverviewProps {
   character: ICharacterOverview;
   content: MDXRemoteSerializeResult;
-  headings: { label: string; id: string }[];
+  nextRoute: PageFooterLinkType;
+  toc: Array<TableOfContentsItem>;
 }
 
 const Overview: NextPage<OverviewProps> = (props) => {
-  const { character, content, headings } = props;
+  const { character, content, nextRoute, toc } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
   return (
-    <>
+    <Page>
       <Head cid={character.id} name={character.name} page="overview" />
-      <Page>
-        <Tree>
-          <TreeSection label="Content">
-            {headings.map((h) => (
-              <TreeItem key={h.id} to={h.id}>
-                {h.label}
-              </TreeItem>
-            ))}
-          </TreeSection>
-        </Tree>
-        <div className="mt-30 mb-16 w-full md:mt-34 lg:pl-8">
-          <header className="mb-2 md:mb-0">
-            <Typography className="uppercase" color="aqua" component="p" variant="h3">
-              {character.name}
-            </Typography>
-            <Typography className="uppercase" variant="h1">
-              Overview
-            </Typography>
-          </header>
-          <div>
-            <div className="md:float-right md:bg-neutral-900 md:pl-4 md:pb-2">
-              <div className="paper mt-4 h-max flex-shrink-0 p-4 md:-mt-2 md:w-[375px]">
-                <div className="relative mb-4 h-96 overflow-hidden rounded-2xl border border-neutral-500">
-                  <Image alt={character.imgAlt} layout="fill" objectFit="cover" src={character.imgUrl} />
-                </div>
-                <Tables.BasicStats character={character} />
-                <Tables.DamageScaling character={character} />
-                <Tables.XfactorMultipliers character={character} />
-                <Tables.GroundDashes character={character} />
-                {character.airDashArchetype !== "None" && <Tables.AirDashes character={character} />}
-                <Tables.JumpDurations character={character} />
-                <Tables.CrossoverAttack character={character} />
-              </div>
-            </div>
-            <MDXRemote {...content} components={MarkdownComponents} />
-          </div>
-        </div>
-        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
-          <List />
-        </button>
-        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
-          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
-            <button onClick={() => setDrawerOpen(false)}>
-              <ChevronRight />
-            </button>
-            <Typography className="uppercase" variant="h4">
-              Overview
-            </Typography>
-          </div>
-          <ul className="-mt-2 px-5 py-4">
-            <TreeSection label="Table of Contents">
-              {headings.map((h) => (
-                <TreeItem onClick={() => setDrawerOpen(false)} key={h.id} to={h.id}>
-                  {h.label}
-                </TreeItem>
-              ))}
-            </TreeSection>
-          </ul>
-        </Drawer>
-      </Page>
-    </>
+      <TableOfContents label="Content" contents={toc} />
+      <div className="mt-30 mb-16 w-full md:mt-34 lg:pl-8">
+        <PageHeader heading="Overview" subheading={character.name} />
+        <CharacterInfoBox character={character} />
+        <MDXRemote {...content} />
+        <PageFooter nextRoute={nextRoute} />
+      </div>
+      <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+        <List />
+      </button>
+      <Drawer heading="Overview" onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+        <TableOfContents contents={toc} isDrawerToc label="Contents" onSelectItem={() => setDrawerOpen(false)} />
+      </Drawer>
+    </Page>
   );
-};
-
-export const getStaticPaths: GetStaticPaths = () => {
-  const paths = getCharacterIds();
-  return {
-    paths,
-    fallback: false,
-  };
 };
 
 interface IParams extends ParsedUrlQuery {
@@ -106,29 +53,47 @@ interface IParams extends ParsedUrlQuery {
 }
 
 function getHeadings(source: string) {
-  const headingLines = source.split("\n").filter((line) => {
-    return line.match(/^## *\s/);
+  // checks each line and verifies if it contains an h2 or h3 heading by the number of # at the start of row.
+  const headingLines = source.split("\n").filter((line) => line.match(/^[#]{2,3}\s/));
+  const headings = headingLines.map((line) => {
+    // check if there is remark-heading-id syntax (\{#...}\).
+    const commentRegex = new RegExp(/\\\{.*\\\}/);
+    const foundSubstring = line.match(commentRegex);
+    let to = "#";
+    if (foundSubstring) {
+      // remove special syxtax from comment to create url
+      to = "#" + foundSubstring[0].replace("\\{#", "").replace("\\}", "");
+    }
+    // remove entire comment from line for ui
+    const label = line.replace(commentRegex, "").replaceAll("#", "").trim();
+    // determine depth by getting the number of # at the start of the line and subtract 2 (h2 === depth: 0)
+    const depth = line.split(" ")[0].length - 2;
+    return { label, to, depth };
   });
-
-  return headingLines.map((raw) => {
-    const heading = raw.replace(/^##*\s/, "").replace("\r", "");
-    const id = "#" + heading.toLowerCase().replace(/ /g, "-");
-    return { label: heading, id };
-  });
+  return headings;
 }
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { cid } = context.params as IParams;
   const { character, content } = getCharacterOverview(cid);
-  const headings = getHeadings(content);
-  const mdx = await serialize(content);
-
+  const toc = getHeadings(content);
+  const mdx = await serialize(content, { mdxOptions: { remarkPlugins: [require("remark-heading-id")] } });
+  const nextRoute = { heading: "Moves", subheading: character.name, href: routes.moves(character.id) };
   return {
     props: {
       character,
       content: mdx,
-      headings,
+      nextRoute,
+      toc,
     },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+  const paths = getCharacterIds();
+  return {
+    paths,
+    fallback: false,
   };
 };
 

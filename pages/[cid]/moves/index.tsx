@@ -1,126 +1,56 @@
+// packages
 import { useState } from "react";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
-import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
-import Chip from "components/Chip";
+// components
 import Drawer from "components/Drawer";
 import Head from "components/Head";
-import { ChevronRight, List } from "components/Icon";
-import Link from "components/Link";
+import { List } from "components/Icon";
+import MoveCard from "components/MoveCard";
 import Page from "components/Page";
-import { MovePreview } from "components/Table";
-import Tree from "components/Tree";
-import TreeItem from "components/TreeItem";
-import TreeSection from "components/TreeSection";
-import Typography from "components/Typography";
+import PageFooter, { PageFooterLinkType } from "components/PageFooter";
+import PageHeader from "components/PageHeader";
+import TableOfContents, { TableOfContentsItem } from "components/TableOfContents";
+// utils
 import { getCharacterIds } from "lib/character";
 import { getMovePreviews } from "lib/move";
 import routes from "routes";
 import { MoveTypeValues, IMovePreview, RawCharacter } from "types";
-import { BLUR_DATA_URL } from "helpers/images";
-import { getInputColor } from "helpers";
 
 interface MovesProps {
   character: RawCharacter;
   moves: Array<IMovePreview>;
+  nextRoute: PageFooterLinkType;
+  previousRoute: PageFooterLinkType;
+  toc: Array<TableOfContentsItem>;
 }
 
 const Moves: NextPage<MovesProps> = (props) => {
-  const { character, moves } = props;
+  const { character, moves, nextRoute, previousRoute, toc } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { query, push } = useRouter();
-  const cid = query.cid as string;
-  const sections = [];
-  for (const type of MoveTypeValues) {
-    const items = moves.filter((m) => m.type === type);
-    if (items.length > 0) {
-      sections.push({ items, label: type + "s", id: type.replace(" ", "-").toLowerCase() + "s" });
-    }
-  }
 
   return (
-    <>
-      <Head cid={cid} name={character.name} page="moves" />
-      <Page>
-        <Tree>
-          {sections.map((s) => (
-            <TreeSection key={s.label} label={s.label}>
-              {s.items.map((n) => (
-                <TreeItem key={n.id} to={routes.move(cid, n.id)}>
-                  {n.name}
-                </TreeItem>
-              ))}
-            </TreeSection>
+    <Page>
+      <Head cid={character.id} name={character.name} page="moves" />
+      <TableOfContents label="Move List" contents={toc} />
+      <div className="mt-30 w-page-content md:mb-8 md:mt-34 lg:pl-8">
+        <PageHeader heading="Move List" subheading={character.name} />
+        <ul className="grid gap-y-6 md:mx-0">
+          {moves.map((m) => (
+            <li key={m.id}>
+              <MoveCard move={m} href={routes.move(character.id, m.id)} />
+            </li>
           ))}
-        </Tree>
-        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
-          <header className="mb-2">
-            <Typography className="uppercase" color="aqua" component="p" variant="h3">
-              {character.name}
-            </Typography>
-            <Typography className="uppercase" variant="h1">
-              Move List
-            </Typography>
-          </header>
-          <ul className="grid gap-y-4 md:gap-y-6">
-            {moves.map((m) => (
-              <li
-                className="paper group flex cursor-pointer overflow-hidden"
-                key={m.id}
-                onClick={() => push(routes.move(cid, m.id))}
-              >
-                <div className="p-4 md:hidden">
-                  <Link className="mb-1 block uppercase" color="white" href={routes.move(cid, m.id)} variant="h3">
-                    {m.name}
-                  </Link>
-                  <Chip className="h4 normal-case" color={getInputColor(m.input)}>
-                    {m.input}
-                  </Chip>
-                </div>
-                <div className="hidden w-1/2 p-6 md:block">
-                  <MovePreview cid={cid} move={m} />
-                </div>
-                <div className="relative hidden w-1/2 overflow-hidden border-l border-l-neutral-500 bg-neutral-700 md:block">
-                  <Image
-                    alt={m.imgAlt}
-                    blurDataURL={BLUR_DATA_URL}
-                    layout="fill"
-                    objectFit="cover"
-                    placeholder="blur"
-                    src={m.imgUrl}
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
-          <List />
-        </button>
-        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
-          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
-            <button onClick={() => setDrawerOpen(false)}>
-              <ChevronRight />
-            </button>
-            <Typography className="uppercase" variant="h4">
-              Move List
-            </Typography>
-          </div>
-          <ul className="-mt-2 px-5 py-4">
-            {sections.map((s) => (
-              <TreeSection key={s.label} label={s.label}>
-                {s.items.map((n) => (
-                  <TreeItem key={n.id} onClick={() => setDrawerOpen(false)} to={routes.move(cid, n.id)}>
-                    {n.name}
-                  </TreeItem>
-                ))}
-              </TreeSection>
-            ))}
-          </ul>
-        </Drawer>
-      </Page>
-    </>
+        </ul>
+        <PageFooter previousRoute={previousRoute} nextRoute={nextRoute} />
+      </div>
+      <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+        <List />
+      </button>
+      <Drawer heading="Move List" onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+        <TableOfContents contents={toc} isDrawerToc label="Contents" onSelectItem={() => setDrawerOpen(false)} />
+      </Drawer>
+    </Page>
   );
 };
 
@@ -136,11 +66,28 @@ interface IParams extends ParsedUrlQuery {
   cid: string;
 }
 
+function getMoveListTableOfContents(cid: string, moves: Array<IMovePreview>): Array<TableOfContentsItem> {
+  const contents = [];
+  for (const type of MoveTypeValues) {
+    const items = moves.filter((m) => m.type === type);
+    if (items.length > 0) {
+      contents.push({ label: `${type}s`, depth: 0 });
+      for (const item of items) {
+        contents.push({ label: item.name, to: routes.move(cid, item.id), depth: 1 });
+      }
+    }
+  }
+  return contents;
+}
+
 export const getStaticProps: GetStaticProps = async (context) => {
   const { cid } = context.params as IParams;
-  const data = getMovePreviews(cid);
+  const { moves, character } = getMovePreviews(cid);
+  const toc = getMoveListTableOfContents(cid, moves);
+  const previousRoute = { heading: "Overview", subheading: character.name, href: routes.overview(character.id) };
+  const nextRoute = { heading: "Assists", subheading: character.name, href: routes.assists(character.id) };
   return {
-    props: { ...data },
+    props: { character, moves, nextRoute, previousRoute, toc },
   };
 };
 
