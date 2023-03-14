@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import characters from "db/index.json";
-import { ChevronDown, ChevronLeft, ChevronRight, Menu } from "components/Icon";
+import { ChevronDown, Menu } from "components/Icon";
 import Link from "components/Link";
 import SecondaryHeader from "components/SecondaryHeader";
 import Typography from "components/Typography";
@@ -50,15 +50,7 @@ function Layout({ children }: { children: React.ReactNode }) {
           </ul>
         </nav>
       </header>
-      <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen}>
-        <div className="flex h-14 items-center justify-between gap-4 border-b border-neutral-600 px-4">
-          <Typography variant="h4" className="uppercase">
-            Characters
-          </Typography>
-          <button onClick={() => setDrawerOpen(false)}>
-            <ChevronLeft />
-          </button>
-        </div>
+      <Drawer heading="Characters" onClose={() => setDrawerOpen(false)} open={drawerOpen}>
         <ul className="-mt-2 px-5 py-4">
           {characters.map((c) => (
             <li key={c.id}>

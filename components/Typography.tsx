@@ -32,7 +32,7 @@ const colors = {
   black: "text-neutral-900",
 };
 
-interface TypographyProps extends React.ComponentPropsWithoutRef<"p"> {
+export interface TypographyProps extends React.ComponentPropsWithoutRef<"p"> {
   children: React.ReactNode;
   component?: "h1" | "h2" | "h3" | "h4" | "p" | "span";
   color?: "white" | "gray" | "blue" | "yellow" | "red" | "green" | "purple" | "aqua" | "black";

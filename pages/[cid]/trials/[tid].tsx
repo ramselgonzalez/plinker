@@ -7,12 +7,12 @@ import Tree from "components/Tree";
 import TreeItem from "components/TreeItem";
 import TreeSection from "components/TreeSection";
 import Typography from "components/Typography";
-import { MarkdownComponents } from "helpers/markdown";
 import { getTrial, getTrialIds } from "lib/trial";
 import routes from "routes";
 import { RawCharacter, RawCombo } from "types";
 import Head from "components/Head";
 import DataItem from "components/DataItem";
+import { highlightInputNotation } from "helpers/input";
 
 interface TrialProps {
   character: RawCharacter;
@@ -46,14 +46,17 @@ const Trial: NextPage<TrialProps> = (props) => {
                 {trial.title}
               </Typography>
             </header>
-            <div className="relative h-0 w-full pb-[56.25%]">
-              <iframe
-                allowFullScreen
-                className="absolute top-0 left-0 h-full w-full rounded-2xl"
-                frameBorder="0"
-                src={`https://www.youtube.com/embed/${trial.videoId}?modestbranding=1`}
-                title="Trial video"
-              />
+            <div className="-mx-4 md:mx-0">
+              <div className="relative h-0 w-full pb-[56.25%]">
+                <iframe
+                  className="absolute top-0 left-0 h-full w-full md:rounded-2xl"
+                  src={`https://www.youtube-nocookie.com/embed/${trial.videoId}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
             </div>
             <div className="paper p-4">
               <Typography className="uppercase" color="gray" variant="h4">
@@ -61,7 +64,7 @@ const Trial: NextPage<TrialProps> = (props) => {
               </Typography>
               <div
                 className="mt-2 rounded-xl bg-neutral-900 p-4 font-mono text-sm"
-                dangerouslySetInnerHTML={{ __html: trial.inputHTML }}
+                dangerouslySetInnerHTML={{ __html: highlightInputNotation(trial.input) }}
               />
             </div>
             <div className="paper flex flex-wrap gap-4 p-4">
@@ -71,13 +74,13 @@ const Trial: NextPage<TrialProps> = (props) => {
               <DataItem className="flex-1" label="X-Factor" value={trial.xfactor || "--"} />
             </div>
             <div className="paper flex flex-wrap gap-4 p-4">
-              <DataItem className="flex-1" label="Damage" value={trial.damage.toLocaleString("en")} />
+              <DataItem className="flex-1" label="Damage" value={trial.damage} />
               <DataItem className="flex-1" label="Meter Start" value={trial.meterStart} />
               <DataItem className="flex-1" label="Meter Build" value={trial.meterBuild} />
               <DataItem className="flex-1" label="Meter Spend" value={trial.meterSpend} />
             </div>
             <div>
-              <MDXRemote {...content} components={MarkdownComponents} />
+              <MDXRemote {...content} />
             </div>
           </div>
         </div>

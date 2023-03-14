@@ -1,180 +1,80 @@
+// packages
 import fs from "fs";
 import path from "path";
 import { useState } from "react";
 import { ParsedUrlQuery } from "querystring";
 import { NextPage, GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
-import Image from "next/image";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import { getPlaiceholder } from "plaiceholder";
-import Chip from "components/Chip";
+// components
 import DataItem from "components/DataItem";
-import Head from "components/Head";
-import Page from "components/Page";
-import Tree from "components/Tree";
-import TreeSection from "components/TreeSection";
-import TreeItem from "components/TreeItem";
-import Typography from "components/Typography";
-import { getMoveIds, getMove } from "lib/move";
-import { IMoveDetail, IMovePreview, MoveTypeValues, RawCharacter } from "types";
-import { MarkdownComponents } from "helpers/markdown";
-import { getInputColor } from "helpers";
-import routes from "routes";
 import Drawer from "components/Drawer";
-import { ChevronRight, List } from "components/Icon";
+import Head from "components/Head";
+import { List } from "components/Icon";
+import MarkdownComponents from "components/Markdown";
+import MoveOverview from "components/MoveOverview";
+import Page from "components/Page";
+import PageHeader from "components/PageHeader";
+import TableOfContents, { TableOfContentsItem } from "components/TableOfContents";
+// utils
+import { getFrameDataColor } from "helpers/move";
+import { getMoveIds, getMove } from "lib/move";
+import routes from "routes";
+import { IMoveDetail, IMovePreview, MoveTypeValues, RawCharacter } from "types";
 
 interface MoveProps {
   blurDataURL: string;
   content: MDXRemoteSerializeResult;
   character: RawCharacter;
   move: IMoveDetail;
-  moves: Array<IMovePreview>;
-}
-
-function getFrameDataColor(adv: number | string) {
-  if (typeof adv === "string") return;
-  if (adv > 0) return "green";
-  if (adv < 0) return "red";
+  toc: Array<TableOfContentsItem>;
 }
 
 const Move: NextPage<MoveProps> = (props) => {
-  const { content, character, move, moves, blurDataURL } = props;
+  const { content, character, move, blurDataURL, toc } = props;
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { query } = useRouter();
-  const cid = query.cid as string;
-  const sections = [];
-  for (const type of MoveTypeValues) {
-    const items = moves.filter((m) => m.type === type);
-    if (items.length > 0) {
-      sections.push({ items, label: type + "s", id: type.replace(" ", "-").toLowerCase() + "s" });
-    }
-  }
+
   return (
-    <>
-      <Head cid={cid} mid={move.id} move={move.name} name={character.name} page="move" />
-      <Page>
-        <Tree>
-          {sections.map((s) => (
-            <TreeSection key={s.label} label={s.label}>
-              {s.items.map((n) => (
-                <TreeItem key={n.id} to={routes.move(cid, n.id)}>
-                  {n.name}
-                </TreeItem>
-              ))}
-            </TreeSection>
-          ))}
-        </Tree>
-        <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
-          <header className="mb-2">
-            <Typography className="uppercase" color="aqua" component="p" variant="h3">
-              {character.name}
-            </Typography>
-            <Typography className="uppercase" variant="h1">
-              {move.name}
-            </Typography>
-          </header>
-          <div className="flex flex-col gap-y-4">
-            <div className="flex flex-col gap-x-4 md:flex-row">
-              <div className="relative mb-2 flex h-auto overflow-hidden rounded-2xl border border-neutral-500 md:mb-0 md:w-1/2">
-                <Image
-                  alt={move.imgAlt}
-                  blurDataURL={blurDataURL}
-                  height={480}
-                  key={move.id}
-                  objectFit="cover"
-                  placeholder={blurDataURL ? "blur" : undefined}
-                  priority
-                  src={move.imgUrl}
-                  width={853}
-                />
-              </div>
-              <div className="flex flex-col md:w-1/2">
-                <div>
-                  <Typography className="mb-2 uppercase" color="gray" variant="h4">
-                    Input
-                  </Typography>
-                  <Chip className="h3" color={getInputColor(move.input)}>
-                    {move.input}
-                  </Chip>
-                </div>
-                <div className="mt-3 flex border-y border-neutral-700 py-3">
-                  <DataItem className="flex-auto border-r" label="Class" value={move.type} />
-                  <DataItem className="flex-auto border-r" label="Block" value={move.block} />
-                  <DataItem className="flex-auto" label="Hit Type" value={move.hit} />
-                </div>
-                <div className="mt-2 flex flex-1 flex-col justify-between gap-y-4">
-                  <Typography className="italic">{move.description}</Typography>
-                  {move.attributes.length > 0 && (
-                    <div>
-                      <Typography className="uppercase" color="gray" variant="h4">
-                        Attributes
-                      </Typography>
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {move.attributes.map((a) => (
-                          <Chip className="h4 uppercase" key={a}>
-                            {a}
-                          </Chip>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="paper flex flex-wrap gap-y-4 p-4">
-              <DataItem className="flex-auto" label="Start Up" value={move.startUp} />
-              <DataItem className="flex-auto" label="Active" value={move.active} />
-              <DataItem className="flex-auto" label="Recovery" value={move.recovery} />
-              <DataItem
-                className="flex-auto"
-                color={getFrameDataColor(move.advBlock)}
-                label="Block Adv."
-                value={move.advBlock}
-              />
-              <DataItem
-                className="flex-auto"
-                color={getFrameDataColor(move.advHit)}
-                label="Hit Adv."
-                value={move.advHit}
-              />
-            </div>
-            <div className="paper flex flex-wrap gap-y-4 p-4">
-              <DataItem className="flex-auto" label="Hits" value={move.hits} />
-              <DataItem className="flex-auto" label="Damage" value={move.dmg} />
-              <DataItem className="flex-auto" label="Meter Gain" value={move.meterGain} />
-            </div>
-            <div className="-mt-4">
-              <MDXRemote {...content} components={MarkdownComponents} />
-            </div>
+    <Page>
+      <Head cid={character.id} mid={move.id} move={move.name} name={character.name} page="move" />
+      <TableOfContents contents={toc} label="Contents" onSelectItem={() => setDrawerOpen(false)} />
+      <div className="mt-30 mb-8 w-page-content md:mt-34 lg:pl-8">
+        <PageHeader heading={move.name} subheading={character.name} />
+        <div className="flex flex-col">
+          <MoveOverview move={move} blurDataURL={blurDataURL} />
+          <div className="paper my-2 flex flex-wrap gap-y-4 p-4">
+            <DataItem className="flex-auto" label="Start Up" value={move.startUp} />
+            <DataItem className="flex-auto" label="Active" value={move.active} />
+            <DataItem className="flex-auto" label="Recovery" value={move.recovery} />
+            <DataItem
+              className="flex-auto"
+              color={getFrameDataColor(move.advBlock)}
+              label="Block Adv."
+              value={move.advBlock}
+            />
+            <DataItem
+              className="flex-auto"
+              color={getFrameDataColor(move.advHit)}
+              label="Hit Adv."
+              value={move.advHit}
+            />
           </div>
+          <div className="paper my-2 flex flex-wrap gap-y-4 p-4">
+            <DataItem className="flex-auto" label="Hits" value={move.hits} />
+            <DataItem className="flex-auto" label="Damage" value={move.dmg} />
+            <DataItem className="flex-auto" label="Meter Gain" value={move.meterGain} />
+          </div>
+          <MDXRemote {...content} components={MarkdownComponents} />
         </div>
-        <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
-          <List />
-        </button>
-        <Drawer onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
-          <div className="flex h-14 items-center gap-4 border-b border-neutral-600 px-4">
-            <button onClick={() => setDrawerOpen(false)}>
-              <ChevronRight />
-            </button>
-            <Typography className="uppercase" variant="h4">
-              Move List
-            </Typography>
-          </div>
-          <ul className="-mt-2 px-5 py-4">
-            {sections.map((s) => (
-              <TreeSection key={s.label} label={s.label}>
-                {s.items.map((n) => (
-                  <TreeItem key={n.id} onClick={() => setDrawerOpen(false)} to={routes.move(cid, n.id)}>
-                    {n.name}
-                  </TreeItem>
-                ))}
-              </TreeSection>
-            ))}
-          </ul>
-        </Drawer>
-      </Page>
-    </>
+      </div>
+      <button className="fab lg:hidden" onClick={() => setDrawerOpen(true)}>
+        <List />
+      </button>
+      <Drawer heading="Move List" onClose={() => setDrawerOpen(false)} open={drawerOpen} position="right">
+        <TableOfContents contents={toc} label="Contents" isDrawerToc onSelectItem={() => setDrawerOpen(false)} />
+      </Drawer>
+    </Page>
   );
 };
 
@@ -188,16 +88,36 @@ interface IParams extends ParsedUrlQuery {
   mid: string;
 }
 
+function getMoveListTableOfContents(cid: string, moves: Array<IMovePreview>): Array<TableOfContentsItem> {
+  const contents = [];
+  for (const type of MoveTypeValues) {
+    const items = moves.filter((m) => m.type === type);
+    if (items.length > 0) {
+      contents.push({ label: `${type}s`, depth: 0 });
+      for (const item of items) {
+        contents.push({ label: item.name, to: routes.move(cid, item.id), depth: 1 });
+      }
+    }
+  }
+  return contents;
+}
+
+async function getBlurDataUrl(imgUrl: string) {
+  const absPath = path.join(process.cwd(), "public", imgUrl);
+  if (!fs.existsSync(absPath)) {
+    return "";
+  }
+  const { base64 } = await getPlaiceholder(imgUrl, { size: 32 });
+  return base64;
+}
+
 export const getStaticProps: GetStaticProps<MoveProps> = async (context) => {
   const { cid, mid } = context.params as IParams;
   const { content: mdx, move, ...rest } = getMove(cid, mid);
   const content = await serialize(mdx);
-  const fullPath = path.join(process.cwd(), "public", move.imgUrl);
-  let blurDataURL = "";
-  if (fs.existsSync(fullPath)) {
-    const { base64 } = await getPlaiceholder(move.imgUrl, { size: 32 });
-    blurDataURL = base64;
-  }
+
+  const toc = getMoveListTableOfContents(cid, rest.moves);
+  const blurDataURL = await getBlurDataUrl(move.imgUrl);
 
   return {
     props: {
@@ -205,6 +125,7 @@ export const getStaticProps: GetStaticProps<MoveProps> = async (context) => {
       content,
       move,
       blurDataURL,
+      toc,
     },
   };
 };

@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import cn from "classnames";
 
-interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
+export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   color?: "white" | "gray" | "blue" | "yellow" | "red" | "green" | "purple" | "aqua" | "black";
   variant?: string;
 }
@@ -22,14 +22,7 @@ function Link(props: LinkProps) {
   const { children, className, color = "aqua", href = "", variant, ...rest } = props;
   return (
     <NextLink href={href} passHref>
-      <a
-        className={cn("hover:underline", {
-          [`${variant}`]: variant,
-          [`${colors[color]}`]: color,
-          [`${className}`]: className,
-        })}
-        {...rest}
-      >
+      <a className={cn("hover:underline", variant, colors[color], className)} {...rest}>
         {children}
       </a>
     </NextLink>

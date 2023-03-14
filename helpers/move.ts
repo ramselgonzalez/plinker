@@ -71,3 +71,9 @@ export function getAdvantage(adv: number | null) {
 
   return adv;
 }
+
+export function getFrameDataColor(adv: number | string) {
+  if (typeof adv === "string") return;
+  if (adv > 0) return "green";
+  if (adv < 0) return "red";
+}

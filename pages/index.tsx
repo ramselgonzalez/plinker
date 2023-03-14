@@ -1,10 +1,15 @@
+// packages
 import { NextPage, GetStaticProps } from "next";
 import Head from "next/head";
+// components
 import Page from "components/Page";
 import Typography from "components/Typography";
 import CharacterSelectItem from "components/CharacterSelectItem";
+// utils
+import { getCharacterSortByFranchise, getCharacterMobileSort } from "helpers/character";
 import { getCharacterPreviews } from "lib/character";
-import { ICharacterPreview } from "types";
+import { Franchise, ICharacterPreview } from "types";
+import routes from "routes";
 
 interface HomeProps {
   characters: Array<ICharacterPreview>;
@@ -12,16 +17,9 @@ interface HomeProps {
 
 const Home: NextPage<HomeProps> = (props) => {
   const { characters } = props;
-
-  const orderSort = characters.slice().sort((a, b) => a.selectOrder - b.selectOrder);
-  const mobileSort = characters.slice().sort((a, b) => {
-    if (a.name > b.name) return 1;
-    if (a.name < b.name) return -1;
-    return 0;
-  });
-
-  const marvel = orderSort.filter((c) => c.franchise === "marvel");
-  const capcom = orderSort.filter((c) => c.franchise === "capcom");
+  const mobileSort = getCharacterMobileSort(characters);
+  const marvel = getCharacterSortByFranchise(characters, Franchise.Marvel);
+  const capcom = getCharacterSortByFranchise(characters, Franchise.Capcom);
 
   return (
     <>
@@ -43,7 +41,8 @@ const Home: NextPage<HomeProps> = (props) => {
                 className={i === 1 ? "col-start-1" : ""}
                 imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
-                value={c}
+                href={routes.overview(c.id)}
+                disabled={c.id !== "zero"}
               />
             ))}
           </div>
@@ -62,7 +61,8 @@ const Home: NextPage<HomeProps> = (props) => {
                 className={i === 0 ? "col-start-4" : ""}
                 imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
-                value={c}
+                href={routes.overview(c.id)}
+                disabled={c.id !== "zero"}
               />
             ))}
           </div>
@@ -83,7 +83,7 @@ const Home: NextPage<HomeProps> = (props) => {
                 alt={c.name}
                 imageUrl={`/images/portraits/thumbnails_${c.id}.webp`}
                 key={c.id}
-                value={c}
+                href={routes.overview(c.id)}
               />
             ))}
           </div>

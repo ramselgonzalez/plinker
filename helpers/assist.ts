@@ -1,14 +1,24 @@
 import { getHits } from "helpers";
 import { getDmgPreview, getMeterGain } from "helpers/damage";
-import { IAssistDetail, IAssistPreview, RawAssist } from "types";
+import { IAssistDetail, IAssistPreview, RawAssist, RawCharacter } from "types";
 
-export function getAssistPreview(a: RawAssist): IAssistPreview {
+function getAssistImgAlt(cname: string, aname: string) {
+  return `${cname} being called in as an assist performing ${aname}`;
+}
+
+function getAssistImgUrl(cid: string, aid: string) {
+  return `/images/${cid}/assists/${aid}.jpg`;
+}
+
+export function getAssistPreview(a: RawAssist, character: RawCharacter): IAssistPreview {
   return {
     id: a.id,
     active: a.active || "--",
     attributes: a.attributes,
     block: a.block,
     dmg: getDmgPreview(a.dmg),
+    imgAlt: getAssistImgAlt(character.name, a.name),
+    imgUrl: getAssistImgUrl(character.id, a.id),
     meterGain: getMeterGain(a.meterGain, 0),
     name: a.name,
     recovery: a.recovery,

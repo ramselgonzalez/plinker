@@ -2,27 +2,25 @@ import { ComponentPropsWithoutRef } from "react";
 import cn from "classnames";
 import Image from "next/image";
 import Link from "components/Link";
-import routes from "routes";
-import { ICharacterPreview } from "types";
 
 interface CharacterSelectItemProps extends ComponentPropsWithoutRef<"a"> {
   alt: string;
+  disabled?: boolean;
+  href: string;
   imageUrl: string;
-  value: ICharacterPreview;
 }
 
 function CharacterSelectItem(props: CharacterSelectItemProps) {
-  const { alt, imageUrl, value, className } = props;
+  const { alt, imageUrl, href, className, disabled } = props;
   return (
     <Link
-      className={cn(
-        "relative h-22 w-22 overflow-hidden rounded-lg border border-neutral-500 bg-white duration-200 hover:scale-110",
-        {
-          [`${className}`]: className,
-        }
-      )}
+      aria-disabled={disabled}
+      className={cn("relative h-22 w-22 overflow-hidden rounded-lg border border-neutral-500 bg-white", className, {
+        ["duration-200 hover:scale-110 focus:scale-110"]: !disabled,
+        ["pointer-events-none grayscale"]: disabled,
+      })}
       color="black"
-      href={routes.overview(value.id)}
+      href={disabled ? "#" : href}
     >
       <Image alt={alt} layout="fill" priority src={imageUrl} />
     </Link>
