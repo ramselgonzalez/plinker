@@ -66,7 +66,9 @@ function getHeadings(source: string) {
       to = "#" + foundSubstring[0].replace("\\{#", "").replace("\\}", "");
     }
     // remove entire comment from line for ui
-    const label = line.replace(commentRegex, "").replaceAll("#", "").trim();
+    const nocomment = line.replace(commentRegex, "");
+    console.log({ line, nocomment });
+    const label = nocomment.replaceAll("#", "").trim();
     // determine depth by getting the number of # at the start of the line and subtract 2 (h2 === depth: 0)
     const depth = line.split(" ")[0].length - 2;
     return { label, to, depth };
