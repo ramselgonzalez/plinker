@@ -55,7 +55,6 @@ interface IParams extends ParsedUrlQuery {
 function getHeadings(source: string) {
   // checks each line and verifies if it contains an h2 or h3 heading by the number of # at the start of row.
   const headingLines = source.split("\n").filter((line) => line.match(/^[#]{2,3}\s/));
-  console.log(headingLines);
   const headings = headingLines.map((line) => {
     // check if there is remark-heading-id syntax (\{#...}\).
     const commentRegex = new RegExp(/\\\{.*\\\}/);
